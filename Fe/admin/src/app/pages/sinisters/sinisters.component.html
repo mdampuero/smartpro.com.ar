@@ -1,0 +1,74 @@
+<div class="container-fluid animated fadeIn">
+    <app-breadcrumb [title]="'Siniestros'" [breadcrumbs]="breadcrumbs" ></app-breadcrumb>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row form-material">
+                        <div class="col-md-4">
+                            <div class="text-left animated fadeInLeft">
+                                <a role="button" routerLink="nuevo" class="btn btn-rounded btn-success"><i class="fa fa-plus"></i> Nuevo</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 animated fadeInDown">
+                            <div>
+                                <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="query" (keyUp.enter)="search()">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-right animated fadeInRight">
+                                <app-pagination  [total]="data.recordsFiltered" [limit]="sinistersService.limit" [pages]="data.pages"></app-pagination>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" animated fadeInUp">
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th (click)="sinistersService.setOrder('number')">
+                                        <app-table-th [title]="'Número'" [field]="'number'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>                                   
+                                    <th (click)="sinistersService.setOrder('amount')">
+                                        <app-table-th [title]="'Monto'" [field]="'amount'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>                                   
+                                    <th (click)="sinistersService.setOrder('date')">
+                                        <app-table-th [title]="'F.Ingreso'" [field]="'date'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>                                   
+                                    <th (click)="sinistersService.setOrder('days')">
+                                        <app-table-th [title]="'Días'" [field]="'days'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>                                   
+                                    <th (click)="sinistersService.setOrder('company')">
+                                        <app-table-th [title]="'Compañia'" [field]="'company'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>                                   
+                                    <th (click)="sinistersService.setOrder('productor')">
+                                        <app-table-th [title]="'Analista'" [field]="'productor'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>                                   
+                                    <th (click)="sinistersService.setOrder('status')">
+                                        <app-table-th [title]="'Estado'" [field]="'status'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of data.data; let i=index;" >
+                                    <td>{{ item.number }}</td>
+                                    <td>$ {{ item.amount }}</td>
+                                    <td>{{ item.date | date:'dd/MM/Y' }}</td>
+                                    <td>{{ i }}</td>
+                                    <td>{{ item.company.name }}</td>
+                                    <td>{{ item.productor.name }}</td>
+                                    <td class="text-center bg-{{ item.status.color }} text-white" valing="middle"><b>{{ item.status.name }}</b></td>
+                                    <td class="text-center">
+                                        <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 
+                                        <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash text-danger"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <app-count-results [total]="data.recordsFiltered"></app-count-results>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

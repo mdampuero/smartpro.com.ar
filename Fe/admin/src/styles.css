@@ -1,0 +1,5 @@
+/* You can add global styles to this file, and also import other style files */
+.btn-outline-danger:hover i, .btn-outline-danger:focus i, .btn-outline-danger.focus i{
+    color: white !important;
+}
+

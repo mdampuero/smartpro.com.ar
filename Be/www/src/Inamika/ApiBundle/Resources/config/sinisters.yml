@@ -1,0 +1,24 @@
+api_sinisters:
+    path:     /sinisters
+    defaults: { _controller: InamikaApiBundle:Sinisters:index }
+    methods: [GET]
+
+api_sinisters_get:
+    path:     /sinisters/{id}
+    defaults: { _controller: InamikaApiBundle:Sinisters:get }
+    methods: [GET]
+
+api_sinisters_post:
+    path:     /sinisters
+    defaults: { _controller: InamikaApiBundle:Sinisters:post }
+    methods: [POST]
+
+api_sinisters_put:
+    path:     /sinisters/{id}
+    defaults: { _controller: InamikaApiBundle:Sinisters:put }
+    methods: [PUT]
+
+api_sinisters_delete:
+    path:     /sinisters/{id}
+    defaults: { _controller: InamikaApiBundle:Sinisters:delete }
+    methods: [DELETE]

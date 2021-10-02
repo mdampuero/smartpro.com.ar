@@ -1,0 +1,8 @@
+<fieldset class="form-group">
+    <label>Cambiar</label>
+    <label class="custom-file d-block">
+        <input accept="{{ accept }}" type="file" (change)="handleUpload($event)">
+        <span class="custom-file-control"></span>
+    </label>
+    <small class="form-control-feedback text-danger">{{ error }}</small>
+</fieldset>

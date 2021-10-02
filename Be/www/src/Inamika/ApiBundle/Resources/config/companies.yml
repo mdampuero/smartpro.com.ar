@@ -1,0 +1,24 @@
+api_companies:
+    path:     /companies
+    defaults: { _controller: InamikaApiBundle:Companies:index }
+    methods: [GET]
+
+api_companies_get:
+    path:     /companies/{id}
+    defaults: { _controller: InamikaApiBundle:Companies:get }
+    methods: [GET]
+
+api_companies_post:
+    path:     /companies
+    defaults: { _controller: InamikaApiBundle:Companies:post }
+    methods: [POST]
+
+api_companies_put:
+    path:     /companies/{id}
+    defaults: { _controller: InamikaApiBundle:Companies:put }
+    methods: [PUT]
+
+api_companies_delete:
+    path:     /companies/{id}
+    defaults: { _controller: InamikaApiBundle:Companies:delete }
+    methods: [DELETE]

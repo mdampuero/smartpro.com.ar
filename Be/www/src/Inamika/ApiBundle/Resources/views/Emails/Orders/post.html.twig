@@ -1,0 +1,90 @@
+{% extends "InamikaApiBundle::Emails/layout.html.twig" %}
+{% block body %}
+<h4>Datos de la orden</h4>
+<hr>
+    <p>
+        <b>Nº: </b>
+        <span>{{ entity.id }}</span>
+    </p>
+    <p>
+        <b>Cliente: </b>
+        <span>{{ entity.customer.name }}</span>
+    </p>
+    <p>
+        <b>Total: </b>
+        <span>$ {{ entity.total | number_format(0, ',', '.') }}</span>
+    </p>
+    <p>
+        <b>Siniestro: </b>
+        <span>{{ entity.customer.sinister.number }}</span>
+    </p>
+    <p>
+        <b>Compañia: </b>
+        <span>{{ entity.customer.sinister.company.name }}</span>
+    </p>
+<h4>Items de la orden</h4>
+<hr>
+<table width="100%">
+    <thead>
+        <tr>
+            <th align="center">Item</th>
+            <th align="center">Sku</th>
+            <th align="left">Descripcion</th>
+            <th align="center">Cantidad</th>
+            <th align="right">P/U</th>
+            <th align="right">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in entity.customer.cart.items %}
+        <tr>
+            <td align="center">{{ loop.index }}</td>
+            <td align="center">{{ item.product.sku}}</td>
+            <td align="left">{{ item.product.name }}</td>
+            <td align="center">{{ item.amount }}</td>
+            <td align="right">{{ (item.product.price) | number_format(2, ',', '.')}}</td>
+            <td align="right">{{ item.total | number_format(2,',','.') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{# <hr>  
+    <p>
+        <b>Nombre completo: </b>
+        <span>{{ entity.name }}</span>
+    </p>
+    <p>
+        <b>Email: </b>
+        <span><a href='mailto:{{ entity.email }}' target="_blank">{{ entity.email }}</a></span>
+    </p>
+    <p>
+        <b>DNI: </b>
+        <span>{{ entity.document }}</span>
+    </p>
+    <p>
+        <b>Teléfono: </b>
+        <span>{{ entity.phone }}</span>
+    </p>
+    <p>
+        <b>Provincia: </b>
+        <span>{{ entity.provence }}</span>
+    </p>
+    <p>
+        <b>Localidad: </b>
+        <span>{{ entity.city }}</span>
+    </p>
+    <p>
+        <b>Calle: </b>
+        <span>{{ entity.street }} {{ entity.streetNumber }}, Dpto: {{ entity.department }}, Piso {{ entity.floor }}</span>
+    </p>
+<h4>Acceso a la Tienda</h4>
+<hr>  
+    <p>
+        <b>Nº de siniestro: </b>
+        <span>{{ entity.number }}</span>
+    </p>
+    <p>
+        <b>Contraseña: </b>
+        <span>{{ entity.document}}</span>
+    </p>  #}
+{% endblock %}

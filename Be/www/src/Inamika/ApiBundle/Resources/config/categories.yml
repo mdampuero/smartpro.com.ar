@@ -1,0 +1,24 @@
+api_categories:
+    path:     /categories
+    defaults: { _controller: InamikaApiBundle:Categories:index }
+    methods: [GET]
+
+api_categories_get:
+    path:     /categories/{id}
+    defaults: { _controller: InamikaApiBundle:Categories:get }
+    methods: [GET]
+
+api_categories_post:
+    path:     /categories
+    defaults: { _controller: InamikaApiBundle:Categories:post }
+    methods: [POST]
+
+api_categories_put:
+    path:     /categories/{id}
+    defaults: { _controller: InamikaApiBundle:Categories:put }
+    methods: [PUT]
+
+api_categories_delete:
+    path:     /categories/{id}
+    defaults: { _controller: InamikaApiBundle:Categories:delete }
+    methods: [DELETE]

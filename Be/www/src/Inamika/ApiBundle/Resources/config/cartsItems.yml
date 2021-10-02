@@ -1,0 +1,9 @@
+api_cartsItems_post:
+    path:     /cartsItems/{cart}
+    defaults: { _controller: InamikaApiBundle:CartsItems:post }
+    methods: [POST]
+api_cartsItems_delete:
+    path:     /cartsItems/{cart}/{id}
+    defaults: { _controller: InamikaApiBundle:CartsItems:delete }
+    methods: [DELETE]
+

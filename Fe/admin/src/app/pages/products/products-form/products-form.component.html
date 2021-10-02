@@ -1,0 +1,84 @@
+<div class="container-fluid animated fadeIn">
+    <app-breadcrumb [title]="'Productos'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title animated fadeInDown">{{ breadcrumbs[(breadcrumbs.length-1)].title }}</h4>
+                    <form class="form-material m-t-40" (ngSubmit)="save(products)" #products="ngForm">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Proveedor</label>
+                                    <select class="form-control" [(ngModel)]="form.provider" name="provider">
+                                        <option value=''>--Seleccione una opción--</option>
+                                        <option value="{{ provider.id }}" *ngFor="let provider of providers; let i=index;" >{{ provider.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.name" name="name" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Sku</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.sku" name="sku" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Precio</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.price" name="price" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Marca</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.brand" name="brand" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Recomendado</label>
+                                    <select class="form-control" [(ngModel)]="form.isSalient" name="isSalient">
+                                        <option value="1">SI</option>
+                                        <option value="0">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Tags de búsqueda</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.tags" name="tags" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Descripción</label>
+                                    <textarea class="form-control" [(ngModel)]="form.description" name="description" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="card-title animated fadeInDown">Imagen principal</h4>
+                        <hr>
+                        <div class="row el-element-overlay">
+                            <div class="col-sm-6">
+                                <app-card-picture [path]="form.picturePreview" [title]="''" [subtitle]="''"></app-card-picture>
+                            </div>
+                            <div class="col-sm-6">
+                                <app-input-file [maxSize]="2000" [accept]="'image/png, image/jpeg, image/jpg'"></app-input-file>
+                            </div>
+                        </div>
+                        <div class="animated fadeInUp">
+                            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Guardar</button>
+                            <a role="button" routerLink="/products" type="button" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-remove"></i> Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

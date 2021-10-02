@@ -1,0 +1,42 @@
+<div class="container-fluid animated fadeIn">
+    <app-breadcrumb [title]="'Sliders'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+        
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title animated fadeInDown">{{ breadcrumbs[(breadcrumbs.length-1)].title }}</h4>
+                    <!-- <h6 class="card-subtitle">Just add <code>form-material</code> class to the form that's it.</h6> -->
+                    <form class="form-material m-t-40" (ngSubmit)="save(sliders)" #sliders="ngForm">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Título</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.title" name="title" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Subtítulo</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.subtitle" name="subtitle" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row el-element-overlay">
+                            <div class="col-sm-6">
+                                <app-card-picture [path]="form.picturePreview" [title]="''" [subtitle]="''"></app-card-picture>
+                            </div>
+                            <div class="col-sm-6">
+                                <app-input-file [maxSize]="2000" [accept]="'image/png, image/jpeg, image/jpg'"></app-input-file>
+                            </div>
+                        </div>
+                        <div class="animated fadeInUp">
+                            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Guardar</button>
+                            <a role="button" routerLink="/sliders" type="button" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-remove"></i> Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

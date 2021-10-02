@@ -1,0 +1,10 @@
+
+.navbar ul>li>a{
+    color: #FFF;
+}
+.navbar ul>li>a:hover{
+    color: #ebebeb;
+}
+.navbar ul>li>a.active{
+    font-weight: 500;
+}

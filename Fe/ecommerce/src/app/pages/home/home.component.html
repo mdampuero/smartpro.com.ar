@@ -1,0 +1,11 @@
+<app-carousel></app-carousel>
+<div class="container marketing mt-4">
+	<h3 class="animate__animated animate__fadeInLeft">Recomendados</h3>
+	<hr class="animate__animated animate__fadeInRight">
+	<div class="row">
+		<div class="col-md-3 mb-4 animate__animated animate__fadeInUp animate__faster animate__delay-{{ i }}s" *ngFor="let item of salients; let i=index;">
+			<app-card-product [item]="item"></app-card-product>
+		</div>
+	</div>
+</div>
+

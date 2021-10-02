@@ -1,0 +1,18 @@
+<div class="card-body ">
+    <div class="row">
+        <div class="col-sm-2 text-center">
+            <img src="{{ environment.imgUrl.xs }}{{ item.product.picture }}" class="w-50" onerror="this.onerror=null; this.src='assets/imgs/no-photo.png'" >
+        </div>
+        <div class="col-sm-6 my-auto">
+            {{ item.product.name }}
+        </div>
+        <div class="col-sm-2 my-auto">
+            {{ item.amount }}
+        </div>
+        <div class="col-sm-2 my-auto">
+            <b>
+                {{ (item.product.price * item.amount) | formatNumber }}
+            </b>
+        </div>
+    </div>
+</div>

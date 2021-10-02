@@ -1,0 +1,19 @@
+services:
+    setting:
+        class: Inamika\BackEndBundle\Service\Setting
+        arguments:
+                - '@doctrine.orm.entity_manager'
+    apiCall:
+        class: Inamika\BackEndBundle\Service\ApiCall
+        arguments:
+                - '@doctrine.orm.entity_manager'
+    FirebaseNotifications:
+        class: Inamika\BackEndBundle\Service\FirebaseNotifications
+        arguments:
+                - '@doctrine.orm.entity_manager'
+    ApiTokko:
+        class: Inamika\BackEndBundle\Service\ApiTokko
+        arguments:
+                - '@doctrine.orm.entity_manager'
+    Image:
+        class: Inamika\BackEndBundle\Service\Image

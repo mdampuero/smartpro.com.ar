@@ -1,0 +1,24 @@
+api_uploads:
+    path:     /uploads
+    defaults: { _controller: InamikaApiBundle:Uploads:index }
+    methods: [GET]
+
+api_uploads_get:
+    path:     /uploads/{id}
+    defaults: { _controller: InamikaApiBundle:Uploads:get }
+    methods: [GET]
+
+api_uploads_post:
+    path:     /uploads
+    defaults: { _controller: InamikaApiBundle:Uploads:post }
+    methods: [POST]
+
+api_uploads_put:
+    path:     /uploads/{id}
+    defaults: { _controller: InamikaApiBundle:Uploads:put }
+    methods: [PUT]
+
+api_uploads_delete:
+    path:     /uploads/{id}
+    defaults: { _controller: InamikaApiBundle:Uploads:delete }
+    methods: [DELETE]

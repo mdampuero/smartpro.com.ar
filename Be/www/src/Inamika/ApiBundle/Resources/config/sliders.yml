@@ -1,0 +1,24 @@
+api_sliders:
+    path:     /sliders
+    defaults: { _controller: InamikaApiBundle:Sliders:index }
+    methods: [GET]
+
+api_sliders_get:
+    path:     /sliders/{id}
+    defaults: { _controller: InamikaApiBundle:Sliders:get }
+    methods: [GET]
+
+api_sliders_post:
+    path:     /sliders
+    defaults: { _controller: InamikaApiBundle:Sliders:post }
+    methods: [POST]
+
+api_sliders_put:
+    path:     /sliders/{id}
+    defaults: { _controller: InamikaApiBundle:Sliders:put }
+    methods: [PUT]
+
+api_sliders_delete:
+    path:     /sliders/{id}
+    defaults: { _controller: InamikaApiBundle:Sliders:delete }
+    methods: [DELETE]

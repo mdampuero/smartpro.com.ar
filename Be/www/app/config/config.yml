@@ -1,0 +1,153 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@InamikaApiBundle/Resources/config/services.yml" }
+    - { resource: "@InamikaBackEndBundle/Resources/config/services.yml" }
+
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: es
+
+
+thormeier_breadcrumb: ~
+
+framework:
+    #esi: ~
+    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: [en] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    default_locale: 'es'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+    templating:
+        engines: ['twig']
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        parameter: '%global%'
+    
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        dql:
+            datetime_functions:
+                DATE_FORMAT: Inamika\BackEndBundle\DQL\DateFormatFunction
+            numeric_functions:
+                RAND: Inamika\BackEndBundle\DQL\Rand
+            string_functions:
+                DAY: DoctrineExtensions\Query\Mysql\Day
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+                DATE: DoctrineExtensions\Query\Mysql\Date
+        
+
+# Swiftmailer Configuration
+assetic:
+    bundles:
+        
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    port: '%mailer_port%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    encryption: '%mailer_encryption%'
+    spool: { type: memory }
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: ['*']
+        allow_headers: ['*']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+        max_age: 3600
+        hosts: []
+        origin_regex: false
+ 
+# FOSRest Configuration
+fos_rest:
+    serializer:
+      serialize_null: true
+jms_serializer:
+    property_naming: 
+        lower_case: false
+        id: 'jms_serializer.identical_property_naming_strategy'
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path: ~
+
+    filter_sets:
+        cache: ~
+
+        # the name of the "filter set"
+        my_thumb:
+
+            # adjust the image quality to 75%
+            quality: 75
+
+            # list of transformations to apply (the "filters")
+            filters:
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail: { size: [120, 90], mode: outbound }
+
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                background: { size: [124, 94], position: center, color: '#000000' }
+# # Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+# fos_rest:
+#     routing_loader:
+#         default_format: json
+#         include_format: false
+#     body_listener: true
+#     format_listener:
+#           rules:
+#               - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+#     param_fetcher_listener: true
+#     access_denied_listener:
+#         json: true
+#     view:
+#         view_response_listener: 'force'
+#         formats:
+#             json: true

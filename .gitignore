@@ -1,0 +1,111 @@
+.DS_Store
+/Be/db/working/*
+/Be/www/var/
+/Be/www/web/bundles/*
+/Be/www/web/uploads/*
+/Be/www/vendor/*
+/Be/www/app/config/parameters.yml
+.vscode
+/Be/www/phpunit.xml
+*.log
+/Be/www/web/cache/
+*.cache
+
+/App/.idea
+/App/.ionic
+/App/.sass-cache
+/App/.sourcemaps
+/App/.versions
+/App/.vscode
+/App/coverage
+/App/dist
+/App/node_modules
+/App/platforms
+/App/plugins
+/App/www
+
+/Fe/admin/dist
+/Fe/admin/tmp
+/Fe/admin/out-tsc
+# Only exists if Bazel was run
+/Fe/admin/bazel-out
+
+# dependencies
+/Fe/admin/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/Fe/admin/.sass-cache
+/Fe/admin/connect.lock
+/Fe/admin/coverage
+/Fe/admin/libpeerconnection.log
+/Fe/admin/npm-debug.log
+/Fe/admin/yarn-error.log
+/Fe/admin/testem.log
+/Fe/admin/typings
+
+# System Files
+.DS_Store
+/Fe/admin/Thumbs.db
+
+/Fe/ecommerce/dist
+/Fe/ecommerce/tmp
+/Fe/ecommerce/out-tsc
+# Only exists if Bazel was run
+/Fe/ecommerce/bazel-out
+
+# dependencies
+/Fe/ecommerce/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/Fe/ecommerce/.sass-cache
+/Fe/ecommerce/connect.lock
+/Fe/ecommerce/coverage
+/Fe/ecommerce/libpeerconnection.log
+/Fe/ecommerce/npm-debug.log
+/Fe/ecommerce/yarn-error.log
+/Fe/ecommerce/testem.log
+/Fe/ecommerce/typings
+
+# System Files
+.DS_Store
+/Fe/ecommerce/Thumbs.db

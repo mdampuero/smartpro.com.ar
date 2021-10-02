@@ -1,0 +1,105 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    encoders:
+        Inamika\BackEndBundle\Entity\User: bcrypt
+        # Inamika\BackEndBundle\Entity\Customer: bcrypt
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+
+        our_db_provider:
+            entity:
+                class: InamikaBackEndBundle:User
+                property: email
+        # customer_provider:
+        #     entity:
+        #         class: InamikaBackEndBundle:Customer
+        #         property: email
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin:
+            remember_me:
+                secret:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                # path:     /admin
+                domain:   ~ 
+            anonymous: ~
+            # pattern:    /admin(.*)
+            http_basic: ~
+            provider: our_db_provider
+            
+            logout:
+                path:   /admin/login/logout
+                target: /admin
+
+            form_login:
+                default_target_path: /admin/
+                always_use_default_target_path: true
+                login_path: security_login
+                check_path: security_login
+        # main:
+        #     remember_me:
+        #         secret:      "%secret%"
+        #         lifetime: 31536000 # 365 days in seconds
+        #         path:     /
+        #         domain:   ~ 
+        #     anonymous: ~
+        #     pattern:    /
+        #     http_basic: ~
+        #     provider: customer_provider
+            
+        #     logout:
+        #         path:   /login/logout
+        #         target: /
+        #     context: application
+        #     form_login:
+        #         default_target_path: /home
+        #         always_use_default_target_path: true
+        #         login_path: security_login_frontend
+        #         check_path: security_login_frontend
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_OPER
+        ROLE_SUPER: ROLE_ADMIN
+
+    access_control:
+        # - { path: ^/home, roles: [ROLE_USER] }
+        - { path: ^/login/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/usuarios/*, roles: [ROLE_SUPER] }
+        - { path: ^/admin/emprendimientos/new, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/emprendimientos/edit, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/emprendimientos/map, roles: [ROLE_ADMIN] }
+
+        - { path: ^/admin/unidades/new, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/unidades/edit, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/unidades/import, roles: [ROLE_ADMIN] }
+        
+        - { path: ^/admin/propietarios/new, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/propietarios/edit, roles: [ROLE_ADMIN] }
+        
+        - { path: ^/admin/estados/new, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/estados/edit, roles: [ROLE_ADMIN] }
+
+        - { path: ^/admin/demos/delete/*, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/setting/*, roles: [ROLE_SUPER] }
+        # - { methods: [POST,PUT,DELETE] roles: [ROLE_ADMIN] }
+
+        # Dejar esta regla siempre al final
+        - { path: ^/admin/*, roles: [ROLE_OPER] }
+        # - { path: ^/api/*, roles: [ROLE_OPER] }
+        # - { path: ^/api/admin/*, roles: [ROLE_OPER] }
+
+        
+            # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            #form_login: ~

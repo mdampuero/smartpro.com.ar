@@ -1,0 +1,40 @@
+version: "3"
+services:
+    smartpro_apache:
+        build: .
+        image: php:7.4-apache
+        container_name: smartpro_apache
+        extra_hosts:
+            - "dev.smartpro.com.ar:127.0.0.1"
+        volumes:
+            - ".:/app:cached"
+            - ../www/:/var/www/html
+            - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./config/dev.smartpro.com.ar.conf:/etc/apache2/sites-enabled/dev.smartpro.com.ar.conf
+        expose:
+            - 80
+        ports:
+            - 80:80
+        links: 
+            - smartpro_mysql
+            - smartpro_memcached
+
+    smartpro_mysql:
+        image: mysql:5.7
+        container_name: smartpro_mysql
+        command: mysqld --sql_mode=""
+        ports:
+            - 3306:3306
+        expose:
+            - 3306
+        volumes:
+            - ../db/working:/var/lib/mysql
+            - ../db/backups:/var/db/backups
+        environment:
+            - MYSQL_DATABASE=smartpro
+            - MYSQL_ROOT_PASSWORD=M4ur1c10
+            - MYSQL_USER=smartpro
+            - MYSQL_PASSWORD=M4ur1c10
+    smartpro_memcached:
+        image: memcached:latest
+        container_name: smartpro_memcached

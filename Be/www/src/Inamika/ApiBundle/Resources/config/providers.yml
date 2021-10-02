@@ -1,0 +1,24 @@
+api_providers:
+    path:     /providers
+    defaults: { _controller: InamikaApiBundle:Providers:index }
+    methods: [GET]
+
+api_providers_get:
+    path:     /providers/{id}
+    defaults: { _controller: InamikaApiBundle:Providers:get }
+    methods: [GET]
+
+api_providers_post:
+    path:     /providers
+    defaults: { _controller: InamikaApiBundle:Providers:post }
+    methods: [POST]
+
+api_providers_put:
+    path:     /providers/{id}
+    defaults: { _controller: InamikaApiBundle:Providers:put }
+    methods: [PUT]
+
+api_providers_delete:
+    path:     /providers/{id}
+    defaults: { _controller: InamikaApiBundle:Providers:delete }
+    methods: [DELETE]

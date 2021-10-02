@@ -1,0 +1,9 @@
+services:
+    Inamika\ApiBundle\Controller\UsersController:
+        class: Inamika\ApiBundle\Controller\UsersController
+        autowire: true # or define your controller constructor and configure its arguments explicitly
+        tags: ['controller.service_arguments']
+    image:
+        class: Inamika\BackEndBundle\Service\Image
+    Base64Service:
+        class: Inamika\BackEndBundle\Service\Base64Service

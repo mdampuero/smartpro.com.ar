@@ -1,0 +1,15 @@
+<div class="card">
+    <div class="el-card-item">
+        <div class="el-card-avatar el-overlay-1"> 
+            <img src="{{ path }}" onerror="this.onerror=null; this.src='assets/images/no-photo.png'" />
+            <div class="el-overlay">
+                <!-- <ul class="el-info">
+                    <li><a href="{{ path }}" class="btn default btn-outline image-popup-vertical-fit" href="{{ path }}"><i class="icon-magnifier"></i></a></li>
+                </ul> -->
+            </div>
+        </div>
+        <div class="el-card-content">
+            <h3 class="box-title" *ngIf="title">{{ title }}</h3> <small *ngIf="subtitle">{{ subtitle }}</small>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+
+<div class="card h-100 box" >
+    <div class="ribbon" *ngIf="item.isSalient"><span>Recomendado</span></div>
+    <img class="card-img-top cursor-pointer" src="{{ environment.imgUrl.md }}{{ item.picture }}"  onerror="this.onerror=null; this.src='assets/imgs/no-photo.png'" >
+    <div class="card-body cursor-pointer">
+        <h3 class="card-title">
+            <b>{{ item.price | formatNumber }}</b>
+        </h3>
+        <p class="text-muted">{{ item.name }}</p>
+        <small>{{ item.sku }}</small>
+    </div>
+    <div class="card-footer text-center">
+        <button class="btn btn-sm btn-info text-white" (click)="addToCart()" *ngIf="!inCart">Añadir al carrito</button>
+        <button class="btn btn-sm btn-success text-white" *ngIf="inCart"> Añadido <i class="fa fa-check"></i></button>
+    </div>
+</div>

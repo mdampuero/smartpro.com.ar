@@ -1,0 +1,45 @@
+<div class="navbar-brand d-flex flex-column justify-content-center" style="height: 8rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 animate__animated animate__fadeInLeft">
+                <a routerLink="/home" >
+                    <img  src="assets/imgs/logo_smartpro.png" id="icon" alt="Logo SmartPro" />
+                </a>
+            </div>
+            <div class="col-md-6 animate__animated animate__fadeInDown">
+                <div class="input-group">
+                    <input type="text" class="form-control search" (keyup.enter)="onEnter()" [(ngModel)]="query" placeholder="¿Qué estás buscando?..." aria-label="¿Qué estás buscando?..." aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-info text-white btn-search" type="button" (click)="onEnter()" ><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 animate__animated animate__fadeInRight">
+                <div class="box-my-account">
+                    <div class="row">
+                        <div class="col-sm-6 text-end">
+                            <a href="" ngbTooltip="Mi cuenta">
+                                <span class="fa-stack fa-lg ">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            <a routerLink="/carrito" ngbTooltip="Mi carrito">
+                                <span class="fa-stack fa-lg ">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa  fa-shopping-bag fa-stack-1x fa-inverse"></i>
+                                    <span class="badge badge-danger badge-items">{{ this.loginService.user.cart.items.length }}</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 balance">
+                            Crédito: {{ loginService.user.balance | formatNumber}}<br/>
+                            Compra: <span>{{ this.loginService.user.cart.total | formatNumber}}</span><br/>
+                            Saldo: <span [ngClass]="(loginService.user.balance - this.loginService.user.cart.total) > 0 ? 'text-success' : 'text-danger' ">{{ (loginService.user.balance - this.loginService.user.cart.total) | formatNumber}}</span>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

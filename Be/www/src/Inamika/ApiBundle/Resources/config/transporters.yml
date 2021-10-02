@@ -1,0 +1,24 @@
+api_transporters:
+    path:     /transporters
+    defaults: { _controller: InamikaApiBundle:Transporters:index }
+    methods: [GET]
+
+api_transporters_get:
+    path:     /transporters/{id}
+    defaults: { _controller: InamikaApiBundle:Transporters:get }
+    methods: [GET]
+
+api_transporters_post:
+    path:     /transporters
+    defaults: { _controller: InamikaApiBundle:Transporters:post }
+    methods: [POST]
+
+api_transporters_put:
+    path:     /transporters/{id}
+    defaults: { _controller: InamikaApiBundle:Transporters:put }
+    methods: [PUT]
+
+api_transporters_delete:
+    path:     /transporters/{id}
+    defaults: { _controller: InamikaApiBundle:Transporters:delete }
+    methods: [DELETE]

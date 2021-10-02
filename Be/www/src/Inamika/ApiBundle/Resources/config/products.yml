@@ -1,0 +1,29 @@
+api_products:
+    path:     /products
+    defaults: { _controller: InamikaApiBundle:Products:index }
+    methods: [GET]
+
+api_products_salients:
+    path:     /products/salients
+    defaults: { _controller: InamikaApiBundle:Products:salients }
+    methods: [GET]
+
+api_products_get:
+    path:     /products/{id}
+    defaults: { _controller: InamikaApiBundle:Products:get }
+    methods: [GET]
+
+api_products_post:
+    path:     /products
+    defaults: { _controller: InamikaApiBundle:Products:post }
+    methods: [POST]
+
+api_products_put:
+    path:     /products/{id}
+    defaults: { _controller: InamikaApiBundle:Products:put }
+    methods: [PUT]
+
+api_products_delete:
+    path:     /products/{id}
+    defaults: { _controller: InamikaApiBundle:Products:delete }
+    methods: [DELETE]

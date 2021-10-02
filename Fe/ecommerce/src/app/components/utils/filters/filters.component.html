@@ -1,0 +1,46 @@
+<div class="mt-3">
+    <ul class="list-group">
+        <li class="list-group-item py-4 pb-3" >
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" (change)="changeCategory()" [(ngModel)]="category" [value]="0">Todas las categorías
+                </label>
+            </div>
+        </li>
+        <ng-container *ngIf="!ready">
+            <li class="list-group-item py-4 pb-3">
+                <div class="d-flex flex-column justify-content-center align-items-center"  style="height: 4rem;">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                </div>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="ready">
+            <li class="list-group-item py-4 pb-3" *ngFor="let cat of categories.data; let i=index;">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" (change)="changeCategory()" [(ngModel)]="category" value="{{ cat.id }}" >{{ cat.name }}
+                    </label>
+                </div>
+            </li>
+        </ng-container>
+    </ul>
+</div>
+<div class="card mt-3">
+    <div class="card-header">
+        Rango de precios
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>Desde: <input type="text" (keyup.enter)="changeRange()" [(ngModel)]="minValue" class="form-control"></p>
+                </div>
+                <div class="col-sm-6">
+                    <p>Hasta: <input type="text" (keyup.enter)="changeRange()" [(ngModel)]="maxValue" class="form-control"></p>
+                </div>
+            </div>
+            <ngx-slider [(value)]="minValue" (userChangeEnd)="changeRange()" [(highValue)]="maxValue" [options]="options"></ngx-slider>
+        </div>
+    </div>
+</div>
+<button class="btn text-white btn-info w-100 mt-3 " (click)="resetFilter()"><i class="fa fa-trash"></i> Limpiar filtros</button>

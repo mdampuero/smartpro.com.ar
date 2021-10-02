@@ -1,0 +1,57 @@
+
+.badge-items{
+    top: -5px;
+    position: absolute;
+    right: -2px;
+    font-size: 12px;
+    color: white;
+}
+.form-control.search{
+    border-radius: 10px 0 0 10px;
+    border-right: none;
+    line-height: 30px !important;
+    height: 44px !important;
+}
+.btn-search{
+    line-height: 30px;
+    border-radius: 0 10px 10px 0;
+}
+.form-control.search:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #ced4da;
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.btn-check:active+.btn-info:focus, .btn-check:checked+.btn-info:focus, .btn-info.active:focus, .btn-info:active:focus, .show>.btn-info.dropdown-toggle:focus {
+    box-shadow: none !important;
+}
+
+.box-my-account{
+    width: 100%;
+    margin-top: -5px;
+    text-align: end;
+    font-size: 1rem;
+}
+
+.box-my-account a{
+    color: #666;
+}
+.box-my-account a:hover{
+    color: #51cbf0;
+}
+
+.box-my-account .fa-stack{
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    vertical-align: middle;
+    font-size: 26px;
+}
+.balance{
+    margin-top: -5px;
+    font-size: 13px;
+    font-weight: 500;
+}

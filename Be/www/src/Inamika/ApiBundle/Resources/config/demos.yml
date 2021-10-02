@@ -1,0 +1,24 @@
+api_demos:
+    path:     /demos
+    defaults: { _controller: InamikaApiBundle:Demos:index }
+    methods: [GET]
+
+api_demos_get:
+    path:     /demos/{id}
+    defaults: { _controller: InamikaApiBundle:Demos:get }
+    methods: [GET]
+
+api_demos_post:
+    path:     /demos
+    defaults: { _controller: InamikaApiBundle:Demos:post }
+    methods: [POST]
+
+api_demos_put:
+    path:     /demos/{id}
+    defaults: { _controller: InamikaApiBundle:Demos:put }
+    methods: [PUT]
+
+api_demos_delete:
+    path:     /demos/{id}
+    defaults: { _controller: InamikaApiBundle:Demos:delete }
+    methods: [DELETE]

@@ -1,0 +1,29 @@
+api_customers:
+    path:     /customers
+    defaults: { _controller: InamikaApiBundle:Customers:index }
+    methods: [GET]
+
+api_customers_get:
+    path:     /customers/{id}
+    defaults: { _controller: InamikaApiBundle:Customers:get }
+    methods: [GET]
+
+api_customers_post:
+    path:     /customers
+    defaults: { _controller: InamikaApiBundle:Customers:post }
+    methods: [POST]
+
+api_customers_post_login:
+    path:     /customers/login
+    defaults: { _controller: InamikaApiBundle:Customers:login }
+    methods: [POST]
+
+api_customers_put:
+    path:     /customers/{id}
+    defaults: { _controller: InamikaApiBundle:Customers:put }
+    methods: [PUT]
+
+api_customers_delete:
+    path:     /customers/{id}
+    defaults: { _controller: InamikaApiBundle:Customers:delete }
+    methods: [DELETE]

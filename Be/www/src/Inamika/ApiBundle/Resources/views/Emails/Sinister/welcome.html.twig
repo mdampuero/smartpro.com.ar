@@ -1,0 +1,22 @@
+{% extends "InamikaApiBundle::Emails/layout.html.twig" %}
+{% block body %}
+<h4>Hola {{ entity.name }},</h4>
+<p>Bienvenidos a SmartPro, a continuación te dejamos los datos para acceder a la tienda</p>
+<hr>  
+    <p>
+        <b>Link: </b>
+        <span><a href="{{ parameter.ecommerce }}">Ingresar desde aquí</a></span>
+    </p>
+    <p>
+        <b>Nº de siniestro: </b>
+        <span>{{ entity.sinister.number }}</span>
+    </p>
+    <p>
+        <b>Contraseña: </b>
+        <span>La contraseña es tu Nº de documento sin puntos</span>
+    </p> 
+    <p>
+        <b>Monto asignado: </b>
+        <span>$ {{ entity.sinister.amount}}</span>
+    </p> 
+{% endblock %}

@@ -1,0 +1,19 @@
+api_orders:
+    path:     /orders
+    defaults: { _controller: InamikaApiBundle:Orders:index }
+    methods: [GET]
+
+api_orders_get:
+    path:     /orders/{id}
+    defaults: { _controller: InamikaApiBundle:Orders:get }
+    methods: [GET]
+
+api_orders_post:
+    path:     /orders
+    defaults: { _controller: InamikaApiBundle:Orders:post }
+    methods: [POST]
+
+api_orders_delete:
+    path:     /orders/{id}
+    defaults: { _controller: InamikaApiBundle:Orders:delete }
+    methods: [DELETE]

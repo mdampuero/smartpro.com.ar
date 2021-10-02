@@ -1,0 +1,37 @@
+<div class="container marketing pt-4">
+    <div class="row">
+        <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-1s">
+            <app-filters></app-filters>
+        </div>
+        <div class="col-sm-9">
+            <div class="py-4">
+                <div class="row">
+                    <ng-container *ngIf="data.recordsFiltered > 0">
+                        <div class="col-md-8">
+                            <h6>Encontramos {{ data.recordsFiltered }} resultado<span *ngIf="data.recordsFiltered > 1">s</span></h6>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <label >Ordenar por: &nbsp;</label>
+                            <select name="order" id="orderBy" (change)="orderBy()" style="margin-top: -8px;" [(ngModel)]="order" class="form-control bg-transparent shadow-none border-0 p-0 text-end pull-right w-auto">
+                                <option value="{{ i }}" *ngFor="let orderItem of orders; let i=index;">{{ orderItem.label }}</option>
+                            </select>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="data.recordsFiltered == 0">
+                        <div class="col-md-12 text-center">
+                            <h4>No encontramos resultados, intenta quitando los filtros o con otro criterio de búsqueda.</h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__faster animate__delay-{{ i+1 }}s"  *ngFor="let item of data.data; let i=index;">
+                    <app-card-product [item]="item" class=""></app-card-product>
+                </div>
+            </div>
+            <div class="text-center" *ngIf="data.pages > (page+1) ">
+                <button class="btn btn-info text-white btn-sm" (click)="nextPage()">Ver más resultados</button>
+            </div>
+        </div>
+    </div>
+</div>

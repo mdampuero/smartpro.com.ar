@@ -1,0 +1,69 @@
+{% extends "InamikaApiBundle::Emails/layout.html.twig" %}
+{% block body %}
+<h4>Datos del siniestro</h4>
+<hr>
+    <p>
+        <b>Nº: </b>
+        <span>{{ entity.sinister.number }}</span>
+    </p>
+    <p>
+        <b>Fecha de ingreso: </b>
+        <span>{{ entity.sinister.date | date('d/m/Y H:i') }}</span>
+    </p>
+    <p>
+        <b>Monto: </b>
+        <span>$ {{ entity.sinister.amount }}</span>
+    </p>
+    <p>
+        <b>Analista de siniestro: </b>
+        <span>{{ entity.sinister.productor.name }}</span>
+    </p>
+    <p>
+        <b>Compañia: </b>
+        <span>{{ entity.sinister.company.name }}</span>
+    </p>
+    <p>
+        <b>Descripción del siniestro ocurrido: </b>
+        <span>{{ entity.sinister.observations | nl2br }}</span>
+    </p>
+<h4>Datos del siniestrado</h4>
+<hr>  
+    <p>
+        <b>Nombre completo: </b>
+        <span>{{ entity.name }}</span>
+    </p>
+    <p>
+        <b>Email: </b>
+        <span><a href='mailto:{{ entity.email }}' target="_blank">{{ entity.email }}</a></span>
+    </p>
+    <p>
+        <b>DNI: </b>
+        <span>{{ entity.document }}</span>
+    </p>
+    <p>
+        <b>Teléfono: </b>
+        <span>{{ entity.phone }}</span>
+    </p>
+    <p>
+        <b>Provincia: </b>
+        <span>{{ entity.provence }}</span>
+    </p>
+    <p>
+        <b>Localidad: </b>
+        <span>{{ entity.city }}</span>
+    </p>
+    <p>
+        <b>Calle: </b>
+        <span>{{ entity.street }} {{ entity.streetNumber }}, Dpto: {{ entity.department }}, Piso {{ entity.floor }}</span>
+    </p>
+<h4>Acceso a la Tienda</h4>
+<hr>  
+    <p>
+        <b>Nº de siniestro: </b>
+        <span>{{ entity.sinister.number }}</span>
+    </p>
+    <p>
+        <b>Contraseña: </b>
+        <span>{{ entity.document}}</span>
+    </p> 
+{% endblock %}

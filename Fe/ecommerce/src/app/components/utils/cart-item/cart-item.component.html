@@ -1,0 +1,23 @@
+<div class="card-body ">
+    <div class="row">
+        <div class="col-sm-2">
+            <img src="{{ environment.imgUrl.xs }}{{ item.product.picture }}" class="w-50" onerror="this.onerror=null; this.src='assets/imgs/no-photo.png'" >
+        </div>
+        <div class="col-sm-5 my-auto">
+            {{ item.product.name }}
+        </div>
+        <div class="col-sm-2 my-auto">
+            {{ item.product.price | formatNumber  }} x &nbsp;&nbsp; <a href="javascript:void(0)" (click)="minus()"><i class="fa fa-chevron-down"></i></a> <b> {{ item.amount }} </b> <a href="javascript:void(0)" (click)="plus()"><i class="fa fa-chevron-up cursor-pointer"></i></a>
+        </div>
+        <div class="col-sm-2 my-auto">
+            <b>
+                {{ (item.product.price * item.amount) | formatNumber }}
+            </b>
+        </div>
+        <div class="col-sm-1 my-auto">
+            <a href="javascript:void(0)" (click)="removeItem()">
+                <i class="fa fa-trash text-danger fa-2x"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+api_users:
+    path:     /users
+    defaults: { _controller: InamikaApiBundle:Users:index }
+    methods: [GET]
+
+api_users_get:
+    path:     /users/{id}
+    defaults: { _controller: InamikaApiBundle:Users:get }
+    methods: [GET]
+
+api_users_post:
+    path:     /users
+    defaults: { _controller: InamikaApiBundle:Users:post }
+    methods: [POST]
+
+api_users_put:
+    path:     /users/{id}
+    defaults: { _controller: InamikaApiBundle:Users:put }
+    methods: [PUT]
+
+api_users_put_attribute:
+    path:     /users/{id}/attributte
+    defaults: { _controller: InamikaApiBundle:Users:putAttribute }
+    methods: [PUT]
+
+api_users_profile:
+    path:     /users/{id}/profile
+    defaults: { _controller: InamikaApiBundle:Users:profile }
+    methods: [PUT]
+
+api_users_delete:
+    path:     /users/{id}
+    defaults: { _controller: InamikaApiBundle:Users:delete }
+    methods: [DELETE]

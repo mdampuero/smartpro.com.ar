@@ -1,0 +1,8 @@
+api_settings_put:
+    path:     /settings/{id}
+    defaults: { _controller: InamikaApiBundle:Settings:put }
+    methods: [PUT]
+api_settings_get:
+    path:     /settings/{id}
+    defaults: { _controller: InamikaApiBundle:Settings:get }
+    methods: [GET]
