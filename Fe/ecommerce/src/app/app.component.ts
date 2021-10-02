@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { LoginService } from './services/db/login.service';
 
 @Component({
@@ -10,12 +9,8 @@ import { LoginService } from './services/db/login.service';
 export class AppComponent {
   title = 'ecommerce';
   constructor(
-    private router: Router,
-    private loginService:LoginService
+    public loginService:LoginService
     ) {
-      if(!this.loginService.user){
-        this.router.navigate(['/login']);
-      }
       
     }
     

@@ -8,18 +8,19 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { TermsComponent } from './pages/terms/terms.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: 'productos', component: ProductsComponent},
-  { path: 'productos/:query', component: ProductsComponent},
-  { path: 'carrito', component: CartComponent},
-  { path: 'checkout', component: CheckoutComponent},
-  { path: 'finalizado', component: FinishedComponent},
-  { path: 'terminosYcondiciones', component: TermsComponent},
-  { path: 'nosotros', component: AboutComponent},
-  { path: '', pathMatch:'full', component: HomeComponent},
-  { path: '**', pathMatch:'full', component: HomeComponent},
+  { path: 'productos', component: ProductsComponent, canActivate:[AuthGuard]},
+  { path: 'productos/:query', component: ProductsComponent,canActivate:[AuthGuard]},
+  { path: 'carrito', component: CartComponent,canActivate:[AuthGuard]},
+  { path: 'checkout', component: CheckoutComponent,canActivate:[AuthGuard]},
+  { path: 'finalizado', component: FinishedComponent,canActivate:[]},
+  { path: 'terminosYcondiciones', component: TermsComponent,canActivate:[AuthGuard]},
+  { path: 'nosotros', component: AboutComponent,canActivate:[AuthGuard]},
+  { path: '', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
+  { path: '**', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
   
 ];
 

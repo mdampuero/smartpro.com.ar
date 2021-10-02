@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomerService } from 'src/app/services/api/customer.service';
 import { OrderService } from 'src/app/services/api/orders.service';
 import { LoginService } from 'src/app/services/db/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-checkout',
@@ -41,9 +42,20 @@ export class CheckoutComponent implements OnInit {
     $(".form-control-feedback.text-danger").remove();
     this.ordersService.save({ customer:this.loginService.user.id,total:this.loginService.user.cart.total, cart:this.loginService.user.cart}).subscribe(
       (data:any) => {
-        this.loginService.user={};
-        this.loginService.saveStorage();
-        this.router.navigate(['/finalizado']);
+        this.loginService.logout();
+        Swal.fire({
+          icon: 'success',
+          allowOutsideClick: false,
+          focusConfirm: false,
+          title: '¡Felicitaciones!',
+          text: 'Hemos recibido tu pedido Nº #'+data.id+' y ya lo estamos preparando, te notificaremos por email cuando lo despachemos.',
+          footer: 'Si tienes alguna pregunta, puedes escribirnos &nbsp;<a href="mailto:hola@smartpro.com.ar">aquí </a>',
+          confirmButtonText: 'Aceptar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.href='/login';
+          }
+        })
       },
       (error) => {
         if(error.status==400)

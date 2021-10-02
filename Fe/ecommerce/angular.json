@@ -35,7 +35,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/plugins/jquery/jquery.min.js"
+              "src/assets/plugins/jquery/jquery.min.js",
+              "./node_modules/sweetalert2/dist/sweetalert2.all.min.js"
             ]
           },
           "configurations": {

@@ -1,12 +1,12 @@
-<div class="navbar-brand d-flex flex-column justify-content-center" style="height: 8rem;">
+<div class="navbar-brand d-flex flex-column justify-content-center pt-3" style="height: 5rem;" *ngIf="loginService.isAutenticate()">
     <div class="container">
         <div class="row">
             <div class="col-md-3 animate__animated animate__fadeInLeft">
                 <a routerLink="/home" >
-                    <img  src="assets/imgs/logo_smartpro.png" id="icon" alt="Logo SmartPro" />
+                    <img  src="assets/imgs/logo_smartpro.png" id="icon" alt="Logo SmartPro" style="margin-top: 5px;" />
                 </a>
             </div>
-            <div class="col-md-6 animate__animated animate__fadeInDown">
+            <div class="col-md-6 animate__animated animate__fadeInDown mb-3">
                 <div class="input-group">
                     <input type="text" class="form-control search" (keyup.enter)="onEnter()" [(ngModel)]="query" placeholder="¿Qué estás buscando?..." aria-label="¿Qué estás buscando?..." aria-describedby="basic-addon2">
                     <div class="input-group-append">
@@ -18,7 +18,7 @@
                 <div class="box-my-account">
                     <div class="row">
                         <div class="col-sm-6 text-end">
-                            <a href="" ngbTooltip="Mi cuenta">
+                            <a href="" (click)="loginService.logout()" ngbTooltip="Mi cuenta">
                                 <span class="fa-stack fa-lg ">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa fa-user fa-stack-1x fa-inverse"></i>

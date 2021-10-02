@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/db/login.service';
 
 @Component({
   selector: 'app-finished',
@@ -8,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class FinishedComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,public loginService:LoginService) { }
 
   ngOnInit(): void {
-    setTimeout(() =>{
-      this.router.navigate(['/login']);
-    },10000)
+    // setTimeout(() =>{
+    //   this.loginService.logout()
+    // },5000)
   }
 
 }
