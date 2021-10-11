@@ -7,6 +7,7 @@ import { CompaniesComponent } from './pages/companies/companies.component';
 import { DemoFormComponent } from './pages/demo/demo-form/demo-form.component';
 import { DemoComponent } from './pages/demo/demo.component';
 import { HomeComponent } from './pages/home/home.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 import { ProductorsFormComponent } from './pages/productors/productors-form/productors-form.component';
 import { ProductorsComponent } from './pages/productors/productors.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
@@ -14,6 +15,8 @@ import { ProductsUploadComponent } from './pages/products/products-upload/produc
 import { ProductsComponent } from './pages/products/products.component';
 import { ProvidersFormComponent } from './pages/providers/providers-form/providers-form.component';
 import { ProvidersComponent } from './pages/providers/providers.component';
+import { SinisterDetailComponent } from './pages/sinisters/sinister-detail/sinister-detail.component';
+import { SinisterStatusComponent } from './pages/sinisters/sinister-status/sinister-status.component';
 import { SinistersFormComponent } from './pages/sinisters/sinisters-form/sinisters-form.component';
 import { SinistersComponent } from './pages/sinisters/sinisters.component';
 import { SlidersFormComponent } from './pages/sliders/sliders-form/sliders-form.component';
@@ -28,6 +31,8 @@ const routes: Routes = [
   { path: 'demos/nuevo', component: DemoFormComponent },
   { path: 'demos/editar/:id', component: DemoFormComponent },
   
+  { path: 'orders', component: OrdersComponent},
+  
   { path: 'productors', component: ProductorsComponent},
   { path: 'productors/nuevo', component: ProductorsFormComponent },
   { path: 'productors/editar/:id', component: ProductorsFormComponent },
@@ -35,6 +40,8 @@ const routes: Routes = [
   { path: 'sinisters', component: SinistersComponent},
   { path: 'sinisters/nuevo', component: SinistersFormComponent },
   { path: 'sinisters/editar/:id', component: SinistersFormComponent },
+  { path: 'sinisters/:id', component: SinisterDetailComponent },
+  { path: 'sinisters/status/:id', component: SinisterStatusComponent },
 
   { path: 'sliders', component: SlidersComponent},
   { path: 'sliders/nuevo', component: SlidersFormComponent },

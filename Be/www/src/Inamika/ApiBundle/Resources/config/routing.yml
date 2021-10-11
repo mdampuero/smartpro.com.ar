@@ -45,3 +45,15 @@ api_cartsItems:
 
 api_orders:
     resource: "@InamikaApiBundle/Resources/config/orders.yml"
+
+api_logs:
+    resource: "@InamikaApiBundle/Resources/config/logs.yml"
+
+api_crons:
+    resource: "@InamikaApiBundle/Resources/config/crons.yml"
+
+api_provences:
+    resource: "@InamikaApiBundle/Resources/config/provences.yml"
+
+api_localities:
+    resource: "@InamikaApiBundle/Resources/config/localities.yml"

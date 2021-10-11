@@ -11,7 +11,11 @@ imports:
 parameters:
     locale: es
 
-
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+            
 thormeier_breadcrumb: ~
 
 framework:

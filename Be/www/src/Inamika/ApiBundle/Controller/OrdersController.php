@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Inamika\BackEndBundle\Entity\Order;
 use Inamika\BackEndBundle\Entity\Cart;
+use Inamika\BackEndBundle\Entity\Log;
 use Inamika\BackEndBundle\Entity\OrderItem;
 use Inamika\BackEndBundle\Entity\SinisterStatus;
 use Inamika\BackEndBundle\Form\Order\OrderType;
@@ -65,8 +66,8 @@ class OrdersController extends FOSRestController
             if(!key_exists('cart',$content) || !key_exists('items',$content["cart"]) || !count($content["cart"]["items"]))
                 return $this->handleView($this->view($this->displayErrors('items','No hay productos en su carrito'), Response::HTTP_BAD_REQUEST));
             $cart=$this->getDoctrine()->getRepository(Cart::class)->find($content["cart"]["id"]);
-            if($cart->getTotal()!=$content["total"])
-                return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
+            // if($cart->getTotal()!=$content["total"])
+            //     return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
             /**
              * Guardo la orden
              */
@@ -77,10 +78,7 @@ class OrdersController extends FOSRestController
                 $orderItem->setOrder($entity);
                 $em->persist($orderItem);
             }
-            /**
-             * Change estado de siniestro
-             */
-            $cart->getCustomer()->getSinister()->setStatus($this->getDoctrine()->getRepository(SinisterStatus::class)->find(SinisterStatus::WAITING_FOR_PRODUCTS));
+            
             /**
              * Inactivo el usuario
              */
@@ -88,6 +86,41 @@ class OrdersController extends FOSRestController
             $em->persist($cart);
             
             $em->flush();
+
+            /**
+             * Guardo Log para siniestro
+             */
+            $log=new Log();
+            $log->setUser($cart->getCustomer()->getName());
+            $log->setResource($cart->getCustomer()->getSinister()->getId());
+            $log->setTitle("Cambio de estado por nuevo pedido");
+            $log->setIcon("fa fa-truck");
+            $log->setStatus("primary");
+            $log->setDescription("El siniestro cambió de estado por la finalización del pedido #".$entity->getId());
+            $em->persist($log);
+
+            /**
+             * Guardo Log para orden
+             */
+            $log=new Log();
+            $log->setUser($cart->getCustomer()->getName());
+            $log->setResource($entity->getId());
+            $log->setTitle("Nueva pedido");
+            $log->setIcon("fa fa-truck");
+            $log->setStatus("primary");
+            $log->setDescription("Nuevo pedido #".$entity->getId()." por un total de $ ".number_format($entity->getTotal(), 0, ',', '.'));
+            $em->persist($log);
+            
+            /**
+             * Change estado de siniestro
+             */
+            $sinister=$cart->getCustomer()->getSinister();
+            $sinister->setStatus($this->getDoctrine()->getRepository(SinisterStatus::class)->find(SinisterStatus::WAITING_FOR_PRODUCTS));
+            $sinister->setOrder($entity);
+            $em->persist($sinister);
+
+            $em->flush();
+
             $this->sendEmails($entity);
             return $this->handleView($this->view($entity, Response::HTTP_OK));
         }

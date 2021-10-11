@@ -2,4 +2,13 @@
 .btn-outline-danger:hover i, .btn-outline-danger:focus i, .btn-outline-danger.focus i{
     color: white !important;
 }
+.btn-outline-success:hover i, .btn-outline-success:focus i, .btn-outline-success.focus i{
+    color: white !important;
+}
+.btn-outline-warning:hover i, .btn-outline-warning:focus i, .btn-outline-warning.focus i{
+    color: white !important;
+}
+.btn-outline-info:hover i, .btn-outline-info:focus i, .btn-outline-info.focus i{
+    color: white !important;
+}
 

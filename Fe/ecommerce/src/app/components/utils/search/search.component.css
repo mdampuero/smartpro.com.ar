@@ -36,7 +36,7 @@
 }
 
 .box-my-account a{
-    color: #666;
+    color: #959595;
 }
 .box-my-account a:hover{
     color: #51cbf0;
@@ -54,4 +54,7 @@
     margin-top: -5px;
     font-size: 13px;
     font-weight: 500;
+}
+.dropdown-toggle::after {
+    display:none;
 }

@@ -40,6 +40,14 @@ class ProductsController extends DefaultController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
+    public function getBySkuAction($sku){
+        if(!$entity=$this->getDoctrine()->getRepository(Product::class)->findOneBySku($sku))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        return $this->handleView($this->view($entity));
+    }
+    public function similarAction($id){
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Product::class)->search("", 4, 0, null, null,null)->getQuery()->getResult()));
+    }
     
     public function salientsAction(){
         return $this->handleView($this->view($this->getDoctrine()->getRepository(Product::class)->getAll()

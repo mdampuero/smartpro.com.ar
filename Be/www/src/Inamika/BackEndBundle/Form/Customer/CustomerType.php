@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CustomerType extends AbstractType
 {
@@ -24,9 +26,22 @@ class CustomerType extends AbstractType
         ->add('name',TextType::class)
         ->add('document',TextType::class)
         ->add('email',TextType::class)
+        ->add('postalCode',TextType::class)
         ->add('phone',TextType::class)
-        ->add('provence',TextType::class)
-        ->add('city',TextType::class)
+        ->add('provence', EntityType::class, array(
+            'class' => 'InamikaBackEndBundle:Provence',
+            'query_builder' => function (EntityRepository $er) {
+                $qb = $er->createQueryBuilder('e');
+                return $qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)->orderBy('e.name', 'ASC');
+            }
+        ))
+        ->add('locality', EntityType::class, array(
+            'class' => 'InamikaBackEndBundle:Locality',
+            'query_builder' => function (EntityRepository $er) {
+                $qb = $er->createQueryBuilder('e');
+                return $qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)->orderBy('e.name', 'ASC');
+            }
+        ))
         ->add('street',TextType::class)
         ->add('department',TextType::class)
         ->add('floor',TextType::class)

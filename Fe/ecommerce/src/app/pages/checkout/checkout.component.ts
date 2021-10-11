@@ -3,7 +3,9 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomerService } from 'src/app/services/api/customer.service';
+import { LocalitiesService } from 'src/app/services/api/localities.service';
 import { OrderService } from 'src/app/services/api/orders.service';
+import { ProvencesService } from 'src/app/services/api/provences.service';
 import { LoginService } from 'src/app/services/db/login.service';
 import Swal from 'sweetalert2';
 
@@ -13,17 +15,40 @@ import Swal from 'sweetalert2';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-
-  constructor(private router: Router,public loginService:LoginService,private spinner: NgxSpinnerService,private customerService:CustomerService,private ordersService:OrderService) { }
+  public loadingLocalities=true;
+  public provences: any[]=[];
+  public localities: any[]=[];
+  public form={
+    provence:'',
+    locality:''
+  }
+  constructor(
+    public localitiesService: LocalitiesService,
+    public provencesService: ProvencesService,private router: Router,public loginService:LoginService,private spinner: NgxSpinnerService,private customerService:CustomerService,private ordersService:OrderService) { }
   ngOnInit(): void { 
     if(this.loginService.user.cart.items.length == 0){
       this.router.navigate(['/home']);
     }
+    this.provencesService.getAll().subscribe((data:any) => {
+      this.provences=data.data;
+      this.form.provence=this.loginService.user.provence.id;
+      this.onChange(true);      
+    });
   }
-
+  onChange(selected:boolean) {
+    this.loadingLocalities=true;
+    this.localitiesService.getByProvence(this.form.provence).subscribe((data:any) => {
+      this.localities=data;
+      if(selected)
+        this.form.locality=this.loginService.user.locality.id;
+      this.loadingLocalities=false;
+    });
+  }
   save(form:NgForm){
     this.spinner.show();
     $(".form-control-feedback.text-danger").remove();
+    this.loginService.user.provence=this.form.provence;
+    this.loginService.user.locality=this.form.locality;
     this.customerService.save(this.loginService.user).subscribe(
       () =>  this.saveOrder(),
       (error) => {

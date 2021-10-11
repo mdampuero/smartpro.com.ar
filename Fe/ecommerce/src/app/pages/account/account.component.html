@@ -1,0 +1,96 @@
+<div class="container marketing py-4">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb mt-2">
+            <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mi cuenta</li>
+        </ol>
+    </nav>
+    <div class="bg-white pt-4">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group">
+                    <a href="javascript:void(0)" (click)="go(1)" class="list-group-item list-group-item-action" [ngClass]="{ 'active':menu === 1 }">Mi dirección</a>
+                    <a href="javascript:void(0)" (click)="go(0)" class="list-group-item list-group-item-action" [ngClass]="{ 'active':menu === 0 }" aria-current="true">
+                      Mi carrito
+                    </a>
+                    <a href="javascript:void(0)" (click)="go(2)" class="list-group-item list-group-item-action" [ngClass]="{ 'active':menu === 2 }">Mi pedidos</a>
+                    <a href="javascript:void(0)" (click)="logout()" class="list-group-item list-group-item-action" >Salir</a>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <app-cartfull [title]="''" *ngIf="menu==0" ></app-cartfull>
+                <ng-container *ngIf="menu==1">
+                    <form class="" (ngSubmit)="save()">
+                        <div class="row">
+                            <div class="col-sm-6 animate__animated animate__fadeInUp animate__faster animate__delay-2s">
+                                <div class="form-group">
+                                    <label>Provincia</label>
+                                    <select  class="form-control" [(ngModel)]="form.provence" name="provence" (change)="onChange(false)">
+                                        <option value=''>--Seleccione una opción--</option>
+                                        <option value="{{ provence.id }}" *ngFor="let provence of provences; let i=index;" >{{ provence.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 animate__animated animate__fadeInUp animate__faster animate__delay-2s">
+                                <div class="form-group">
+                                    <label>Localidad</label>
+                                    <ng-container *ngIf="!loadingLocalities">
+                                        <select  class="form-control" [(ngModel)]="form.locality" name="locality" >
+                                            <option value=''>--Seleccione una opción--</option>
+                                            <option value="{{ locality.id }}" *ngFor="let locality of localities; let i=index;" >{{ locality.name }} ({{ locality.department.name }})</option>
+                                        </select>
+                                    </ng-container>
+                                    <ng-container *ngIf="loadingLocalities">
+                                        <div  class="text-center">
+                                            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 animate__animated animate__fadeInUp animate__faster animate__delay-3s">
+                                <div class="form-group">
+                                    <label>Calle</label>
+                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.street" name="street" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
+                                <div class="form-group">
+                                    <label>Número</label>
+                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.streetNumber" name="streetNumber" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
+                                <div class="form-group">
+                                    <label>Código postal</label>
+                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.postalCode" name="postalCode" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
+                                <div class="form-group">
+                                    <label>Dpto</label>
+                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.department" name="department" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
+                                <div class="form-group">
+                                    <label>Piso</label>
+                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.floor" name="floor" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="animate__animated animate__fadeInUp animate__faster animate__delay-5s">
+                        <div class="text-center my-4 animate__animated animate__fadeInUp animate__faster animate__delay-6s">
+                            <button type="submit" class="btn btn-info align-center">Guardar</button>
+                        </div>
+                    </form> 
+                </ng-container>
+                <ng-container *ngIf="menu==2">
+                    <div class="text-center animate__animated animate__zoomIn animate__faster">
+                        Aún no tienes pedidos realizados
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="container marketing py-4">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb mt-2">
+            <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+            <li class="breadcrumb-item"><a routerLink="/productos">Productos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ sku }}</li>
+        </ol>
+    </nav>
+    <div class="bg-white py-4">
+        <app-detail-product [sku]="sku"></app-detail-product>
+    </div>
+</div>

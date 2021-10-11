@@ -39,6 +39,10 @@ export class ProductsService {
   getSalients(query: string) {
     return this.http.get(`${environment.apiUrl}products/salients`);
   }
+
+  getSimilar(sku: string) {
+    return this.http.get(`${environment.apiUrl}products/similar/${sku}`);
+  }
   
   getOne(id: string) {
     return this.http.get(`${environment.apiUrl}products/${id}`).pipe(map((data:any) => {
@@ -46,6 +50,9 @@ export class ProductsService {
       return data;
     })
   );
+  }
+  getOneBySku(sku: string) {
+    return this.http.get(`${environment.apiUrl}productsBySku/${sku}`);
   }
   getAll() {
     return this.http.get(`${environment.apiUrl}products?search%5Bvalue%5D=&start=0&length=-1&sort=name&direction=ASC`);

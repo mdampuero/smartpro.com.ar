@@ -81,7 +81,7 @@ class Order
     private $isDelete=false;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="orderId")
+     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order")
      * @Assert\NotBlank()
      */
     private $items;

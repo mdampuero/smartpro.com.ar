@@ -1,0 +1,8 @@
+api_crons_test:
+    path:     /crons/test
+    defaults: { _controller: InamikaApiBundle:Crons:test }
+    methods: [GET]
+api_crons_generate:
+    path:     /crons/generate
+    defaults: { _controller: InamikaApiBundle:Crons:generate }
+    methods: [GET]

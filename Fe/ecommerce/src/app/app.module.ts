@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule,NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule,NgbTooltipModule,NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -25,7 +25,12 @@ import { AboutComponent } from './pages/about/about.component';
 import { CartItemComponent } from './components/utils/cart-item/cart-item.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { CheckoutItemComponent } from './components/utils/checkout-item/checkout-item.component';
-import { FinishedComponent } from './pages/finished/finished.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { DetailProductComponent } from './components/utils/detail-product/detail-product.component';
+import { AccountComponent } from './pages/account/account.component';
+import { CartfullComponent } from './components/utils/cartfull/cartfull.component';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -47,16 +52,22 @@ import { FinishedComponent } from './pages/finished/finished.component';
     CartItemComponent,
     CheckoutComponent,
     CheckoutItemComponent,
-    FinishedComponent
+    ProductDetailComponent,
+    DetailProductComponent,
+    AccountComponent,
+    CartfullComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgxSpinnerModule,
+    MatSnackBarModule,
     NgbModule,
     NgbTooltipModule,
+    NgbDropdownModule,
     FormsModule,
+    PinchZoomModule,
     BrowserAnimationsModule,
     NgxSliderModule
   ],

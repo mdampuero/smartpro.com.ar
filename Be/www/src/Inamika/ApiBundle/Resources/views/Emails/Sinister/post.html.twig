@@ -46,11 +46,15 @@
     </p>
     <p>
         <b>Provincia: </b>
-        <span>{{ entity.provence }}</span>
+        <span>{{ entity.provence.name }}</span>
     </p>
     <p>
         <b>Localidad: </b>
-        <span>{{ entity.city }}</span>
+        <span>{{ entity.locality.name }} ({{ entity.locality.department.name }})</span>
+    </p>
+    <p>
+        <b>Código postal: </b>
+        <span>{{ entity.postalCode }})</span>
     </p>
     <p>
         <b>Calle: </b>

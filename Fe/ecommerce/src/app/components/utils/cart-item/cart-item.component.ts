@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CartService } from 'src/app/services/api/cart.service';
 import { EventsService } from 'src/app/services/events.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class CartItemComponent implements OnInit {
   @Input() item: any;
   public environment=environment;
-  constructor(private cartService:CartService,public events: EventsService,private spinner: NgxSpinnerService) {}
+  constructor(private cartService:CartService,public toast:ToastService,public events: EventsService,private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
 
@@ -31,7 +32,7 @@ export class CartItemComponent implements OnInit {
   }
   update(){
     this.cartService.save(this.item.product,this.item.amount).subscribe(
-      (data:any) => { this.events.publish('updateCart', data); },
+      (data:any) => { this.events.publish('updateCart', data); this.toast.show('Se actualizó el carrito')},
       (error) => {},
       () => {this.spinner.hide()}
     )
@@ -39,9 +40,10 @@ export class CartItemComponent implements OnInit {
   removeItem(){
     this.spinner.show();
     this.cartService.delete(this.item).subscribe(
-      (data:any) => { this.events.publish('updateCart', data); },
+      (data:any) => { this.events.publish('updateCart', data); this.toast.show('Producto eliminado del carrito') },
       (error) => {},
       () => {this.spinner.hide()}
     )
   }
+  
 }

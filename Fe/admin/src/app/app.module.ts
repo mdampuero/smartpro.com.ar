@@ -44,7 +44,7 @@ import { SinistersFormComponent } from './pages/sinisters/sinisters-form/siniste
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbAlertModule,NgbDropdownModule,NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from './pipes/date.pipe';
 import { UploadComponent } from './components/upload/upload.component';
 import { ProductsUploadComponent } from './pages/products/products-upload/products-upload.component';
@@ -53,6 +53,12 @@ import { InputFileComponent } from './components/input-file/input-file.component
 import { ThumbnailPictureComponent } from './components/thumbnail-picture/thumbnail-picture.component';
 import { SlidersComponent } from './pages/sliders/sliders.component';
 import { SlidersFormComponent } from './pages/sliders/sliders-form/sliders-form.component';
+import { SinisterDetailComponent } from './pages/sinisters/sinister-detail/sinister-detail.component';
+import { FormatNumberPipe } from './pipes/format-number.pipe';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { SinisterStatusComponent } from './pages/sinisters/sinister-status/sinister-status.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+
 
 @NgModule({
   declarations: [
@@ -75,6 +81,7 @@ import { SlidersFormComponent } from './pages/sliders/sliders-form/sliders-form.
     AppComponent,
     HomeComponent,
     DemoComponent,
+    OrdersComponent,
     BreadcrumbComponent,
     PaginationComponent,
     CountResultsComponent,
@@ -93,10 +100,16 @@ import { SlidersFormComponent } from './pages/sliders/sliders-form/sliders-form.
     CardPictureComponent,
     InputFileComponent,
     ThumbnailPictureComponent,
+    SinisterDetailComponent,
+    FormatNumberPipe,
+    TimelineComponent,
+    SinisterStatusComponent,
   ],
   imports: [
     NgbPaginationModule, 
     NgbAlertModule,
+    NgbDropdownModule,
+    NgbModalModule,
     MatTooltipModule,
     MatSnackBarModule,
     MatDatepickerModule,

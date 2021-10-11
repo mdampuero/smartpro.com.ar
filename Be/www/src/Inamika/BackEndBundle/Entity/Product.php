@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Product
@@ -38,6 +39,13 @@ class Product
      * @Expose
      */
     private $provider;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @Expose
+     * @ORM\Column(length=255, unique=false)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -257,6 +265,16 @@ class Product
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get slug.
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
     
     /**

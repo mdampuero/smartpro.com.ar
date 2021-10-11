@@ -1,0 +1,5 @@
+api_provences:
+    path:     /provences
+    defaults: { _controller: InamikaApiBundle:Provences:index }
+    methods: [GET]
+

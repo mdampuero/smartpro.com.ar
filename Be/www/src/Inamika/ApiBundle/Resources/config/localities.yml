@@ -1,0 +1,9 @@
+api_localities:
+    path:     /localities
+    defaults: { _controller: InamikaApiBundle:Localities:index }
+    methods: [GET]
+api_localities_by_provence:
+    path:     /localities/provence/{provence}
+    defaults: { _controller: InamikaApiBundle:Localities:byProvence }
+    methods: [GET]
+

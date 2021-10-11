@@ -13,6 +13,16 @@ api_products_get:
     defaults: { _controller: InamikaApiBundle:Products:get }
     methods: [GET]
 
+api_products_getBySku:
+    path:     /productsBySku/{sku}
+    defaults: { _controller: InamikaApiBundle:Products:getBySku }
+    methods: [GET]
+
+api_products_get_similar:
+    path:     /products/similar/{id}
+    defaults: { _controller: InamikaApiBundle:Products:similar }
+    methods: [GET]
+
 api_products_post:
     path:     /products
     defaults: { _controller: InamikaApiBundle:Products:post }

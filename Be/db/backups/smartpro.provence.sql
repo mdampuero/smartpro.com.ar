@@ -1,0 +1,54 @@
+-- MySQL dump 10.13  Distrib 5.7.35, for Linux (x86_64)
+--
+-- Host: localhost    Database: smartpro
+-- ------------------------------------------------------
+-- Server version	5.7.35
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `provence`
+--
+
+DROP TABLE IF EXISTS `provence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `provence` (
+  `id` char(36) COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:guid)',
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `is_delete` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `provence`
+--
+
+LOCK TABLES `provence` WRITE;
+/*!40000 ALTER TABLE `provence` DISABLE KEYS */;
+INSERT INTO `provence` VALUES ('004bf85c-26cc-11ec-a6e2-0242ac120003','Chaco','2021-10-06 17:36:56','2021-10-06 17:36:56',0),('02efa5f5-26cc-11ec-a6e2-0242ac120003','Chubut','2021-10-06 17:37:00','2021-10-06 17:37:00',0),('05948e18-26cc-11ec-a6e2-0242ac120003','Entre Ríos','2021-10-06 17:37:05','2021-10-06 17:37:05',0),('0ae80631-26cc-11ec-a6e2-0242ac120003','Formosa','2021-10-06 17:37:13','2021-10-06 17:37:13',0),('0cf106e8-26cc-11ec-a6e2-0242ac120003','Jujuy','2021-10-06 17:37:17','2021-10-06 17:37:17',0),('121dc214-26cc-11ec-a6e2-0242ac120003','La Pampa','2021-10-06 17:37:26','2021-10-06 17:37:26',0),('152232f7-26cc-11ec-a6e2-0242ac120003','La Rioja','2021-10-06 17:37:31','2021-10-06 17:37:31',0),('185cae96-26cc-11ec-a6e2-0242ac120003','Mendoza','2021-10-06 17:37:36','2021-10-06 17:37:36',0),('1fe6be15-26cc-11ec-a6e2-0242ac120003','Misiones','2021-10-06 17:37:49','2021-10-06 17:37:49',0),('25182276-26cc-11ec-a6e2-0242ac120003','Neuquén','2021-10-06 17:37:57','2021-10-06 17:37:57',0),('27714145-26cc-11ec-a6e2-0242ac120003','Río Negro','2021-10-06 17:38:01','2021-10-06 17:38:01',0),('2db0391a-26cc-11ec-a6e2-0242ac120003','Salta','2021-10-06 17:38:12','2021-10-06 17:38:12',0),('337f6d00-26cc-11ec-a6e2-0242ac120003','San Juan','2021-10-06 17:38:22','2021-10-06 17:38:22',0),('37831c39-26cc-11ec-a6e2-0242ac120003','San Luis','2021-10-06 17:38:28','2021-10-06 17:38:28',0),('3b670128-26cc-11ec-a6e2-0242ac120003','Santa Cruz','2021-10-06 17:38:35','2021-10-06 17:38:35',0),('3c8ac6ee-26cc-11ec-a6e2-0242ac120003','Santa Fe','2021-10-06 17:38:37','2021-10-06 17:38:37',0),('4d4cdd31-26cc-11ec-a6e2-0242ac120003','Santiago del Estero','2021-10-06 17:39:05','2021-10-06 17:39:05',0),('5042e6c8-26cc-11ec-a6e2-0242ac120003','Ciudad Autónoma de Buenos Aires','2021-10-06 17:39:10','2021-10-06 17:39:10',0),('55c492d3-26cc-11ec-a6e2-0242ac120003','Tucumán','2021-10-06 17:39:19','2021-10-06 17:39:19',0),('5daf77b8-26cc-11ec-a6e2-0242ac120003','Tierra del Fuego, Antártida e Islas del Atlántico Sur','2021-10-06 17:39:32','2021-10-06 17:39:32',0),('d4902d89-26cb-11ec-a6e2-0242ac120003','Buenos Aires','2021-10-06 17:35:42','2021-10-06 17:35:42',0),('ea6f77e3-26cb-11ec-a6e2-0242ac120003','Catamarca','2021-10-06 17:36:19','2021-10-06 17:36:19',0),('eec1316a-26cb-11ec-a6e2-0242ac120003','Córdoba','2021-10-06 17:36:26','2021-10-06 17:36:26',0),('fe1a0491-26cb-11ec-a6e2-0242ac120003','Corrientes','2021-10-06 17:36:52','2021-10-06 17:36:52',0);
+/*!40000 ALTER TABLE `provence` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-10-11 13:34:57

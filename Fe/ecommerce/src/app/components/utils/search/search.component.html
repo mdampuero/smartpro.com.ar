@@ -18,7 +18,20 @@
                 <div class="box-my-account">
                     <div class="row">
                         <div class="col-sm-6 text-end">
-                            <a href="" (click)="loginService.logout()" ngbTooltip="Mi cuenta">
+                            <!-- <ng-container ngbDropdown [autoClose]="'outside'">
+                                <a ngbTooltip="Mi cuenta" id="dropdownBasic1" ngbDropdownToggle>
+                                    <span class="fa-stack fa-lg ">
+                                        <i class="fa fa-square fa-stack-2x"></i>
+                                        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
+                                  <a ngbDropdownItem routerLink="/micuenta">Mi cuenta</a>
+                                  <a ngbDropdownItem *ngIf="this.loginService.user.cart.items.length > 0" routerLink="/checkout">Finalizar compra</a>
+                                  <a ngbDropdownItem href="javascript:void(0)" (click)="logout()">Salir</a>
+                                </div>
+                              </ng-container> -->
+                            <a routerLink="/micuenta" ngbTooltip="Mi cuenta">
                                 <span class="fa-stack fa-lg ">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa fa-user fa-stack-1x fa-inverse"></i>

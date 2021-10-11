@@ -40,7 +40,8 @@
         "symfony/symfony": "3.4.*",
         "thormeier/breadcrumb-bundle": "^2.1",
         "twig/twig": "^1.0||^2.0",
-        "yectep/phpspreadsheet-bundle": "^0.1.1"
+        "yectep/phpspreadsheet-bundle": "^0.1.1",
+        "stof/doctrine-extensions-bundle": "1.2.*@dev"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

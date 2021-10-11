@@ -46,3 +46,29 @@ box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.6);
 }
 
 .animate__animated.animate__delay-6s{-webkit-animation-delay:6s;animation-delay:6s;-webkit-animation-delay:calc(var(--animate-delay)*6);animation-delay:calc(var(--animate-delay)*6)}
+
+.bg-info {
+  background-color: #49b8dc!important;
+}
+.btn-info {
+  color: #fff;
+  background-color: #49b8dc!important;
+  border-color: #17a2b8!important;
+}
+.badge-info {
+  color: #fff;
+  background-color: #49b8dc!important;
+}
+.text-info{
+  color:#49b8dc!important;
+}
+
+.list-group-item.active {
+  z-index: 2;
+  font-weight: 400;
+  color: #fff;
+  background-color: #49b8dc;
+  border-color: #49b8dc;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

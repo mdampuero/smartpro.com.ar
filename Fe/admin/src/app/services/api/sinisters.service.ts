@@ -34,6 +34,10 @@ export class SinistersService {
   get(query: string) {
     return this.http.get(`${environment.apiUrl}sinisters?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}`);
   }
+
+  getById(id: string) {
+    return this.http.get(`${environment.apiUrl}sinisters/${id}`);
+  }
   
   getOne(id: string) {
     return this.http.get(`${environment.apiUrl}sinisters/${id}`).pipe(map((data:any) => {

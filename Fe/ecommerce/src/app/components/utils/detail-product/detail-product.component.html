@@ -1,0 +1,60 @@
+<ng-container *ngIf="item">
+    <div class="row animate__animated animate__fadeIn">
+        <div class="col-sm-6 mt-4">
+            <pinch-zoom >
+                <img src="{{ environment.imgUrl.lg }}{{ item.picture }}"  onerror="this.onerror=null; this.src='assets/imgs/no-photo.png'" class="w-100">
+            </pinch-zoom>
+        </div>
+        <div class="col-sm-6">
+            <span class="badge badge-info" *ngIf="item.isSalient">Recomendado</span>
+            <h3 class="py-3">{{ item.name }}</h3>
+            <h3 class="text-info">{{ item.price | formatNumber }}</h3>
+            <div class="description mt-3">
+                <p></p>
+                <ul>
+                    <li>Potencia total 30W</li>
+                    <li>Potencia total 30W</li>
+                    <li>Potencia total 30W</li>
+                    <li>Potencia total 30W</li>
+                </ul>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group ">
+                        <div class="input-group-prepend">
+                            <button class="input-group-text btn" (click)="minus()"><i class="fa fa-minus"></i></button>
+                        </div>
+                        <input type="text" class="form-control text-center" [(ngModel)]="amount" name="amount">
+                        <div class="input-group-append">
+                            <button class="input-group-text btn" (click)="plus()"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <button class="btn btn-info btn-block" (click)="addToCart()" *ngIf="!inCart">Añadir al carrito</button>
+                    <button class="btn btn-success btn-block" (click)="addToCart()" *ngIf="inCart">Actualizar al carrito</button>
+                </div>
+            </div>
+            <hr>
+            <div class="">
+                <h6><b>Modelo:</b> 446545</h6>
+                <h6><b>SKU:</b> {{ item.sku}}</h6>
+                <h6><b>Categoría:</b> Audio</h6>
+                <h6><b>Etiquetas:</b> dadsa,dsadsadsad,sadsa</h6>
+            </div>
+        </div>
+    </div>
+    <h5 class="animate__animated animate__fadeInLeft mt-4">Descripción</h5>
+    <hr class="animate__animated animate__fadeInRight">
+    <div class="description pb-5">
+        {{ item.description }}
+    </div>
+    <h5 class="animate__animated animate__fadeInLeft mt-4">Productos relacionados</h5>
+    <hr class="animate__animated animate__fadeInRight">
+    <div class="row">
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInUp animate__faster animate__delay-{{ i }}s" *ngFor="let item of similars; let i=index;">
+            <app-card-product [item]="item"></app-card-product>
+        </div>
+    </div>
+</ng-container>

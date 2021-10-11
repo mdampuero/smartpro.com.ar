@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Agente de siniestro</label>
+                                    <label>Analista de siniestro</label>
                                     <select class="form-control" [(ngModel)]="form.productor" name="productor">
                                         <option value=''>--Seleccione una opción--</option>
                                         <option value="{{ productor.id }}" *ngFor="let productor of productors; let i=index;" >{{ productor.name }}</option>
@@ -105,13 +105,32 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Provincia</label>
-                                    <input type="text" class="form-control" [(ngModel)]="form.provence" name="provence" placeholder="">
+                                    <select  class="form-control" [(ngModel)]="form.provence" name="provence" (change)="onChange()">
+                                        <option value=''>--Seleccione una opción--</option>
+                                        <option value="{{ provence.id }}" *ngFor="let provence of provences; let i=index;" >{{ provence.name }}</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Localidad</label>
-                                    <input type="text" class="form-control" [(ngModel)]="form.city" name="city" placeholder="">
+                                    <ng-container *ngIf="!loadingLocalities">
+                                        <select  class="form-control" [(ngModel)]="form.locality" name="locality" >
+                                            <option value=''>--Seleccione una opción--</option>
+                                            <option value="{{ locality.id }}" *ngFor="let locality of localities; let i=index;" >{{ locality.name }} ({{ locality.department.name }})</option>
+                                        </select>
+                                    </ng-container>
+                                    <ng-container *ngIf="loadingLocalities">
+                                        <div  class="text-center">
+                                            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Código postal</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.postalCode" name="postalCode" placeholder="">
                                 </div>
                             </div>
                             <div class="col-sm-6">

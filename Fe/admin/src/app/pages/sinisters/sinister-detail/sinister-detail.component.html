@@ -1,0 +1,46 @@
+<div class="container-fluid animated fadeIn">
+    <app-breadcrumb [title]="'Siniestros'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <div class="card">
+        <div class="card-body" *ngIf="data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card bg-light">
+                        <h4 class="card-header bg-info text-white"><b>Datos del siniestro</b></h4>
+                        <div class="card-body">
+                            <p><b>Nº:</b> {{ data.number }}</p>
+                            <p><b>Monto:</b> {{ data.amount | formatNumber }}</p>
+                            <p><b>Fecha:</b> {{ data.date | date }}</p>
+                            <p><b>Compañia:</b> {{ data.company.name }}</p>
+                            <p><b>Analista:</b> {{ data.productor.name }}</p>
+                            <p>{{ data.observations }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-light">
+                        <h4 class="card-header bg-success text-white"><b>Siniestrado</b></h4>
+                        <div class="card-body">
+                            <p><b>Nombre: </b> {{ data.customer.name }}</p>
+                            <p><b>DNI: </b> {{ data.customer.document }}</p>
+                            <p><b>Teléfono: </b> <a href="tel:+549{{ data.phone }}">{{ data.customer.phone }}</a></p>
+                            <p><b>Email: </b> <a href="mailto:{{ data.email }}">{{ data.customer.email }}</a></p>
+                            <p><b>Dirección:</b> {{ data.customer.street }} {{ data.customer.streetNumber }} / {{ data.customer.floor }} {{ data.customer.department }}</p>
+                            <p><b>Ciudad:</b> {{ data.customer.locality.name }}, {{ data.customer.locality.department.name }}, {{ data.customer.provence.name }} ({{ data.customer.postalCode }})</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card bg-light">
+                        <h4 class="card-header bg-{{ data.status.color }} text-white"><b>Estado</b></h4>
+                        <div class="card-body">
+                            <p class="text-center mb-3"><span class="font-16 badge badge-{{ data.status.color }}">{{ data.status.name }}</span></p>
+                            <p><b>Última actualización: </b> {{ data.updatedAt | date }}</p>
+                            <p *ngIf="data.order"><b>Pedido: </b> <a [routerLink]="['/orders/', data.order.id]">Nº {{ data.order.id }}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-timeline [resource]="data.id"></app-timeline>
+        </div>
+    </div>
+</div>

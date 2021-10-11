@@ -52,14 +52,15 @@
                             <tbody>
                                 <tr *ngFor="let item of data.data; let i=index;" >
                                     <td>{{ item.number }}</td>
-                                    <td>$ {{ item.amount }}</td>
+                                    <td>{{ item.amount | formatNumber }}</td>
                                     <td>{{ item.date | date:'dd/MM/Y' }}</td>
                                     <td>{{ i }}</td>
                                     <td>{{ item.company.name }}</td>
                                     <td>{{ item.productor.name }}</td>
                                     <td class="text-center bg-{{ item.status.color }} text-white" valing="middle"><b>{{ item.status.name }}</b></td>
                                     <td class="text-center">
-                                        <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 
+                                        <a matTooltip="Cambiar estado" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/status/', item.id]"  class="btn-edit btn btn-outline-warning btn-circle mr-1"><i class="fa fa-refresh text-warning"></i></a> 
+                                        <a matTooltip="Ver más" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/', item.id]"  class="btn-edit btn btn-outline-success btn-circle mr-1"><i class="fa fa-eye text-success"></i></a> 
                                         <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash text-danger"></i></a>
                                     </td>
                                 </tr>

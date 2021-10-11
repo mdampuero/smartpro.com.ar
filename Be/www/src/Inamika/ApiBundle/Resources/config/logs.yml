@@ -1,0 +1,29 @@
+api_logs:
+    path:     /logs
+    defaults: { _controller: InamikaApiBundle:Logs:index }
+    methods: [GET]
+
+api_logs_get:
+    path:     /logs/{id}
+    defaults: { _controller: InamikaApiBundle:Logs:get }
+    methods: [GET]
+
+api_logs_resource:
+    path:     /logs/resource/{resource}
+    defaults: { _controller: InamikaApiBundle:Logs:getByResource }
+    methods: [GET]
+
+api_logs_post:
+    path:     /logs
+    defaults: { _controller: InamikaApiBundle:Logs:post }
+    methods: [POST]
+
+api_logs_put:
+    path:     /logs/{id}
+    defaults: { _controller: InamikaApiBundle:Logs:put }
+    methods: [PUT]
+
+api_logs_delete:
+    path:     /logs/{id}
+    defaults: { _controller: InamikaApiBundle:Logs:delete }
+    methods: [DELETE]

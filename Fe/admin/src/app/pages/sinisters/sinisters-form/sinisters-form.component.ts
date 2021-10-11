@@ -11,6 +11,8 @@ import { Companies } from 'src/app/models/companies.model';
 import { ProductorsService } from 'src/app/services/api/productors.service';
 import { CompaniesService } from 'src/app/services/api/companies.service';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { ProvencesService } from 'src/app/services/api/provences.service';
+import { LocalitiesService } from 'src/app/services/api/localities.service';
 
 @Component({
   selector: 'app-sinisters-form',
@@ -19,6 +21,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 export class SinistersFormComponent implements OnInit {
   model: NgbDateStruct | undefined;
   public dp={year:"2021", month:"09",day:"12"};
+  public loadingLocalities=false;
   public form: Sinisters={
     id:'',
     number:'',
@@ -33,14 +36,17 @@ export class SinistersFormComponent implements OnInit {
     phone:'',
     observations:'',
     provence:'',
-    city:'',
+    locality:'',
     street:'',
     streetNumber:'',
     department:'',
+    postalCode:'',
     floor:''
   };
   public productors: Productors[]=[];
   public companies: Companies[]=[];
+  public provences: any[]=[];
+  public localities: any[]=[];
   public titlePage:string='Nuevo';
 
   public breadcrumbs=[
@@ -56,6 +62,8 @@ export class SinistersFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public productorsService: ProductorsService,
     public companiesService: CompaniesService,
+    public provencesService: ProvencesService,
+    public localitiesService: LocalitiesService,
     public sinistersService: SinistersService) {
       let id=this.activatedRoute.snapshot.paramMap.get('id');
       this.loadForm();
@@ -69,6 +77,15 @@ export class SinistersFormComponent implements OnInit {
   loadForm(){
     this.productorsService.getAll().subscribe((data:any) => this.productors=data.data);
     this.companiesService.getAll().subscribe((data:any) => this.companies=data.data);
+    this.provencesService.getAll().subscribe((data:any) => this.provences=data.data);
+  }
+  onChange() {
+    this.loadingLocalities=true;
+    this.form.locality='';
+    this.localitiesService.getByProvence(this.form.provence).subscribe((data:any) => {
+      this.localities=data;
+      this.loadingLocalities=false;
+    });
   }
   getOne(id:string){
     this.spinner.show();

@@ -113,24 +113,6 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="provence", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Expose
-     */
-    private $provence;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Expose
-     */
-    private $city;
-    
-    /**
-     * @var string
-     *
      * @ORM\Column(name="street", type="string", length=255)
      * @Assert\NotBlank()
      * @Expose
@@ -153,6 +135,33 @@ class Customer
      */
     private $floor;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postal_code", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $postalCode;
+    
+    /**
+     * Many Customer have one Provence. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Provence")
+     * @ORM\JoinColumn(name="provence_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $provence;
+    
+    /**
+     * Many Customer have one Provence. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Locality")
+     * @ORM\JoinColumn(name="locality_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $locality;
+
     /**
      * @var string
      *
@@ -405,27 +414,27 @@ class Customer
     }
     
     /**
-     * Set city.
+     * Set locality.
      *
-     * @param string $city
+     * @param string $locality
      *
      * @return Customer
      */
-    public function setCity($city)
+    public function setLocality($locality)
     {
-        $this->city = $city;
+        $this->locality = $locality;
 
         return $this;
     }
 
     /**
-     * Get city.
+     * Get locality.
      *
      * @return string
      */
-    public function getCity()
+    public function getLocality()
     {
-        return $this->city;
+        return $this->locality;
     }
     
     /**
@@ -498,6 +507,30 @@ class Customer
     public function getFloor()
     {
         return $this->floor;
+    }
+    
+    /**
+     * Set postalCode.
+     *
+     * @param string $postalCode
+     *
+     * @return Customer
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode.
+     *
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
     }
     
     /**

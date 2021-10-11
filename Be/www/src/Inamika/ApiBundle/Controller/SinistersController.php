@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Inamika\BackEndBundle\Entity\Sinister;
 use Inamika\BackEndBundle\Entity\Customer;
+use Inamika\BackEndBundle\Entity\Log;
 use Inamika\BackEndBundle\Entity\Cart;
 use Inamika\BackEndBundle\Entity\SinisterStatus;
 use Inamika\BackEndBundle\Form\Sinister\SinisterType;
@@ -118,6 +119,20 @@ class SinistersController extends FOSRestController
          * Guardo
          */
         $em->flush();
+
+        /**
+         * Guardo su Log
+         */
+        $log=new Log();
+        $log->setUser("Alguno");
+        $log->setResource($sinister->getId());
+        $log->setTitle("Nuevo");
+        $log->setIcon("fa fa-star");
+        $log->setStatus("warning");
+        $log->setDescription("Siniestro creado Nº ".$sinister->getNumber()." de la compañia ".$sinister->getCompany()->getName()." por un monto de $ ".number_format($sinister->getAmount(), 0, ',', '.'));
+        $em->persist($log);
+        $em->flush();
+
         $this->sendEmail($customer);
         return $this->handleView($this->view($sinister, Response::HTTP_OK)); 
     }

@@ -12,10 +12,11 @@ export class Sinisters {
     public email!: string;
     public phone!: string;
     public provence!: string;
-    public city!: string;
+    public locality!: string;
     public street!: string;
     public streetNumber!: string;
     public department!: string;
+    public postalCode!: string;
     public floor!: string;
     constructor(fields?: any) {
         this.id=fields.id;
@@ -31,10 +32,11 @@ export class Sinisters {
         this.email=fields.email;
         this.phone=fields.phone;
         this.provence=fields.provence;
-        this.city=fields.city;
+        this.locality=fields.locality;
         this.street=fields.street;
         this.streetNumber=fields.streetNumber;
         this.department=fields.department;
         this.floor=fields.floor;
+        this.postalCode=fields.postalCode;
     }
 }
