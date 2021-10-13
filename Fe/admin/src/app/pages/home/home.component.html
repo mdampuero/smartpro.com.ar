@@ -1,21 +1,179 @@
 <div class="container-fluid">
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-themecolor">Starter kit</h3>
-        </div>
-        <div class="col-md-7 align-self-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item">pages</li>
-                <li class="breadcrumb-item active">Starter kit</li>
-            </ol>
+            <h3 class="text-themecolor">Inicio</h3>
         </div>
     </div>    
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="m-r-20 align-self-center">
+                            <span class="fa-stack fa-lg text-primary" style="width: 3em;height: 3em;line-height: 3em;">
+                                <i class="fa fa-circle fa-stack-2x" style="font-size: 3em;"></i>
+                                <i class="fa fa-star fa-stack-1x fa-inverse" style="font-size: 2em;"></i>
+                            </span>
+                        </div>
+                        <div class="align-self-center">
+                            <h5 class="text-muted m-t-10 m-b-0">Total de Siniestros</h5>
+                            <h2 class="m-t-0">
+                                <ng-container *ngIf="!totals"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i></ng-container>
+                                <ng-container *ngIf="totals">{{ totals.countSinister }}</ng-container>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="m-r-20 align-self-center">
+                            <span class="fa-stack fa-lg text-warning" style="width: 3em;height: 3em;line-height: 3em;">
+                                <i class="fa fa-circle fa-stack-2x" style="font-size: 3em;"></i>
+                                <i class="fa fa-shopping-cart fa-stack-1x fa-inverse" style="font-size: 2em;"></i>
+                            </span>
+                        </div>
+                        <div class="align-self-center">
+                            <h5 class="text-muted m-t-10 m-b-0">Total de Pedidos</h5>
+                            <h2 class="m-t-0">
+                                <ng-container *ngIf="!totals"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i></ng-container>
+                                <ng-container *ngIf="totals">{{ totals.countOrder }}</ng-container>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="m-r-20 align-self-center">
+                            <span class="fa-stack fa-lg text-success" style="width: 3em;height: 3em;line-height: 3em;">
+                                <i class="fa fa-circle fa-stack-2x" style="font-size: 3em;"></i>
+                                <i class="fa fa-usd fa-stack-1x fa-inverse" style="font-size: 2em;"></i>
+                            </span>
+                        </div>
+                        <div class="align-self-center">
+                            <h5 class="text-muted m-t-10 m-b-0">Monto en siniestros</h5>
+                            <h2 class="m-t-0">
+                                <ng-container *ngIf="!totals"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i></ng-container>
+                                <ng-container *ngIf="totals">{{ totals.amountSinister | formatNumber }}</ng-container>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="m-r-20 align-self-center">
+                            <span class="fa-stack fa-lg text-info" style="width: 3em;height: 3em;line-height: 3em;">
+                                <i class="fa fa-circle fa-stack-2x" style="font-size: 3em;"></i>
+                                <i class="fa fa-money fa-stack-1x fa-inverse" style="font-size: 2em;"></i>
+                            </span>
+                        </div>
+                        <div class="align-self-center">
+                            <h5 class="text-muted m-t-10 m-b-0">Monto en pedidos</h5>
+                            <h2 class="m-t-0">
+                                <ng-container *ngIf="!totals"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i></ng-container>
+                                <ng-container *ngIf="totals">{{ totals.amountOrder | formatNumber }}</ng-container>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    This is some text within a card block.
+                    <h3 class="card-title">
+                        Siniestros de hoy   
+                    </h3>
+                    <hr>
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Monto</th>
+                                <th>F.Ingreso</th>
+                                <th>Días</th>
+                                <th>Compañia</th>
+                                <th>Analista</th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="todaySinister">
+                                <tr *ngFor="let item of todaySinister; let i=index;" >
+                                    <td>{{ item.number }}</td>
+                                    <td>{{ item.amount | formatNumber }}</td>
+                                    <td>{{ item.date | date:'dd/MM/Y' }}</td>
+                                    <td>{{ i }}</td>
+                                    <td>{{ item.company.name }}</td>
+                                    <td>{{ item.productor.name }}</td>
+                                    <td class="text-center bg-{{ item.status.color }} text-white" valing="middle"><b>{{ item.status.name }}</b></td>
+                                    <td class="text-center">
+                                        <a matTooltip="Ver más" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/', item.id]"  class="btn-edit btn btn-outline-success btn-circle mr-1"><i class="fa fa-eye text-success"></i></a> 
+                                    </td>
+                                </tr>
+                                <tr *ngIf="todaySinister.length == 0"><td colspan="8" class="text-center">No se econtraron resultados</td></tr>
+                            </ng-container>
+                            <ng-container *ngIf="!todaySinister">
+                                <tr><td colspan="8" class="text-center"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i></td></tr>
+                            </ng-container>
+                        </tbody>
+                    </table>   
+                    <div class="text-center"><a [routerLink]="['/sinisters']" role="button" class="btn btn-sm btn-info">Ver todos</a></div>                 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Pedidos de hoy   
+                    </h3>
+                    <hr>
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Email</th>
+                                <th class="text-center">Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="todayOrder">
+                                <tr *ngFor="let item of todayOrder; let i=index;">
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.customer.name }}</td>
+                                    <td>{{ item.customer.email }}</td>
+                                    <td class="text-right" >{{ item.total | formatNumber }}</td>
+                                    <td class="text-center">
+                                        <a matTooltip="Ver más" matTooltipPosition="above" role="button" [routerLink]="['/orders/', item.id]"  class="btn-edit btn btn-outline-success btn-circle mr-1"><i class="fa fa-eye text-success"></i></a> 
+                                    </td>
+                                </tr>
+                                <tr *ngIf="todayOrder.length == 0"><td colspan="5" class="text-center">No se econtraron resultados</td></tr>
+                            </ng-container>
+                            <ng-container *ngIf="!todayOrder">
+                                <tr><td colspan="5" class="text-center"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i></td></tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <div class="text-center"><a [routerLink]="['/orders']" role="button" class="btn btn-sm btn-info">Ver todos</a></div>
                 </div>
             </div>
         </div>

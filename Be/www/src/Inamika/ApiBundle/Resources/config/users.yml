@@ -32,3 +32,8 @@ api_users_delete:
     path:     /users/{id}
     defaults: { _controller: InamikaApiBundle:Users:delete }
     methods: [DELETE]
+
+api_users_post_login:
+    path:     /users_login
+    defaults: { _controller: InamikaApiBundle:Users:login }
+    methods: [POST]

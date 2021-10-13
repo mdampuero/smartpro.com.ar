@@ -57,6 +57,11 @@ class SinistersController extends FOSRestController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
+    
+    public function todayAction(){
+        $today=new \DateTime();
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Sinister::class)->getAll()->andWhere('e.createdAt>=:today')->setParameter('today',$today->format('Y-m-d').' 00:00:00')->getQuery()->getResult()));
+    }
 
     public function byProductorAction($productor){
         return $this->handleView($this->view(array(

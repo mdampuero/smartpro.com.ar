@@ -52,6 +52,9 @@ export class UsersService {
       return this.http.post(`${environment.apiUrl}users`, data);
     }
   }
+  login(data:any) {
+    return this.http.post(`${environment.apiUrl}users_login`, data);
+  }
   delete(item:Users) {
     return this.http.delete(`${environment.apiUrl}users/${item.id}`);
   }

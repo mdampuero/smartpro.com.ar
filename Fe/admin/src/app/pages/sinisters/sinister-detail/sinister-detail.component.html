@@ -1,7 +1,11 @@
-<div class="container-fluid animated fadeIn">
+<div class="container-fluid animated fadeIn" *ngIf="data">
     <app-breadcrumb [title]="'Siniestros'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
     <div class="card">
-        <div class="card-body" *ngIf="data">
+        <div class="card-body">
+            <h3 class="card-title">
+                Siniestro: Nº {{ data.number }}    
+            </h3>
+            <hr>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card bg-light">
@@ -40,6 +44,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body" >
             <app-timeline [resource]="data.id"></app-timeline>
         </div>
     </div>

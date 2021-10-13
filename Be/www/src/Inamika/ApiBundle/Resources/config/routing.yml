@@ -57,3 +57,6 @@ api_provences:
 
 api_localities:
     resource: "@InamikaApiBundle/Resources/config/localities.yml"
+
+api_stats:
+    resource: "@InamikaApiBundle/Resources/config/stats.yml"

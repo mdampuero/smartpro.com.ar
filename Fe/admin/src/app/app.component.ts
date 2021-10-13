@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginService } from './services/db/login.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   
-  title = 'MDA Software solutions';
+  title = 'MDA Software';
+  constructor(public loginService:LoginService) { }
+
+  logout(){
+    this.loginService.logout();
+    location.reload();
+  }
 }

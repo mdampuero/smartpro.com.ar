@@ -1,0 +1,83 @@
+<div class="container-fluid animated fadeIn" *ngIf="data">
+    <app-breadcrumb [title]="'Pedidos'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <div class="card">
+        <div class="card-body" >
+            <h3 class="card-title">
+                Pedido: Nº {{ data.id }}    
+            </h3>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card bg-light">
+                        <h4 class="card-header bg-info text-white"><b>Cliente</b></h4>
+                        <div class="card-body">
+                            <p><b>Nombre: </b> {{ data.customer.name }}</p>
+                            <p><b>DNI: </b> {{ data.customer.document }}</p>
+                            <p><b>Teléfono: </b> <a href="tel:+549{{ data.phone }}">{{ data.customer.phone }}</a></p>
+                            <p><b>Email: </b> <a href="mailto:{{ data.email }}">{{ data.customer.email }}</a></p>
+                            <p><b>Dirección:</b> {{ data.customer.street }} {{ data.customer.streetNumber }} / {{ data.customer.floor }} {{ data.customer.department }}</p>
+                            <p><b>Ciudad:</b> {{ data.customer.locality.name }}, {{ data.customer.locality.department.name }}, {{ data.customer.provence.name }} ({{ data.customer.postalCode }})</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light">
+                        <h4 class="card-header bg-success text-white"><b>Pedido</b></h4>
+                        <div class="card-body">
+                            <p><b>Nº: </b> {{ data.id }}</p>
+                            <p><b>Total: </b> {{ data.total | formatNumber }}</p>
+                            <p><b>Fecha: </b> {{ data.createdAt | date:'H' }}</p>
+                            <p><b>Total de items: </b> {{ data.items.length }}</p>
+                            <p>&nbsp;</p>
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light">
+                        <h4 class="card-header bg-primary text-white"><b>Datos del siniestro</b></h4>
+                        <div class="card-body">
+                            <p><b>Nº:</b> <a [routerLink]="['/sinisters',data.customer.sinister.id]">{{ data.customer.sinister.number }}</a></p>
+                            <p><b>Monto:</b> {{ data.customer.sinister.amount | formatNumber }}</p>
+                            <p><b>Fecha:</b> {{ data.customer.sinister.date | date }}</p>
+                            <p><b>Compañia:</b> {{ data.customer.sinister.company.name }}</p>
+                            <p><b>Analista:</b> {{ data.customer.sinister.productor.name }}</p>
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive" style="clear: both;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th class="text-right">Cantidad</th>
+                                <th class="text-right">P/U</th>
+                                <th class="text-right">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data.items; let i=index;">
+                                <td class="text-center">{{ i+1 }}</td>
+                                <td>{{ item.code }}</td>
+                                <td>{{ item.description }}</td>
+                                <td class="text-right">{{ item.amount }}</td>
+                                <td class="text-right">{{ item.price | formatNumber }}</td>
+                                <td class="text-right">{{ item.subtotal | formatNumber }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body" >
+            <app-timeline [resource]="data.id"></app-timeline>
+        </div>
+    </div>
+</div>

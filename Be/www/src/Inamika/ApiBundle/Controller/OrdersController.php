@@ -57,6 +57,11 @@ class OrdersController extends FOSRestController
         return $this->handleView($this->view($entity));
     }
 
+    public function todayAction(){
+        $today=new \DateTime();
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Order::class)->getAll()->andWhere('e.createdAt>=:today')->setParameter('today',$today->format('Y-m-d').' 00:00:00')->getQuery()->getResult()));
+    }
+
     public function postAction(Request $request){
         $entity = new Order();
         $form = $this->createForm(OrderType::class, $entity);

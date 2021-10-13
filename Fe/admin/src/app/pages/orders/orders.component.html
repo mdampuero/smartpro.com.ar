@@ -47,7 +47,7 @@
                                     <td>{{ item.customer.email }}</td>
                                     <td class="text-right" >{{ item.total | formatNumber }}</td>
                                     <td class="text-center">
-                                        <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/orderss/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 
+                                        <a matTooltip="Ver más" matTooltipPosition="above" role="button" [routerLink]="['/orders/', item.id]"  class="btn-edit btn btn-outline-success btn-circle mr-1"><i class="fa fa-eye text-success"></i></a> 
                                         <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash text-danger"></i></a>
                                     </td>
                                 </tr>

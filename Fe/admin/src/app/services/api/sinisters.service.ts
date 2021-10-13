@@ -9,6 +9,7 @@ import { EventsService } from '../events.service';
   providedIn: 'root'
 })
 export class SinistersService {
+  
   public limit = 30;
   public offset = 0;
   public sort = "createdAt";
@@ -46,6 +47,10 @@ export class SinistersService {
       return data;
     })
   );
+  }
+
+  today() {
+    return this.http.get(`${environment.apiUrl}sinistersToday`);
   }
 
   getAll() {

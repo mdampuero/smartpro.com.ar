@@ -7,6 +7,8 @@ import { CompaniesComponent } from './pages/companies/companies.component';
 import { DemoFormComponent } from './pages/demo/demo-form/demo-form.component';
 import { DemoComponent } from './pages/demo/demo.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ProductorsFormComponent } from './pages/productors/productors-form/productors-form.component';
 import { ProductorsComponent } from './pages/productors/productors.component';
@@ -25,55 +27,59 @@ import { TransportersFormComponent } from './pages/transporters/transporters-for
 import { TransportersComponent } from './pages/transporters/transporters.component';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { UsersComponent } from './pages/users/users.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  { path: 'demos', component: DemoComponent},
-  { path: 'demos/nuevo', component: DemoFormComponent },
-  { path: 'demos/editar/:id', component: DemoFormComponent },
-  
-  { path: 'orders', component: OrdersComponent},
-  
-  { path: 'productors', component: ProductorsComponent},
-  { path: 'productors/nuevo', component: ProductorsFormComponent },
-  { path: 'productors/editar/:id', component: ProductorsFormComponent },
-  
-  { path: 'sinisters', component: SinistersComponent},
-  { path: 'sinisters/nuevo', component: SinistersFormComponent },
-  { path: 'sinisters/editar/:id', component: SinistersFormComponent },
-  { path: 'sinisters/:id', component: SinisterDetailComponent },
-  { path: 'sinisters/status/:id', component: SinisterStatusComponent },
+  { path: 'login', component: LoginComponent},
 
-  { path: 'sliders', component: SlidersComponent},
-  { path: 'sliders/nuevo', component: SlidersFormComponent },
-  { path: 'sliders/editar/:id', component: SlidersFormComponent },
+  { path: 'demos', component: DemoComponent,canActivate:[AuthGuard]},
+  { path: 'demos/nuevo', component: DemoFormComponent ,canActivate:[AuthGuard]},
+  { path: 'demos/editar/:id', component: DemoFormComponent ,canActivate:[AuthGuard]},
   
-  { path: 'categories', component: CategoriesComponent},
-  { path: 'categories/nuevo', component: CategoriesFormComponent },
-  { path: 'categories/editar/:id', component: CategoriesFormComponent },
+  { path: 'orders', component: OrdersComponent,canActivate:[AuthGuard]},
+  { path: 'orders/:id', component: OrdersDetailComponent,canActivate:[AuthGuard]},
   
-  { path: 'providers', component: ProvidersComponent},
-  { path: 'providers/nuevo', component: ProvidersFormComponent },
-  { path: 'providers/editar/:id', component: ProvidersFormComponent },
+  { path: 'productors', component: ProductorsComponent,canActivate:[AuthGuard]},
+  { path: 'productors/nuevo', component: ProductorsFormComponent ,canActivate:[AuthGuard]},
+  { path: 'productors/editar/:id', component: ProductorsFormComponent ,canActivate:[AuthGuard]},
   
-  { path: 'products', component: ProductsComponent},
-  { path: 'products/nuevo', component: ProductsFormComponent },
-  { path: 'products/editar/:id', component: ProductsFormComponent },
-  { path: 'products/photos/:id', component: ProductsUploadComponent },
-  
-  { path: 'transporters', component: TransportersComponent},
-  { path: 'transporters/nuevo', component: TransportersFormComponent },
-  { path: 'transporters/editar/:id', component: TransportersFormComponent },
+  { path: 'sinisters', component: SinistersComponent,canActivate:[AuthGuard]},
+  { path: 'sinisters/nuevo', component: SinistersFormComponent ,canActivate:[AuthGuard]},
+  { path: 'sinisters/editar/:id', component: SinistersFormComponent ,canActivate:[AuthGuard]},
+  { path: 'sinisters/:id', component: SinisterDetailComponent ,canActivate:[AuthGuard]},
+  { path: 'sinisters/status/:id', component: SinisterStatusComponent ,canActivate:[AuthGuard]},
 
-  { path: 'companies', component: CompaniesComponent},
-  { path: 'companies/nuevo', component: CompaniesFormComponent },
-  { path: 'companies/editar/:id', component: CompaniesFormComponent },
-
-  { path: 'usuarios', component: UsersComponent},
-  { path: 'usuarios/nuevo', component: UsersFormComponent },
-  { path: 'usuarios/editar/:id', component: UsersFormComponent },
+  { path: 'sliders', component: SlidersComponent,canActivate:[AuthGuard]},
+  { path: 'sliders/nuevo', component: SlidersFormComponent ,canActivate:[AuthGuard]},
+  { path: 'sliders/editar/:id', component: SlidersFormComponent ,canActivate:[AuthGuard]},
   
-  { path: '', pathMatch:'full', component: HomeComponent},
-  { path: '**', pathMatch:'full', component: HomeComponent},
+  { path: 'categories', component: CategoriesComponent,canActivate:[AuthGuard]},
+  { path: 'categories/nuevo', component: CategoriesFormComponent ,canActivate:[AuthGuard]},
+  { path: 'categories/editar/:id', component: CategoriesFormComponent ,canActivate:[AuthGuard]},
+  
+  { path: 'providers', component: ProvidersComponent,canActivate:[AuthGuard]},
+  { path: 'providers/nuevo', component: ProvidersFormComponent ,canActivate:[AuthGuard]},
+  { path: 'providers/editar/:id', component: ProvidersFormComponent ,canActivate:[AuthGuard]},
+  
+  { path: 'products', component: ProductsComponent,canActivate:[AuthGuard]},
+  { path: 'products/nuevo', component: ProductsFormComponent ,canActivate:[AuthGuard]},
+  { path: 'products/editar/:id', component: ProductsFormComponent ,canActivate:[AuthGuard]},
+  { path: 'products/photos/:id', component: ProductsUploadComponent ,canActivate:[AuthGuard]},
+  
+  { path: 'transporters', component: TransportersComponent,canActivate:[AuthGuard]},
+  { path: 'transporters/nuevo', component: TransportersFormComponent ,canActivate:[AuthGuard]},
+  { path: 'transporters/editar/:id', component: TransportersFormComponent ,canActivate:[AuthGuard]},
+
+  { path: 'companies', component: CompaniesComponent,canActivate:[AuthGuard]},
+  { path: 'companies/nuevo', component: CompaniesFormComponent ,canActivate:[AuthGuard]},
+  { path: 'companies/editar/:id', component: CompaniesFormComponent ,canActivate:[AuthGuard]},
+
+  { path: 'usuarios', component: UsersComponent,canActivate:[AuthGuard]},
+  { path: 'usuarios/nuevo', component: UsersFormComponent ,canActivate:[AuthGuard]},
+  { path: 'usuarios/editar/:id', component: UsersFormComponent ,canActivate:[AuthGuard]},
+  
+  { path: '', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
+  { path: '**', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
 ];
 
 @NgModule({

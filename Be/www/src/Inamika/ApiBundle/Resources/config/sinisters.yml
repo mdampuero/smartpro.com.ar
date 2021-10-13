@@ -13,6 +13,11 @@ api_sinisters_get:
     defaults: { _controller: InamikaApiBundle:Sinisters:get }
     methods: [GET]
 
+api_sinisters_today:
+    path:     /sinistersToday
+    defaults: { _controller: InamikaApiBundle:Sinisters:today }
+    methods: [GET]
+
 api_sinisters_post:
     path:     /sinisters
     defaults: { _controller: InamikaApiBundle:Sinisters:post }

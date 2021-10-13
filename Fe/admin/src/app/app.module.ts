@@ -58,6 +58,8 @@ import { FormatNumberPipe } from './pipes/format-number.pipe';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { SinisterStatusComponent } from './pages/sinisters/sinister-status/sinister-status.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 @NgModule({
@@ -104,6 +106,8 @@ import { OrdersComponent } from './pages/orders/orders.component';
     FormatNumberPipe,
     TimelineComponent,
     SinisterStatusComponent,
+    OrdersDetailComponent,
+    LoginComponent,
   ],
   imports: [
     NgbPaginationModule, 

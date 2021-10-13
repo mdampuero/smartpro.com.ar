@@ -1,0 +1,4 @@
+api_stats_total:
+    path:     /stats/total
+    defaults: { _controller: InamikaApiBundle:Stats:total }
+    methods: [GET]

@@ -70,6 +70,17 @@ class OrderRepository extends \Doctrine\ORM\EntityRepository
         return (int)$resultTotal['total'];
     }
 
+    public function amount(){
+        $resultTotal=$this->search()
+        ->setFirstResult(null)
+        ->where('e.isDelete = :isDelete')
+        ->setParameter('isDelete',false)
+        ->select('SUM(e.total) as total')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+        return (int)$resultTotal['total'];
+    }
 
     public function getUniqueNotDeleted(array $parameters){
         return $this->createQueryBuilder('e')

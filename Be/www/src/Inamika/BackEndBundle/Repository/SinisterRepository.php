@@ -69,6 +69,18 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
         ->getOneOrNullResult();
         return (int)$resultTotal['total'];
     }
+    
+    public function amount(){
+        $resultTotal=$this->search()
+        ->setFirstResult(null)
+        ->where('e.isDelete = :isDelete')
+        ->setParameter('isDelete',false)
+        ->select('SUM(e.amount) as total')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+        return (int)$resultTotal['total'];
+    }
 
 
     public function getUniqueNotDeleted(array $parameters){

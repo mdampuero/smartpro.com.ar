@@ -8,6 +8,11 @@ api_orders_get:
     defaults: { _controller: InamikaApiBundle:Orders:get }
     methods: [GET]
 
+api_orders_today:
+    path:     /ordersToday
+    defaults: { _controller: InamikaApiBundle:Orders:today }
+    methods: [GET]
+
 api_orders_post:
     path:     /orders
     defaults: { _controller: InamikaApiBundle:Orders:post }
