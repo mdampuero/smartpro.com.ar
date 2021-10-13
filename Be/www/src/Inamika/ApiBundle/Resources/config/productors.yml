@@ -13,6 +13,11 @@ api_productors_post:
     defaults: { _controller: InamikaApiBundle:Productors:post }
     methods: [POST]
 
+api_productors_login:
+    path:     /productors/login
+    defaults: { _controller: InamikaApiBundle:Productors:login }
+    methods: [POST]
+
 api_productors_put:
     path:     /productors/{id}
     defaults: { _controller: InamikaApiBundle:Productors:put }

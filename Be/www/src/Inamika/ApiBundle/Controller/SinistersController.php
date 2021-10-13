@@ -57,6 +57,12 @@ class SinistersController extends FOSRestController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
+
+    public function byProductorAction($productor){
+        return $this->handleView($this->view(array(
+            'data'=>$this->getDoctrine()->getRepository(Sinister::class)->getAll()->andWhere('e.productor=:productor')->setParameter('productor',$productor)->getQuery()->getResult()
+        )));
+    }
    
     private function sendEmail($entity){
         //SEND EMAIL ADMINISTRATOR

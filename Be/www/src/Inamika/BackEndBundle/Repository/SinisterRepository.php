@@ -15,7 +15,7 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
         ->select('e')
         ->where('e.isDelete = :isDelete')
         ->setParameter('isDelete',false)
-        ->orderBy("e.id","DESC");
+        ->orderBy("e.createdAt","DESC");
     }
 
     public function search($query=null,$limit=0,$offset=0,$sort=null,$direction=null){

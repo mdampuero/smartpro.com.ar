@@ -1,0 +1,187 @@
+<div class="main main-raised">
+
+    <div class="section section-basic px-2" *ngIf="data">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="preloading" routerLink="/">Mis Siniestros</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Siniestro Nº {{ data.number}}</li>
+                </ol>
+            </nav>
+        </div>
+        
+        <div class="alert alert-{{ data.status.color }}">
+            <div class="container text-center">
+                <h4>
+                    <i class="fas fa-exclamation-triangle"></i> Estado: {{ data.status.name }}
+                </h4>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="title m-0">
+                <h2 class="pb-3">Nº {{ data.number}}</h2>
+            </div>
+            
+                <div class="card mb-5">
+                    <div class="card-header card-header-info mb-4">
+                        <h4>Datos del siniestro</h4>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group ">
+                                    <label>Nº Siniestro</label>
+                                    <p><b>{{ data.number }}</b></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group">
+                                    <label for="si_amount">Monto</label>
+                                    <p><b>{{ data.amount | formatNumber}}</b></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label for="si_co_id">Compañía</label>
+                                    <p><b>{{ data.company.name }}</b></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label for="si_date">Fecha de Ingreso</label>
+                                    <p><b>{{ data.date | date }}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="card mb-5">
+                <div class="card-header card-header-info mb-4">
+                    <h4>Datos del asegurado</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="form-group">
+                                <label for="si_fullname">Nombre completo del asegurado</label>
+                                <p><b>{{ data.customer.name }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <div class="form-group">
+                                <label for="si_document">DNI</label>
+                                <p><b>{{ data.customer.document }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <div class="form-group">
+                                <label for="si_phone">Teléfono</label>
+                                <p><b>{{ data.customer.phone }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="form-group">
+                                <label for="si_email">Email</label>
+                                <p><b>{{ data.customer.email }}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-5">
+                <div class="card-header card-header-info mb-4">
+                    <h4>Datos postales</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="row"> 
+                        <div class="col-lg-4 col-md-6">
+                            <div class="form-group ">
+                                <label for="si_st_id">Provincia</label>
+                                <p><b>{{ data.customer.provence.name }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="form-group">
+                                <label for="si_city">Departamento</label>
+                                <p><b>{{ data.customer.locality.department.name }}, {{ data.customer.locality.name }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="form-group">
+                                <label for="si_address_street">Calle</label>
+                                <p><b>{{ data.customer.street }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            <div class="form-group">
+                                <label for="si_address_number">Número</label>
+                                <p><b>{{ data.customer.streetNumber }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            <div class="form-group">
+                                <label for="si_address_postal">C. postal</label>
+                                <p><b>{{ data.customer.postalCode }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            <div class="form-group">
+                                <label for="si_address_dpto">Dpto</label>
+                                <p><b>{{ data.customer.department }}</b></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            <div class="form-group">
+                                <label for="si_address_floor">Piso</label>
+                                <p><b>{{ data.customer.floor }}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-5">
+                <div class="card-header card-header-info mb-4">
+                    <h4>Descripción del siniestro ocurrido</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="si_observation_loan">Descripción</label>
+                                <p><b>{{ data.observations }}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-5" *ngIf="data.order">
+                <div class="card-header card-header-info mb-2">
+                    <h4>Productos seleccionados</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="table-responsive">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of data.order.items; let i=index;">
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ item.sku }}</td>
+                                    <td>{{ item.description }}</td>
+                                    <td>{{ item.amount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

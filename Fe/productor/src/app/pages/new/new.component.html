@@ -1,0 +1,175 @@
+<div class="main main-raised">
+    <div class="section section-basic px-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="preloading" routerLink="/">Mis Siniestros</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Ingresar siniestro</li>
+                </ol>
+            </nav>
+            <div class="title m-0">
+                <h2 class="pb-3">Ingresar siniestro</h2>
+            </div>
+            <form (ngSubmit)="save(sinisters)" #sinisters="ngForm">
+                <div class="card mb-5">
+                    <div class="card-header card-header-info mb-4">
+                        <h4>Datos del siniestro</h4>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_number">Nº Siniestro *</label>
+                                    <input autocomplete="off" type="text" class="form-control" [(ngModel)]="form.number" name="number">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_amount">Monto *</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="si_amount" [(ngModel)]="form.amount" name="amount" placeholder="Sin puntos ni decimales">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_amount_repeat">Repita el monto *</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="si_amount_repeat" [(ngModel)]="form.amountRepeat" name="amountRepeat" placeholder="Sin puntos ni decimales">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_date">Fecha de Ingreso *</label>
+                                    <mat-datepicker #picker></mat-datepicker>  
+                                    <input type="text" [matDatepicker]="picker" autocomplete="off" (click)="picker.open()" class="form-control datetimepicker" id="si_date" [(ngModel)]="datePicker" name="date" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group " style="margin-top: 22px;">
+                                    <label for="si_co_id">Compañía *</label>
+                                    <select id="si_co_id" [(ngModel)]="form.company" name="company" class="form-control">
+                                        <option value=''>-- Seleccione una opción --</option>
+                                        <option value="{{ company.id }}" *ngFor="let company of companies; let i=index;" >{{ company.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-5 ">
+                    <div class="card-header card-header-info mb-4">
+                        <h4>Datos del asegurado</h4>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_fullname">Nombre completo del asegurado *</label>
+                                    <input type="text" class="form-control" id="si_fullname" [(ngModel)]="form.name" name="name">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_document">DNI *</label>
+                                    <input type="text" class="form-control" id="si_document" [(ngModel)]="form.document" name="document">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_phone">Teléfono</label>
+                                    <input type="text" class="form-control" id="si_phone" [(ngModel)]="form.phone" name="phone">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_email">Email *</label>
+                                    <input type="text" class="form-control" id="si_email" [(ngModel)]="form.email" name="email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-5">
+                    <div class="card-header card-header-info mb-4">
+                        <h4>Datos postales</h4>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row"> 
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group " style="margin-top: 22px;">
+                                    <label for="si_st_id">Provincia *</label>
+                                    <select id="si_st_id" [(ngModel)]="form.provence" name="provence" (change)="onChange()" class="form-control">
+                                        <option value=''>-- Seleccione una opción --</option>
+                                        <option value="{{ provence.id }}" *ngFor="let provence of provences; let i=index;" >{{ provence.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_city">Localidad (Departamento) *</label>
+                                    <ng-container *ngIf="!loadingLocalities">
+                                        <select  class="form-control" [(ngModel)]="form.locality" name="locality" style="margin-top: -5px;" >
+                                            <option value=''>-- Seleccione una opción --</option>
+                                            <option value="{{ locality.id }}" *ngFor="let locality of localities; let i=index;" >{{ locality.name }} ({{ locality.department.name }})</option>
+                                        </select>
+                                    </ng-container>
+                                    <ng-container *ngIf="loadingLocalities">
+                                        <div  class="">
+                                            Cargando localidades...
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_address_street">Calle *</label>
+                                    <input type="text" class="form-control" id="si_address_street" [(ngModel)]="form.street" name="street">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_address_number">Número *</label>
+                                    <input type="text" class="form-control" id="si_address_number" [(ngModel)]="form.streetNumber" name="streetNumber">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_address_postal">C. postal *</label>
+                                    <input type="text" class="form-control" id="si_address_postal" [(ngModel)]="form.postalCode" name="postalCode">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_address_dpto">Dpto</label>
+                                    <input type="text" class="form-control" id="si_address_dpto" [(ngModel)]="form.department" name="department">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_address_floor">Piso</label>
+                                    <input type="text" class="form-control" id="si_address_floor" [(ngModel)]="form.floor" name="floor">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-5 ">
+                    <div class="card-header card-header-info mb-4">
+                        <h4>Descripción del siniestro ocurrido</h4>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group bmd-form-group">
+                                    <label for="si_address_floor">Por favor describa el siniestro</label>
+                                    <textarea class="form-control" id="si_observation_loan" [(ngModel)]="form.observations" name="observations" rows=5></textarea>
+                                </div>
+                            </div>
+                            <div class="text-center pt-4">
+                                <button class="btn btn-primary w-auto" type="submit">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form> 
+        </div>
+    </div>
+</div>

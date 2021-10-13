@@ -1,0 +1,39 @@
+<div class="login-page sidebar-collapse">
+    <div class="page-header-login header-filter" style="background-image: url('assets/img/bg7.jpg'); background-size: cover; background-position: top center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+                    <div class="card card-login">
+                        <form class="form sendToApi" novalidate (ngSubmit)="save(login)" #login="ngForm" >
+                            <div class="card-header card-header-primary text-center p-0">
+                                <img src="assets/img/logo-smartpro-1.png" style="width:70%;">
+                            </div>
+                            <p class="description text-center">Ingrese sus credenciales</p>
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">mail</i>
+                                        </span>
+                                    </div>
+                                    <input type="email" id="email" style="width: auto;"  name="email" [(ngModel)]="form.email" class="form-control" placeholder="Email..." autocomplete="new-password">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                    </div>
+                                    <input type="password" id="password" style="width: auto;" name="password" [(ngModel)]="form.password" class="form-control" placeholder="Contraseña..." autocomplete="new-password">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-link btn-wd btn-lg" type="submit" >Ingresar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

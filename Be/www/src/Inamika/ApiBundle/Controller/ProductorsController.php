@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Inamika\BackEndBundle\Entity\Productor;
 use Inamika\BackEndBundle\Form\Productor\ProductorType;
+use Inamika\BackEndBundle\Form\Productor\LoginType;
 
 class ProductorsController extends FOSRestController
 {   
@@ -33,12 +34,40 @@ class ProductorsController extends FOSRestController
         )));
     }
     
+    private function displayErrors($field,$message){
+        return [
+            'form'=>[
+                'errors'=>[
+                    'children'=>[
+                        $field=>[
+                            'errors'=>[$message]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
+    
     public function getAction($id){
         if(!$entity=$this->getDoctrine()->getRepository(Productor::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
 
+    public function loginAction(Request $request){
+        $form = $this->createForm(LoginType::class);
+        $content=json_decode($request->getContent(), true);
+        $form->submit($content);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if(!$entity=$this->getDoctrine()->getRepository(Productor::class)->findOneBy([
+                'isDelete'=>false,'email'=>$content["email"],'password'=>$content["password"]
+            ]))
+                return $this->handleView($this->view($this->displayErrors('password','Los datos ingresados no son válidos'), Response::HTTP_BAD_REQUEST));
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
+        }
+        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+    }
+    
     public function postAction(Request $request){
         $entity = new Productor();
         $form = $this->createForm(ProductorType::class, $entity);
