@@ -31,6 +31,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { CartfullComponent } from './components/utils/cartfull/cartfull.component';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     FormsModule,
     PinchZoomModule,
     BrowserAnimationsModule,
-    NgxSliderModule
+    NgxSliderModule,
+    Nl2BrPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

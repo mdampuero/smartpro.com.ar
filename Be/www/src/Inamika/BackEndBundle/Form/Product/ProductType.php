@@ -31,12 +31,25 @@ class ProductType extends AbstractType
         ->add('brand',TextType::class)
         ->add('picture',TextType::class,array('mapped'=>false))
         ->add('price',NumberType::class)
+        ->add('cost',NumberType::class)
         ->add('tags',TextType::class)
         ->add('description',TextareaType::class)
+        ->add('descriptionLarge',TextareaType::class)
         ->add('isSalient',ChoiceType::class, array('choices' => array(
             'SI' => 1,
             'NO' =>0
-    )))
+        )))
+        ->add('categories', EntityType::class, array(
+            'class' => 'InamikaBackEndBundle:Category',
+            'choice_label' => 'name',
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('e')
+                ->where('e.isDelete=0')
+                ->orderBy('e.name', 'ASC');
+            }
+        ))
         ->add('provider', EntityType::class, array(
             'class' => 'InamikaBackEndBundle:Provider',
             'query_builder' => function (EntityRepository $er) {

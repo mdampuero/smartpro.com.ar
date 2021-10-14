@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate,  RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { LoginService } from './db/login.service';
 
 @Injectable({
@@ -14,8 +13,15 @@ export class AuthGuard implements CanActivate {
   }
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    
     // when the user is logged in and just navigated to another route...
-    if (this.loginService.isAutenticate()) { return true; } 
+    if (this.loginService.isAutenticate()) { 
+      if((this.loginService.unixtime() - this.loginService.user.lastActivity) > (this.loginService.durationSession * 60) )
+        return false;    
+      
+      this.loginService.saveStorage();
+      return true; 
+    } 
   
     // proceeds if not loggedIn or F5/page refresh 
   

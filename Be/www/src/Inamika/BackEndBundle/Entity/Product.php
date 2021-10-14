@@ -32,6 +32,17 @@ class Product
     private $id;
 
     /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Category")
+     * @ORM\JoinTable(name="product_category",
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     *     )
+     * @Expose
+     */
+    private $categories;
+    
+    /**
      * Many Products have one Provider. This is the owning side.
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Provider")
@@ -116,6 +127,14 @@ class Product
     /**
      * @var float
      *
+     * @ORM\Column(name="cost", type="float")
+     * @Expose
+     */
+    private $cost=0;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="price_min", type="float")
      * @Expose
      */
@@ -189,6 +208,14 @@ class Product
     /**
      * @var string|null
      *
+     * @ORM\Column(name="descriptionLarge", type="text",nullable=true)
+     * @Expose
+     */
+    private $descriptionLarge;
+    
+    /**
+     * @var string|null
+     *
      * @ORM\Column(name="tags", type="text",nullable=true)
      * @Expose
      */
@@ -231,6 +258,7 @@ class Product
 
     public function __construct() {
         $this->pictures = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -243,6 +271,30 @@ class Product
         return $this->id;
     }
 
+    /**
+     * Set categories.
+     *
+     * @param string $categories
+     *
+     * @return Productor
+     */
+    public function setCategories($categories)
+    {
+        $this->categories[] = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Get categories.
+     *
+     * @return string
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+    
     /**
      * Set name.
      *
@@ -506,6 +558,30 @@ class Product
     }
     
     /**
+     * Set descriptionLarge.
+     *
+     * @param string $descriptionLarge
+     *
+     * @return Product
+     */
+    public function setDescriptionLarge($descriptionLarge)
+    {
+        $this->descriptionLarge = $descriptionLarge;
+
+        return $this;
+    }
+
+    /**
+     * Get descriptionLarge.
+     *
+     * @return string
+     */
+    public function getDescriptionLarge()
+    {
+        return $this->descriptionLarge;
+    }
+    
+    /**
      * Set tags.
      *
      * @param string $tags
@@ -551,6 +627,30 @@ class Product
     public function getPrice()
     {
         return $this->price;
+    }
+    
+    /**
+     * Set cost.
+     *
+     * @param float|null $cost
+     *
+     * @return Product
+     */
+    public function setCost($cost = null)
+    {
+        $this->cost = $cost;
+
+        return $this;
+    }
+
+    /**
+     * Get cost.
+     *
+     * @return float|null
+     */
+    public function getCost()
+    {
+        return $this->cost;
     }
 
     /**

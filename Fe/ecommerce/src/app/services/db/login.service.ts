@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Login } from 'src/app/models/login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +6,7 @@ import { Login } from 'src/app/models/login.model';
 export class LoginService {
 
   public user:any;
-
+  public durationSession=5;
   constructor() {
     this.loadStorage();
   }
@@ -24,6 +23,7 @@ export class LoginService {
   }
 
   saveStorage() {
+    this.user.lastActivity=this.unixtime();
     localStorage.setItem("sp-user-ecommerce", JSON.stringify(this.user));
   }
 
@@ -34,4 +34,10 @@ export class LoginService {
   isAutenticate(){
     return (this.user)?true:false;
   }
+
+  unixtime(){
+    let unixtime:any=new Date().getTime() / 1000;
+    return parseInt(unixtime);
+  }
+
 }

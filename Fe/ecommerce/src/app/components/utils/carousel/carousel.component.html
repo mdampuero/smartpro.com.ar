@@ -1,43 +1,10 @@
-<!-- <div id="carouselHome" class="carousel slide" data-bs-ride="carousel">
-    <ng-container *ngIf="!ready">
-        <div class="carousel-inner">
-            <div class="d-flex flex-column justify-content-center align-items-center"  style="height: 32rem;">
-                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-            </div>
-        </div>
-    </ng-container>
-    <ng-container *ngIf="ready">
-        <div class="carousel-indicators">
-            <!-- <button type="button" data-bs-target="#carouselHome" [attr.data-bs-slide-to]="i" *ngFor="let item of data.data; let i=index;" [ngClass]="{ 'active':i === 0 }" ></button> 
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item background-cover" *ngFor="let item of data.data; let i=index;" [ngClass]="{ 'active':i === 0 }" style="background-image: url('{{ environment.imgUrl.xl }}{{ item.picture }}');">  
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1 class="animate__animated animate__fadeInDown">{{ item.title }}</h1>
-                        <p class="animate__animated animate__zoomIn">{{ item.subtitle }}</p>
-                        <p _class="animate_animated animate__fadeInUp" *ngIf="item.link"><a class="btn btn-lg btn-info" href="{{ item.link }}">Conocer más</a></p>
-                    </div>
-                </div>
-            </div>      
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </ng-container>
-  </div> -->
 <ngb-carousel *ngIf="ready">
-    <ng-template ngbSlide *ngFor="let item of data.data; let i=index;">
+    <ng-template ngbSlide *ngFor="let item of data; let i=index;">
         <div class="carousel-inner background-cover" style="height: 32rem;" style="background-image: url('{{ environment.imgUrl.xl }}{{ item.picture }}');"></div>
         <div class="carousel-caption">
         <h3 class="animate__animated animate__fadeInDown">{{ item.title }}</h3>
         <p class="animate__animated animate__zoomIn">{{ item.subtitle }}</p>
-        <p _class="animate_animated animate__fadeInUp" *ngIf="item.link"><a class="btn btn-lg btn-info" href="{{ item.link }}">Conocer más</a></p>
+        <p _class="animate_animated animate__fadeInUp" *ngIf="item.link"><a class="btn btn-lg btn-info btn-sm" href="{{ item.link }}">Ver más</a></p>
         </div>
     </ng-template>
 </ngb-carousel>

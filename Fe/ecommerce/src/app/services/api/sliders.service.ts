@@ -46,7 +46,7 @@ export class SlidersService {
   );
   }
   getAll() {
-    return this.http.get(`${environment.apiUrl}sliders?search%5Bvalue%5D=&start=0&length=-1&sort=createdAt&direction=DESC`);
+    return this.http.get(`${environment.apiUrl}slidersRand`);
   }
   save(data:Sliders) {
     if(data.id !=='')

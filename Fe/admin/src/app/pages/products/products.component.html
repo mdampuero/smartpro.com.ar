@@ -32,9 +32,9 @@
                                     <th (click)="productsService.setOrder('name')">
                                         <app-table-th [title]="'Nombre'" [field]="'name'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
                                     </th>                               
-                                    <th (click)="productsService.setOrder('brand')">
+                                    <!-- <th (click)="productsService.setOrder('brand')">
                                         <app-table-th [title]="'Marca'" [field]="'brand'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
-                                    </th>                                 
+                                    </th>                                  -->
                                     <th (click)="productsService.setOrder('price')">
                                         <app-table-th [title]="'Precio'" [field]="'price'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
                                     </th>    
@@ -51,8 +51,8 @@
                                     </td>
                                     <td>{{ item.sku }}</td>
                                     <td>{{ item.name }}</td>
-                                    <td>{{ item.brand }}</td>
-                                    <td>$ {{ item.price }}</td>
+                                    <!-- <td>{{ item.brand }}</td> -->
+                                    <td>{{ item.price | formatNumber }}</td>
                                     <td class="text-center" [innerHTML]="item.isSalient | badgeBinary"></td>
                                     <td class="text-center">
                                         <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/products/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 

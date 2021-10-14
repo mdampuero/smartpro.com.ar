@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from './services/db/login.service';
 
 @Component({
@@ -11,7 +12,14 @@ export class AppComponent {
   constructor(
     public loginService:LoginService
     ) {
-      
+      setInterval(() => {   
+        if(this.loginService.user){
+          if((this.loginService.unixtime() - this.loginService.user.lastActivity) > (this.loginService.durationSession * 60) ){
+            this.loginService.logout();
+            location.reload();         
+          }
+        }
+      }, 60000);
     }
-    
+  
 }

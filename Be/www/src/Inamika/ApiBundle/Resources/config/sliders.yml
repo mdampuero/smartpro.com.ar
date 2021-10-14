@@ -8,6 +8,11 @@ api_sliders_get:
     defaults: { _controller: InamikaApiBundle:Sliders:get }
     methods: [GET]
 
+api_sliders_rand:
+    path:     /slidersRand
+    defaults: { _controller: InamikaApiBundle:Sliders:rand }
+    methods: [GET]
+
 api_sliders_post:
     path:     /sliders
     defaults: { _controller: InamikaApiBundle:Sliders:post }

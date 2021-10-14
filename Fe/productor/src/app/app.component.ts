@@ -8,5 +8,14 @@ import { LoginService } from './services/db/login.service';
 })
 export class AppComponent {
   title = 'productor';
-  constructor(public loginService:LoginService) { }
+  constructor(public loginService:LoginService) { 
+    setInterval(() => {   
+      if(this.loginService.user){
+        if((this.loginService.unixtime() - this.loginService.user.lastActivity) > (this.loginService.durationSession * 60) ){
+          this.loginService.logout();
+          location.reload();         
+        }
+      }
+    }, 60000);
+  }
 }

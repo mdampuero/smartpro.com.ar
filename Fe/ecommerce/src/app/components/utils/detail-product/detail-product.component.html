@@ -10,13 +10,7 @@
             <h3 class="py-3">{{ item.name }}</h3>
             <h3 class="text-info">{{ item.price | formatNumber }}</h3>
             <div class="description mt-3">
-                <p></p>
-                <ul>
-                    <li>Potencia total 30W</li>
-                    <li>Potencia total 30W</li>
-                    <li>Potencia total 30W</li>
-                    <li>Potencia total 30W</li>
-                </ul>
+                <p>{{ item.description }}</p>
             </div>
             <hr>
             <div class="row">
@@ -38,18 +32,26 @@
             </div>
             <hr>
             <div class="">
-                <h6><b>Modelo:</b> 446545</h6>
+                <h6 *ngIf="item.brand"><b>Marca:</b> {{ item.brand }}</h6>
                 <h6><b>SKU:</b> {{ item.sku}}</h6>
-                <h6><b>Categoría:</b> Audio</h6>
-                <h6><b>Etiquetas:</b> dadsa,dsadsadsad,sadsa</h6>
+                <h6 *ngIf="item.categories.length > 0">
+                    <b>Categoría:</b> 
+                    <ng-container *ngFor="let category of item.categories; let i=index;">
+                        <span class="badge badge-info ml-1">
+                            {{ category.name }}
+                        </span>
+                    </ng-container>
+                </h6>
+                <h6 *ngIf="item.tags"><b>Etiquetas:</b> {{ item.tags }}</h6>
             </div>
         </div>
     </div>
-    <h5 class="animate__animated animate__fadeInLeft mt-4">Descripción</h5>
-    <hr class="animate__animated animate__fadeInRight">
-    <div class="description pb-5">
-        {{ item.description }}
-    </div>
+    <ng-container *ngIf="item.descriptionLarge">
+        <h5 class="animate__animated animate__fadeInLeft mt-4">Descripción</h5>
+        <hr class="animate__animated animate__fadeInRight">
+        <div class="description pb-5" [innerHTML]="item.descriptionLarge | nl2br">
+        </div>
+    </ng-container>
     <h5 class="animate__animated animate__fadeInLeft mt-4">Productos relacionados</h5>
     <hr class="animate__animated animate__fadeInRight">
     <div class="row">

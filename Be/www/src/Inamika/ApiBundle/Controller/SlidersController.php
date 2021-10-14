@@ -33,6 +33,12 @@ class SlidersController extends DefaultController
         )));
     }
     
+    public function randAction(){
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Slider::class)->getAll()
+        ->orderBy('RAND()')
+        ->getQuery()->getResult()));
+    }
+
     private function displayErrors($field,$message){
         return [
             'form'=>[

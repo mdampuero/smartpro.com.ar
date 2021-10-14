@@ -60,7 +60,7 @@ import { SinisterStatusComponent } from './pages/sinisters/sinister-status/sinis
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { LoginComponent } from './pages/login/login.component';
-
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
   declarations: [
@@ -123,7 +123,8 @@ import { LoginComponent } from './pages/login/login.component';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    NgxEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent],

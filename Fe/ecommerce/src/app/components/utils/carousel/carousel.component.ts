@@ -10,12 +10,11 @@ import { environment } from 'src/environments/environment';
 export class CarouselComponent implements OnInit {
   public data:any={ };
   public ready=false;
-  public images:any;
   public environment=environment;
   constructor(
     public slidersService: SlidersService
     ) { 
-      this.images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+      
     }
 
   ngOnInit(): void {
