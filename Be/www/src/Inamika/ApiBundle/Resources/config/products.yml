@@ -19,7 +19,7 @@ api_products_getBySku:
     methods: [GET]
 
 api_products_get_similar:
-    path:     /products/similar/{id}
+    path:     /products/similar/{sku}
     defaults: { _controller: InamikaApiBundle:Products:similar }
     methods: [GET]
 

@@ -20,10 +20,11 @@ class ProductsController extends DefaultController
         $offset = $request->query->get('start', 0);
         $priceMin = $request->query->get('priceMin', 0);
         $priceMax = $request->query->get('priceMax', 0);
+        $category = $request->query->get('category', 0);
         $limit = $request->query->get('length', 30);
         $sort = $request->query->get('sort', null);
         $direction = $request->query->get('direction', null);
-        $filter=['priceMin'=>$priceMin,'priceMax'=>$priceMax];
+        $filter=['priceMin'=>$priceMin,'priceMax'=>$priceMax,'category'=>$category];
         $recordsFiltered = $this->getDoctrine()->getRepository(Product::class)->searchTotal($query, $limit, $offset,$filter);
         return $this->handleView($this->view(array(
             'data' => $this->getDoctrine()->getRepository(Product::class)->search($query, $limit, $offset, $sort, $direction,$filter)->getQuery()->getResult(),
@@ -45,8 +46,13 @@ class ProductsController extends DefaultController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
-    public function similarAction($id){
-        return $this->handleView($this->view($this->getDoctrine()->getRepository(Product::class)->search("", 4, 0, null, null,null)->getQuery()->getResult()));
+    public function similarAction($sku){
+        if(!$entity=$this->getDoctrine()->getRepository(Product::class)->findOneBySku($sku))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Product::class)->search($entity->getTags(), 4, 0, null, null,null)
+        ->andWhere("e.id<>:entity")->setParameter('entity',$entity->getId())
+        ->getQuery()->getResult()));
     }
     
     public function salientsAction(){
