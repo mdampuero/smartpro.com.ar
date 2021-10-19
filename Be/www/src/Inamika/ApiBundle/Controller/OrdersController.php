@@ -71,8 +71,10 @@ class OrdersController extends FOSRestController
             if(!key_exists('cart',$content) || !key_exists('items',$content["cart"]) || !count($content["cart"]["items"]))
                 return $this->handleView($this->view($this->displayErrors('items','No hay productos en su carrito'), Response::HTTP_BAD_REQUEST));
             $cart=$this->getDoctrine()->getRepository(Cart::class)->find($content["cart"]["id"]);
-            // if($cart->getTotal()!=$content["total"])
-            //     return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
+            if($cart->getTotal()!=$content["total"])
+                return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
+            if(!$cart->getCustomer()->getIsActive())
+                return $this->handleView($this->view($this->displayErrors('items','El cliente no esta activo'), Response::HTTP_BAD_REQUEST));
             /**
              * Guardo la orden
              */
@@ -127,9 +129,22 @@ class OrdersController extends FOSRestController
             $em->flush();
 
             $this->sendEmails($entity);
+
+            $this->clearCart($cart);
             return $this->handleView($this->view($entity, Response::HTTP_OK));
         }
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+    }
+
+    private function clearCart($cart){
+        $em = $this->getDoctrine()->getManager();
+        foreach($cart->getItems() as $item){
+            $em->remove($item);
+        }
+        $cart->getCustomer()->setBalance($cart->getCustomer()->getBalance()-$cart->getTotal());
+        $cart->setTotal(0);
+        $em->persist($cart);
+        $em->flush();
     }
 
     private function sendEmails($entity){

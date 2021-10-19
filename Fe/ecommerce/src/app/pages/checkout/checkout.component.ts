@@ -7,6 +7,7 @@ import { LocalitiesService } from 'src/app/services/api/localities.service';
 import { OrderService } from 'src/app/services/api/orders.service';
 import { ProvencesService } from 'src/app/services/api/provences.service';
 import { LoginService } from 'src/app/services/db/login.service';
+import { ToastService } from 'src/app/services/toast.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,7 +25,7 @@ export class CheckoutComponent implements OnInit {
   }
   constructor(
     public localitiesService: LocalitiesService,
-    public provencesService: ProvencesService,private router: Router,public loginService:LoginService,private spinner: NgxSpinnerService,private customerService:CustomerService,private ordersService:OrderService) { }
+    public provencesService: ProvencesService,public toast:ToastService,private router: Router,public loginService:LoginService,private spinner: NgxSpinnerService,private customerService:CustomerService,private ordersService:OrderService) { }
   ngOnInit(): void { 
     if(this.loginService.user.cart.items.length == 0){
       this.router.navigate(['/home']);
@@ -87,6 +88,7 @@ export class CheckoutComponent implements OnInit {
           Object.entries(error.error.form.errors.children).forEach(
             ([key, value]) => this.callback(key,value)
           );
+         this.toast.show('UPS! Algo no salió bien');
         this.spinner.hide();
       },
       ()=> this.spinner.hide()

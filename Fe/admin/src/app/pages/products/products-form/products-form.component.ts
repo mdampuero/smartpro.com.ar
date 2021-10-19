@@ -124,10 +124,10 @@ export class ProductsFormComponent implements OnInit {
 		this.productsService.save(this.form).subscribe(
 		(data:any) => {
 			this._snackBar.open('Los cambios fueron guardados','Aceptar', { duration: 3000 });
-			if(this.activatedRoute.snapshot.paramMap.get('id'))
 			this.router.navigate(['/products']);
-			else
-			this.router.navigate([`/products/photos/${data.id}`]);
+			// if(this.activatedRoute.snapshot.paramMap.get('id'))
+			// else
+			// this.router.navigate([`/products/photos/${data.id}`]);
 		},
 		(error) => {
 			if(error.status==400)

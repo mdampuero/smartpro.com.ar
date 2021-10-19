@@ -6,11 +6,11 @@ parameters:
     database_user: c2360229_spFull
     database_password: labiZAdi18
     mailer_transport: smtp
-    mailer_host: smtp.mailtrap.io
-    mailer_port: 2525
-    mailer_encryption: tls
-    mailer_user: a4140ccebccb5f
-    mailer_password: ad647ff494915d
+    mailer_host: c2360229.ferozo.com
+    mailer_port: 465
+    mailer_encryption: ssl
+    mailer_user: sp@mdasoftware.com.ar
+    mailer_password: cRkc*WX6yW
     secret: 99b2af404f070f6d849dea5705fd9375b130a628
     global: 
         ecommerce: 'http://smartpro.ecommerce.mdasoftware.com.ar/'

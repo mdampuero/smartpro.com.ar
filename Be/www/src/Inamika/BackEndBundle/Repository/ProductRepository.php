@@ -44,12 +44,12 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             if(count($words)>1){
                 foreach ($words as $key => $word) {
                     $queryString=array();
-                    $queryString[]="CONCAT(e.name,COALESCE(e.sku,''),COALESCE(e.ean,'')) LIKE :word".$key;
+                    $queryString[]="CONCAT(e.name,COALESCE(e.sku,''),COALESCE(e.tags,''),COALESCE(e.brand,''),COALESCE(e.ean,'')) LIKE :word".$key;
                     $qb->setParameter('word'.$key,"%".$word."%");
                     $qb->andWhere(join(' AND ',$queryString));
                 }
             }else{
-                $qb->andWhere("CONCAT(e.name,COALESCE(e.sku,''),COALESCE(e.ean,'')) LIKE :query")->setParameter('query',"%".$query."%");
+                $qb->andWhere("CONCAT(e.name,COALESCE(e.sku,''),COALESCE(e.tags,''),COALESCE(e.brand,''),COALESCE(e.ean,'')) LIKE :query")->setParameter('query',"%".$query."%");
             }
         }
         return $qb;
