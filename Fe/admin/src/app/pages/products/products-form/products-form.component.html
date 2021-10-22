@@ -64,23 +64,13 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Descripción breve</label>
-                                    <!-- <div class="NgxEditor__Wrapper" style="min-height: 250px; border:none">
-                                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-                                        <ngx-editor
-                                            name="description"
-                                            [editor]="editor"
-                                            [(ngModel)]="html"
-                                            [disabled]="false"
-                                            [placeholder]="''"
-                                        ></ngx-editor>
-                                    </div> -->
-                                    <textarea class="form-control" [(ngModel)]="form.description" name="description" rows="5"></textarea>
+                                    <angular-editor [placeholder]="'Resumen del producto...'" [(ngModel)]="form.description" name="description" [config]="editorConfig"></angular-editor>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Descripción extensa</label>
-                                    <textarea class="form-control" [(ngModel)]="form.descriptionLarge" name="descriptionLarge" rows="10"></textarea>
+                                    <angular-editor [placeholder]="'Resumen del producto...'" [(ngModel)]="form.descriptionLarge" name="descriptionLarge" [config]="editorConfig"></angular-editor>
                                 </div>
                             </div>
                         </div>

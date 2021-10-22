@@ -37,3 +37,13 @@ api_products_delete:
     path:     /products/{id}
     defaults: { _controller: InamikaApiBundle:Products:delete }
     methods: [DELETE]
+
+api_products_download:
+    path:     /productsDownload
+    defaults: { _controller: InamikaApiBundle:Products:download }
+    methods: [GET]
+
+api_products_upload:
+    path:     /productsUpload
+    defaults: { _controller: InamikaApiBundle:Products:upload }
+    methods: [POST]

@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LogsService } from 'src/app/services/api/logs.service';
 import { EventsService } from 'src/app/services/events.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { LoginService } from '../../services/db/login.service';
 
 @Component({
   selector: 'app-timeline',
@@ -24,6 +25,7 @@ export class TimelineComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService,
     public logsService: LogsService,
+    public loginService: LoginService,
     public events: EventsService,
     private modalService: NgbModal,
     private _snackBar: MatSnackBar) { 
@@ -52,7 +54,7 @@ export class TimelineComponent implements OnInit {
   }
   
   save(){
-    this.form.user='Usuario';
+    this.form.user=this.loginService.user.name;
     this.form.icon='fa fa-pencil';
     this.form.status='info';
     this.form.resource=this.resource;

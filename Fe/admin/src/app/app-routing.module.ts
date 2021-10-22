@@ -13,6 +13,7 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { ProductorsFormComponent } from './pages/productors/productors-form/productors-form.component';
 import { ProductorsComponent } from './pages/productors/productors.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
+import { ProductsUpdateComponent } from './pages/products/products-update/products-update.component';
 import { ProductsUploadComponent } from './pages/products/products-upload/products-upload.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProvidersFormComponent } from './pages/providers/providers-form/providers-form.component';
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'providers/editar/:id', component: ProvidersFormComponent ,canActivate:[AuthGuard]},
   
   { path: 'products', component: ProductsComponent,canActivate:[AuthGuard]},
+  { path: 'products/updatePrice', component: ProductsUpdateComponent,canActivate:[AuthGuard]},
   { path: 'products/nuevo', component: ProductsFormComponent ,canActivate:[AuthGuard]},
   { path: 'products/editar/:id', component: ProductsFormComponent ,canActivate:[AuthGuard]},
   { path: 'products/photos/:id', component: ProductsUploadComponent ,canActivate:[AuthGuard]},

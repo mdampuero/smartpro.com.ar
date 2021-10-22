@@ -135,7 +135,7 @@ class SinistersController extends FOSRestController
          * Guardo su Log
          */
         $log=new Log();
-        $log->setUser("Alguno");
+        $log->setUser($content["user"]);
         $log->setResource($sinister->getId());
         $log->setTitle("Nuevo");
         $log->setIcon("fa fa-star");
@@ -166,18 +166,17 @@ class SinistersController extends FOSRestController
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
     }
     
-    public function putAction(Request $request,$id){
+    public function changeSatusAction(Request $request,$id){
         if(!$entity=$this->getDoctrine()->getRepository(Sinister::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-        $form = $this->createForm(SinisterType::class, $entity);
-        $form->submit(json_decode($request->getContent(), true));
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-            return $this->handleView($this->view($entity, Response::HTTP_OK));
-        }
-        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+        $body=json_decode($request->getContent(), true);
+        if(!$newStatus=$this->getDoctrine()->getRepository(SinisterStatus::class)->find($body["status"]))
+            return $this->handleView($this->view(null, Response::HTTP_BAD_REQUEST));
+        $em = $this->getDoctrine()->getManager();
+        $entity->setStatus($newStatus);
+        $em->persist($entity);
+        $em->flush();
+        return $this->handleView($this->view($entity, Response::HTTP_OK));
     }
 
     public function deleteAction(Request $request,$id){

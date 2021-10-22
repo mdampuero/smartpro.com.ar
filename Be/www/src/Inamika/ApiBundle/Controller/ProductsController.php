@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Inamika\BackEndBundle\Entity\Product;
 use Inamika\BackEndBundle\Form\Product\ProductType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ProductsController extends DefaultController
 {   
@@ -125,4 +128,100 @@ class ProductsController extends DefaultController
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
     }
 
+    public function downloadAction(){
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject->getProperties()->setCreator("SmartPro")
+            ->setLastModifiedBy("SmartPro")
+            ->setTitle("Lista de precios SmartPro")
+            ->setSubject("Lista de precios SmartPro")
+            ->setDescription("Este documento contiene la lista de precios de SmartPro");
+        $data=$this->getDoctrine()->getRepository(Product::class)->getAll()
+        ->orderBy('e.sku','DESC')
+        ->getQuery()->getResult();
+        
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->setCellValue('A1','SKU')
+            ->setCellValue('B1','Nombre')
+            ->setCellValue('C1','Precio costo')
+            ->setCellValue('D1','Precio venta')
+            ;
+        $row=2;
+        foreach ($data as $key => $d) {
+            $phpExcelObject->setActiveSheetIndex(0)
+                ->setCellValue('A'.$row, $d->getSku())
+                ->setCellValue('B'.$row, $d->getName())
+                ->setCellValue('C'.$row, (String)round(($d->getCost()),2))
+                ->setCellValue('D'.$row, (String)round(($d->getPrice()),2))
+                ;
+            $row++;
+        }
+        foreach(range('A','D') as $columnID) {
+            $phpExcelObject->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+        }
+        
+        $phpExcelObject->getActiveSheet()->setTitle('Lista de precios');
+        $phpExcelObject->setActiveSheetIndex(0);
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'CSV');
+        $writer->setDelimiter(";");
+        $writer->setEnclosure('"');
+        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        $dispositionHeader = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'SmartProListaDePrecio'.date('d_m_Y_H_i').'.csv'
+        );
+
+        $response->headers->set('Content-Type', 'text/csv;');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Content-Disposition', $dispositionHeader);
+
+        return $response;
+    }
+    
+    public function uploadAction(Request $request){
+        $content=json_decode($request->getContent(), true);
+        if(!key_exists("file",$content) || empty($content["file"]))
+            return $this->handleView($this->view($this->displayErrors('file','</br>El archivo no es válido o esta vacío.'), Response::HTTP_BAD_REQUEST));
+        $dataFile=explode("base64,",$content["file"]);
+        $dataFileInfo=explode(":",$dataFile[0]);
+        $dataFileExtension=explode("/",$dataFileInfo[1]);
+        $extension=str_replace(";", "", $dataFileExtension[1]);
+        if($extension!=='csv')
+            return $this->handleView($this->view($this->displayErrors('file','</br>El formato del archivo no es válido o esta vacío.'), Response::HTTP_BAD_REQUEST));
+        $fileName = md5(uniqid()).'.'.$extension;
+        $data = base64_decode($dataFile[1]);
+		$success = file_put_contents("uploads/".$fileName, $data);
+
+        $em = $this->getDoctrine()->getManager();
+        $i=0;
+        if (($handle = fopen("uploads/".$fileName, "r")) !== FALSE) {            
+            while (($data = fgetcsv($handle, null, ';')) !== FALSE) {
+                $i++;
+                if ($i<=1 || empty($data[0])) continue;
+                if(!$product=$em->getRepository(Product::class)->findOneBySku($data[0]))
+                    continue;
+                $product->setCost($data[2]);
+                $product->setPrice($data[3]);
+                $em->persist($product);
+                                
+            }
+            $em->flush();
+            fclose($handle);
+        }
+        return $this->handleView($this->view("OK", Response::HTTP_OK));
+    }
+
+    private function displayErrors($field,$message){
+        return [
+            'form'=>[
+                'errors'=>[
+                    'children'=>[
+                        $field=>[
+                            'errors'=>[$message]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
 }

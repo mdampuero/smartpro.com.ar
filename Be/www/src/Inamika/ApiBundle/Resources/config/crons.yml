@@ -6,3 +6,11 @@ api_crons_generate:
     path:     /crons/generate
     defaults: { _controller: InamikaApiBundle:Crons:generate }
     methods: [GET]
+api_crons_import:
+    path:     /crons/import
+    defaults: { _controller: InamikaApiBundle:Crons:import }
+    methods: [GET]
+api_crons_init:
+    path:     /crons/init
+    defaults: { _controller: InamikaApiBundle:Crons:init }
+    methods: [GET]

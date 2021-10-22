@@ -75,6 +75,8 @@ class OrdersController extends FOSRestController
                 return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
             if(!$cart->getCustomer()->getIsActive())
                 return $this->handleView($this->view($this->displayErrors('items','El cliente no esta activo'), Response::HTTP_BAD_REQUEST));
+            if($cart->getCustomer()->getSinister()->getIsDelete())
+                return $this->handleView($this->view($this->displayErrors('items','El siniestro esta eliminado'), Response::HTTP_BAD_REQUEST));
             /**
              * Guardo la orden
              */

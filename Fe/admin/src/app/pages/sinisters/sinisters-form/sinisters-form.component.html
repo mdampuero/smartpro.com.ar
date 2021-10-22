@@ -1,7 +1,7 @@
 <div class="container-fluid animated fadeIn">
     <app-breadcrumb [title]="'Siniestros'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
         
-    <form class="form-material m-t-40" (ngSubmit)="save(sinisters)" #sinisters="ngForm">
+    <form class="form-material m-t-40" (ngSubmit)="save(sinisters)" #sinisters="ngForm" autocomplete="off">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -18,12 +18,14 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Fecha de ingreso</label>
-                                    <div class="input-group">
+                                    <mat-datepicker #picker></mat-datepicker>  
+                                    <input type="text" [matDatepicker]="picker" autocomplete="off" (click)="picker.open()" class="form-control datetimepicker" [(ngModel)]="datePicker" name="datePicker" value="">
+                                    <!-- <div class="input-group">
                                         <input class="form-control" placeholder="yyyy-mm-dd" name="dp" readonly="readonly" [(ngModel)]="dp" ngbDatepicker #d="ngbDatepicker">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-sm-3">

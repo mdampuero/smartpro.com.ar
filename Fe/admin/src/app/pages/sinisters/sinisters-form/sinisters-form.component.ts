@@ -13,15 +13,32 @@ import { CompaniesService } from 'src/app/services/api/companies.service';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ProvencesService } from 'src/app/services/api/provences.service';
 import { LocalitiesService } from 'src/app/services/api/localities.service';
+import { MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
 
 @Component({
   selector: 'app-sinisters-form',
-  templateUrl: './sinisters-form.component.html'
+  templateUrl: './sinisters-form.component.html',
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class SinistersFormComponent implements OnInit {
   model: NgbDateStruct | undefined;
   public dp={year:"2021", month:"09",day:"12"};
   public loadingLocalities=false;
+  public datePicker:any;
   public form: Sinisters={
     id:'',
     number:'',
@@ -106,6 +123,8 @@ export class SinistersFormComponent implements OnInit {
   save(form:NgForm){
     this.spinner.show();
     $(".form-control-feedback.text-danger").remove();
+    if(this.datePicker)
+      this.form.date=this.datePicker.format('YYYY-MM-DD');
     this.form.date=`${this.dp.year}-${this.dp.month}-${this.dp.day}`;
     this.sinistersService.save(this.form).subscribe(
       (data:any) => {

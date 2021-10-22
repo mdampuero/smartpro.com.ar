@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Sinisters } from 'src/app/models/sinisters.model';
 import { EventsService } from '../events.service';
+import { LoginService } from '../db/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class SinistersService {
   public sort = "createdAt";
   public direction = "DESC";
 
-  constructor(private http: HttpClient,public events: EventsService) { 
+  constructor(private http: HttpClient,public events: EventsService, public loginService:LoginService) { 
 
   }
 
@@ -56,11 +57,15 @@ export class SinistersService {
   getAll() {
     return this.http.get(`${environment.apiUrl}sinisters?search%5Bvalue%5D=&start=0&length=-1&sort=name&direction=ASC`);
   }
-  save(data:Sinisters) {
+  save(data:any) {
+    data.user=this.loginService.user.name;
     if(data.id !=='')
       return this.http.put(`${environment.apiUrl}sinisters/${data.id}`, data);
     else
       return this.http.post(`${environment.apiUrl}sinisters`, data);
+  }
+  changeStatus(status:string,id:string) {
+    return this.http.put(`${environment.apiUrl}sinisters/changeSatus/${id}`, { status:status});
   }
   delete(item:Sinisters) {
     return this.http.delete(`${environment.apiUrl}sinisters/${item.id}`);

@@ -32,7 +32,7 @@ class Product
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Category")
+     * @ORM\ManyToMany(targetEntity="Category", cascade={"persist"})
      * @ORM\JoinTable(name="product_category",
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}

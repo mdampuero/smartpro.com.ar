@@ -61,6 +61,12 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+import { ProductsUpdateComponent } from './pages/products/products-update/products-update.component';
 
 @NgModule({
   declarations: [
@@ -108,11 +114,13 @@ import { NgxEditorModule } from 'ngx-editor';
     SinisterStatusComponent,
     OrdersDetailComponent,
     LoginComponent,
+    ProductsUpdateComponent
   ],
   imports: [
     NgbPaginationModule, 
     NgbAlertModule,
     NgbDropdownModule,
+    AngularEditorModule,
     NgbModalModule,
     MatTooltipModule,
     MatSnackBarModule,
@@ -124,7 +132,10 @@ import { NgxEditorModule } from 'ngx-editor';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    NgxEditorModule
+    NgxEditorModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent],

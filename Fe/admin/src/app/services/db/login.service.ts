@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class LoginService {
 
   public user:any;
-  public durationSession=5;
+  public durationSession=15;
   constructor() {
     this.loadStorage();
   }

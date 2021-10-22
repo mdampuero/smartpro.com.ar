@@ -56,6 +56,9 @@ export class ProductsService {
     else
       return this.http.post(`${environment.apiUrl}products`, data);
   }
+  updatePrice(data:any) {
+    return this.http.post(`${environment.apiUrl}productsUpload`, data);
+  }
   delete(item:Products) {
     return this.http.delete(`${environment.apiUrl}products/${item.id}`);
   }

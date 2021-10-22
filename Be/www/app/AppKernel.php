@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Inamika\ApiBundle\InamikaApiBundle(),
             new Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             // new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
         ];
 

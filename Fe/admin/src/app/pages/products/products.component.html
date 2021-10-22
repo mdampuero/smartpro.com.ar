@@ -5,17 +5,19 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row form-material">
-                        <div class="col-md-4">
-                            <div class="text-left animated fadeInLeft">
+                        <div class="col-md-6">
+                            <div class="text-left animated fadeInLeft btn-group">
                                 <a role="button" routerLink="nuevo" class="btn btn-rounded btn-success"><i class="fa fa-plus"></i> Nuevo</a>
+                                <a role="button" routerLink="updatePrice" class="btn btn-rounded btn-primary"><i class="fa fa-upload"></i> Actualizar</a>
+                                <a role="button" herf="javascript:void(0)" (click)="download()" class="btn btn-rounded btn-warning"><i class="fa fa-download"></i> Descargar</a>
                             </div>
                         </div>
-                        <div class="col-md-4 animated fadeInDown">
+                        <div class="col-md-3 animated fadeInDown">
                             <div>
                                 <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="query" (keyUp.enter)="search()">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="text-right animated fadeInRight">
                                 <app-pagination  [total]="data.recordsFiltered" [limit]="productsService.limit" [pages]="data.pages"></app-pagination>
                             </div>

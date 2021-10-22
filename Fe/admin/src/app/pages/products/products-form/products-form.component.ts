@@ -12,14 +12,41 @@ import { EventsService } from 'src/app/services/events.service';
 import { Editor, Toolbar } from 'ngx-editor';
 import { Categories } from 'src/app/models/categories.model';
 import { CategoriesService } from 'src/app/services/api/categories.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-products-form',
   templateUrl: './products-form.component.html'
 })
 export class ProductsFormComponent implements OnInit {
-  editor: Editor = new Editor;
-  public html: '' | undefined;
+  public htmlContent:any;
+  editorConfig: AngularEditorConfig = {
+    minHeight: '200px',
+    editable: true,
+    spellcheck: true,
+    toolbarHiddenButtons: [
+      [
+        'subscript',
+        'superscript',
+        'heading',
+        'fontName'
+      ],
+      [
+        'fontSize',
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'link',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
+
   public categorySelect=[];
   public form: Products={
     id:'',
@@ -37,16 +64,7 @@ export class ProductsFormComponent implements OnInit {
     isSalient:0,
     categories:[]
   };
-  public toolbar: Toolbar = [
-    ["bold", "italic"],
-    ["underline", "strike"],
-    ["code", "blockquote"],
-    ["ordered_list", "bullet_list"],
-    // [{ heading: ["h1", "h2", "h3", "h4", "h5", "h6"] }],
-    ["link"],
-    // ["text_color", "background_color"],
-    ["align_left", "align_center", "align_right", "align_justify"]
-  ];
+ 
   public providers: Providers[]=[];
   public categories: any[]=[];
   public titlePage:string='Nuevo';
@@ -104,7 +122,6 @@ export class ProductsFormComponent implements OnInit {
 	}
 	
 	ngOnInit(): void {
-    this.editor = new Editor();
 		this.events.subscribe('app-input-file', (data: any) => {
 			this.form.picture=data.base64;
 			this.form.picturePreview=data.base64;
@@ -145,7 +162,6 @@ export class ProductsFormComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.editor.destroy();
     this.events.destroy('app-input-file');
   }
 }

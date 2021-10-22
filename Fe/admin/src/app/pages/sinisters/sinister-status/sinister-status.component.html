@@ -1,44 +1,89 @@
+
+<!-- NEED_TO_DEFINE_PRODUCTS
+WAITING_FOR_PRODUCTS
+UNDELIVERED
+DELIVERED
+INVOICED
+DISCHARDGED -->
 <div class="container-fluid animated fadeIn">
     <app-breadcrumb [title]="'Siniestros'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
     <div class="card">
         <div class="card-body" *ngIf="data">
-            <h2 class="card-title animated fadeInDown">Estados</h2>
+            <h2 class="card-title animated fadeInDown">Estado actual</h2>
+            <hr class="mb-4">
+            <div class="alert alert-{{ data.status.color }}">{{ data.status.name }}</div>
+            <h2 class="card-title animated fadeInDown">Cambiar estado</h2>
             <hr class="mb-4">
             <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-                <li [ngbNavItem]="1">
-                  <a ngbNavLink>One</a>
+                <li [ngbNavItem]="this.status[0].id" [disabled]="this.status[0].disabled">
+                  <a ngbNavLink >{{ this.status[0].label }}</a>
                   <ng-template ngbNavContent>
-                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
-                      master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
-                      keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
-                      salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                    <div class="tab-pane">
+                      <p>
+                        EL siniestro Nº se encuentra en estado '{{ this.status[0].label }}'
+                      </p>
+                    </div>
                   </ng-template>
                 </li>
-                <li [ngbNavItem]="2">
-                  <a ngbNavLink>Two</a>
+                <li [ngbNavItem]="this.status[1].id" [disabled]="this.status[1].disabled">
+                  <a ngbNavLink >{{ this.status[1].label }}</a>
                   <ng-template ngbNavContent>
-                    <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
-                      farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
-                      ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-                      helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson
-                      8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
-                      stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+                    <div class="tab-pane">
+                      <p>
+                        EL siniestro Nº se encuentra en estado '{{ this.status[1].label }}'
+                      </p>
+                    </div>
                   </ng-template>
                 </li>
-                <li [ngbNavItem]="3">
-                  <a ngbNavLink>Three</a>
+                <li [ngbNavItem]="this.status[2].id" [disabled]="this.status[2].disabled">
+                  <a ngbNavLink >{{ this.status[2].label }}</a>
                   <ng-template ngbNavContent>
-                    <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
-                      Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
-                      Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
-                      egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
-                      tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-                      magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-                      neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+                    <div class="tab-pane">
+                      <p>
+                        EL siniestro Nº se encuentra en estado '{{ this.status[2].label }}'
+                      </p>
+                    </div>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="this.status[3].id" [disabled]="this.status[3].disabled">
+                  <a ngbNavLink >{{ this.status[3].label }}</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane">
+                      <p>
+                        EL siniestro Nº se encuentra en estado '{{ this.status[3].label }}'
+                      </p>
+                    </div>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="this.status[4].id" [disabled]="this.status[4].disabled">
+                  <a ngbNavLink >{{ this.status[4].label }}</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane">
+                      <p>
+                        EL siniestro Nº se encuentra en estado '{{ this.status[4].label }}'
+                      </p>
+                    </div>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="this.status[5].id">
+                  <a ngbNavLink>{{ this.status[5].label }}</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane text-center">
+                      <ng-container *ngIf="data.status.id==this.status[5].id">
+                        <p>
+                          EL siniestro Nº se encuentra en estado '{{ this.status[5].label }}'
+                        </p>
+                      </ng-container>
+                      <ng-container *ngIf="data.status.id!=this.status[5].id">
+                        <p>
+                          ¿Está seguro que desea cambiar a este estado?
+                        </p>
+                        <button class="btn btn-info" (click)="newStatus(this.status[5].id)">Sí, Aceptar</button>
+                      </ng-container>
+                    </div>
                   </ng-template>
                 </li>
               </ul>
-              
               <div [ngbNavOutlet]="nav" class="mt-2"></div>
         </div>
     </div>

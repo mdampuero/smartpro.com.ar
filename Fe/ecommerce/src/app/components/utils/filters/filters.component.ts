@@ -13,8 +13,8 @@ export class FiltersComponent implements OnInit {
   public ready=false;
   public category=0;
   public categories={data:[{name:'',id:''}]};
-  public min=100;
-  public max=500000;
+  public min=1000;
+  public max=200000;
   minValue: number = this.min;
   value: number=this.min;
   maxValue: number = this.max;

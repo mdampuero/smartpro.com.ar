@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/services/api/products.service';
 import { EventsService } from 'src/app/services/events.service';
 import Swal from 'sweetalert2';
+import { environment } from "src/environments/environment";
 
 import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
@@ -41,6 +42,13 @@ export class ProductsComponent implements OnInit {
     this.events.publish('paginationOffset', {});
     this.productsService.offset=0;
     this.getResult();
+  }
+  
+  download(){
+    location.href=`${environment.apiUrl}productsDownload`;
+  }
+  upload(){
+    location.href=`${environment.apiUrl}productsDownload`;
   }
 
   getResult(){

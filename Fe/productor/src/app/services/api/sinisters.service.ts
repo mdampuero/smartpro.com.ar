@@ -44,6 +44,7 @@ export class SinistersService {
   }
 
   save(data:any) {
+    data.user=this.loginService.user.name;
     data.productor=this.loginService.user.id;
     return this.http.post(`${environment.apiUrl}sinisters`, data);
   }

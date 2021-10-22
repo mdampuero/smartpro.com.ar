@@ -9,6 +9,7 @@ import { EventsService } from 'src/app/services/events.service';
 export class InputFileComponent implements OnInit {
   @Input() accept: string = '';
   @Input() maxSize: number=0;
+  @Input() label: string='Cambiar';
   constructor(public events: EventsService) { }
   public error:string='';
   ngOnInit(): void {

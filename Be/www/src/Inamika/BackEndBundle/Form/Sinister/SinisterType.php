@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SinisterType extends AbstractType
 {
@@ -27,6 +28,7 @@ class SinisterType extends AbstractType
         ->add('date',TextType::class)
         ->add('amount',TextType::class)
         ->add('amountRepeat',TextType::class,array('mapped'=>false))
+        ->add('user',TextType::class,array('mapped'=>false,'constraints' => array(new NotBlank())))
         ->add('productor', EntityType::class, array(
             'class' => 'InamikaBackEndBundle:Productor',
             'query_builder' => function (EntityRepository $er) {
