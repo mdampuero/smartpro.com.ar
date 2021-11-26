@@ -15,6 +15,7 @@ use Inamika\BackEndBundle\Entity\Cart;
 use Inamika\BackEndBundle\Entity\Log;
 use Inamika\BackEndBundle\Entity\OrderItem;
 use Inamika\BackEndBundle\Entity\SinisterStatus;
+use Inamika\BackEndBundle\Entity\Sinister;
 use Inamika\BackEndBundle\Form\Order\OrderType;
 
 class OrdersController extends FOSRestController
@@ -69,8 +70,10 @@ class OrdersController extends FOSRestController
         $form->submit($content);
         if ($form->isSubmitted() && $form->isValid()) {
             if(!key_exists('cart',$content) || !key_exists('items',$content["cart"]) || !count($content["cart"]["items"]))
-                return $this->handleView($this->view($this->displayErrors('items','No hay productos en su carrito'), Response::HTTP_BAD_REQUEST));
+            return $this->handleView($this->view($this->displayErrors('items','No hay productos en su carrito'), Response::HTTP_BAD_REQUEST));
             $cart=$this->getDoctrine()->getRepository(Cart::class)->find($content["cart"]["id"]);
+            if($cart->getTotal()!=$cart->getCustomer()->getBalance())
+                return $this->handleView($this->view($this->displayErrors('items','Saldo difiere de cero'), Response::HTTP_BAD_REQUEST));
             if($cart->getTotal()!=$content["total"])
                 return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
             if(!$cart->getCustomer()->getIsActive())
@@ -127,6 +130,12 @@ class OrdersController extends FOSRestController
             $sinister->setStatus($this->getDoctrine()->getRepository(SinisterStatus::class)->find(SinisterStatus::WAITING_FOR_PRODUCTS));
             $sinister->setOrder($entity);
             $em->persist($sinister);
+
+            /**
+             * Agrego los productos
+             */
+            //return $this->handleView($this->view($cart->getItems(), Response::HTTP_OK));
+            $this->getDoctrine()->getRepository(Sinister::class)->addProductByOrder($cart,$cart->getItems());
 
             $em->flush();
 

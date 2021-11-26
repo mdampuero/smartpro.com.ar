@@ -62,6 +62,7 @@ export class ProductsFormComponent implements OnInit {
     picture:'',
     picturePreview:'',
     isSalient:0,
+    inStock:1,
     categories:[]
   };
  
@@ -113,6 +114,7 @@ export class ProductsFormComponent implements OnInit {
 			this.form=data;
       this.loadForm();
       this.form.isSalient=(data.isSalient)?1:0;
+      this.form.inStock=(data.inStock)?1:0;
 			this.spinner.hide();
 		},
 		(error) => {

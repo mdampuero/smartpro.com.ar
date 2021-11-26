@@ -23,6 +23,11 @@ api_products_get_similar:
     defaults: { _controller: InamikaApiBundle:Products:similar }
     methods: [GET]
 
+api_products_productsList:
+    path:     /productsList
+    defaults: { _controller: InamikaApiBundle:Products:getList }
+    methods: [GET]
+
 api_products_post:
     path:     /products
     defaults: { _controller: InamikaApiBundle:Products:post }

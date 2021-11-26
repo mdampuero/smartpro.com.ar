@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+  public remaind:any
   public loadingLocalities=true;
   public provences: any[]=[];
   public localities: any[]=[];
@@ -35,6 +36,7 @@ export class CheckoutComponent implements OnInit {
       this.form.provence=this.loginService.user.provence.id;
       this.onChange(true);      
     });
+    this.remaind=this.loginService.user.balance - this.loginService.user.cart.total;
   }
   onChange(selected:boolean) {
     this.loadingLocalities=true;

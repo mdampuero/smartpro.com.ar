@@ -1,90 +1,112 @@
-
 <!-- NEED_TO_DEFINE_PRODUCTS
 WAITING_FOR_PRODUCTS
 UNDELIVERED
 DELIVERED
 INVOICED
 DISCHARDGED -->
-<div class="container-fluid animated fadeIn">
-    <app-breadcrumb [title]="'Siniestros'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-    <div class="card">
-        <div class="card-body" *ngIf="data">
-            <h2 class="card-title animated fadeInDown">Estado actual</h2>
-            <hr class="mb-4">
-            <div class="alert alert-{{ data.status.color }}">{{ data.status.name }}</div>
-            <h2 class="card-title animated fadeInDown">Cambiar estado</h2>
-            <hr class="mb-4">
-            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-                <li [ngbNavItem]="this.status[0].id" [disabled]="this.status[0].disabled">
-                  <a ngbNavLink >{{ this.status[0].label }}</a>
-                  <ng-template ngbNavContent>
-                    <div class="tab-pane">
-                      <p>
-                        EL siniestro Nº se encuentra en estado '{{ this.status[0].label }}'
-                      </p>
-                    </div>
-                  </ng-template>
-                </li>
-                <li [ngbNavItem]="this.status[1].id" [disabled]="this.status[1].disabled">
-                  <a ngbNavLink >{{ this.status[1].label }}</a>
-                  <ng-template ngbNavContent>
-                    <div class="tab-pane">
-                      <p>
-                        EL siniestro Nº se encuentra en estado '{{ this.status[1].label }}'
-                      </p>
-                    </div>
-                  </ng-template>
-                </li>
-                <li [ngbNavItem]="this.status[2].id" [disabled]="this.status[2].disabled">
-                  <a ngbNavLink >{{ this.status[2].label }}</a>
-                  <ng-template ngbNavContent>
-                    <div class="tab-pane">
-                      <p>
-                        EL siniestro Nº se encuentra en estado '{{ this.status[2].label }}'
-                      </p>
-                    </div>
-                  </ng-template>
-                </li>
-                <li [ngbNavItem]="this.status[3].id" [disabled]="this.status[3].disabled">
-                  <a ngbNavLink >{{ this.status[3].label }}</a>
-                  <ng-template ngbNavContent>
-                    <div class="tab-pane">
-                      <p>
-                        EL siniestro Nº se encuentra en estado '{{ this.status[3].label }}'
-                      </p>
-                    </div>
-                  </ng-template>
-                </li>
-                <li [ngbNavItem]="this.status[4].id" [disabled]="this.status[4].disabled">
-                  <a ngbNavLink >{{ this.status[4].label }}</a>
-                  <ng-template ngbNavContent>
-                    <div class="tab-pane">
-                      <p>
-                        EL siniestro Nº se encuentra en estado '{{ this.status[4].label }}'
-                      </p>
-                    </div>
-                  </ng-template>
-                </li>
-                <li [ngbNavItem]="this.status[5].id">
-                  <a ngbNavLink>{{ this.status[5].label }}</a>
-                  <ng-template ngbNavContent>
-                    <div class="tab-pane text-center">
-                      <ng-container *ngIf="data.status.id==this.status[5].id">
-                        <p>
-                          EL siniestro Nº se encuentra en estado '{{ this.status[5].label }}'
-                        </p>
-                      </ng-container>
-                      <ng-container *ngIf="data.status.id!=this.status[5].id">
-                        <p>
-                          ¿Está seguro que desea cambiar a este estado?
-                        </p>
-                        <button class="btn btn-info" (click)="newStatus(this.status[5].id)">Sí, Aceptar</button>
-                      </ng-container>
-                    </div>
-                  </ng-template>
-                </li>
-              </ul>
-              <div [ngbNavOutlet]="nav" class="mt-2"></div>
-        </div>
-    </div>
-</div>
+<div class="container-fluid animated fadeIn form-material">
+	<app-breadcrumb [title]="'Siniestro'" [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+	<div class="card">
+		<div class="card-body" *ngIf="data">
+			<h2 class="card-title animated fadeInDown">Estado actual</h2>
+			<hr class="mb-4">
+			<div class="alert alert-{{ data.status.color }}">{{ data.status.name }}</div>
+			<h2 class="card-title animated fadeInDown">Cambiar estado</h2>
+			<hr class="mb-4">
+			<ng-container *ngIf="data.status.id != 'INVOICED' && data.status.id != 'DISCHARDGED'">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<select name="newStatus" class="form-control" [(ngModel)]="newStatusSelect">
+								<option value="-1">-- Seleccione el nuevo estado --</option>
+								<ng-container *ngFor="let item of status; let i=index;">
+									<option value="{{ i }}" *ngIf="!item.disabled">{{ item.label }}</option>
+								</ng-container>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-12" *ngIf="newStatusSelect !=-1 && status[newStatusSelect].id == status[1].id">
+						<div class="card card-outline-info">
+							<div class="card-header">
+								<h4 class="m-b-0 text-white">{{ this.status[1].label }}</h4>
+							</div>
+							<div class="card-body">
+								<h3 class="card-title animated fadeInDown">Agregar producto</h3>
+								<hr class="">
+								<app-form-product-sinister></app-form-product-sinister>
+								<h3 class="card-title animated fadeInDown">Productos</h3>
+								<hr class="">
+								<div class="table-responsive bg-white" style="clear: both;">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>Producto</th>
+												<th class="text-right">Cantidad</th>
+												<th class="text-right">Costo</th>
+												<th class="text-right">Precio</th>
+												<th>Remito</th>
+												<th>Proveedor</th>
+												<th>Pedido</th>
+												<th>Llegada</th>
+												<th>Medio</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let product of productList; let i=index;">
+												<td>{{ product.name }}</td>
+												<td class="text-right">{{ product.amount }}</td>
+												<td class="text-right">{{ product.cost | formatNumber }}</td>
+												<td class="text-right">{{ product.price | formatNumber }}</td>
+												<td>{{ product.bill_number }}</td>
+												<td>{{ product.providerName }}</td>
+												<td>{{ product.departureDate }}</td>
+												<td>{{ product.arrivalDate }}</td>
+												<td>{{ product.transport }}</td>
+												<a matTooltip="Eliminar" matTooltipPosition="above" role="button"
+													(click)="removeProduct(i)"
+													class="btn-remove btn btn-outline-danger"><i
+														class="fa fa-trash text-danger"></i></a>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="text-center" *ngIf="productList.length > 0">
+									<div class="form-group">
+										<textarea name="observations" [(ngModel)]="observations" class="form-control"
+											rows="5" placeholder="Observaciones"></textarea>
+									</div>
+									<button class="btn btn-info"
+										(click)="newStatus(status[newStatusSelect].id,productList)">Cambiar
+										estado</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12" *ngIf="newStatusSelect != 1 && newStatusSelect !=-1">
+						<div class="card card-outline-info">
+							<div class="card-header">
+								<h4 class="m-b-0 text-white">{{ this.status[newStatusSelect].label }}</h4>
+							</div>
+							<div class="card-body">
+								<div class="text-center">
+									<div class="form-group">
+										<textarea name="observations" [(ngModel)]="observations" class="form-control"
+											rows="5" placeholder="Observaciones"></textarea>
+									</div>
+									<button class="btn btn-info"
+										(click)="newStatus(status[newStatusSelect].id,productList)">Cambiar
+										estado</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+			<ng-container *ngIf="data.status.id == 'INVOICED' || data.status.id == 'DISCHARDGED'">
+				<div class="alert alert-warning">
+					El siniestro se encuentra un un estado irreversible
+				</div>
+			</ng-container>
+		</div>
+	</div>

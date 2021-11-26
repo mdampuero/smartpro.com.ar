@@ -31,10 +31,13 @@
                                     <th (click)="sinistersService.setOrder('amount')">
                                         <app-table-th [title]="'Monto'" [field]="'amount'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
                                     </th>                                   
+                                    <th (click)="sinistersService.setOrder('customer')">
+                                        <app-table-th [title]="'Asegurado'" [field]="'customer'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
+                                    </th>                                   
                                     <th (click)="sinistersService.setOrder('date')">
                                         <app-table-th [title]="'F.Ingreso'" [field]="'date'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
                                     </th>                                   
-                                    <th (click)="sinistersService.setOrder('days')">
+                                    <th (click)="sinistersService.setOrder('days')" class="text-center">
                                         <app-table-th [title]="'Días'" [field]="'days'" [sort]="sinistersService.sort" [direction]="sinistersService.direction"></app-table-th>
                                     </th>                                   
                                     <th (click)="sinistersService.setOrder('company')">
@@ -53,8 +56,13 @@
                                 <tr *ngFor="let item of data.data; let i=index;" >
                                     <td>{{ item.number }}</td>
                                     <td>{{ item.amount | formatNumber }}</td>
+                                    <td>
+                                        <i class="fa fa-user text-secondary"></i>&nbsp;{{ item.customer.name }}<br/>
+                                        <i class="fa fa-phone text-secondary"></i>&nbsp;<a href="tel:{{ item.customer.phone }}">{{ item.customer.phone }}</a><br/>
+                                        <i class="fa fa-envelope text-secondary"></i>&nbsp;<a href="mailto:{{ item.customer.email }}"> {{ item.customer.email }}</a>
+                                    </td>
                                     <td>{{ item.date | date:'dd/MM/Y' }}</td>
-                                    <td>{{ i }}</td>
+                                    <td class="text-center"><span class="badge badge-pill badge-info"><b>{{ item.days }}</b></span></td>
                                     <td>{{ item.company.name }}</td>
                                     <td>{{ item.productor.name }}</td>
                                     <td class="text-center bg-{{ item.status.color }} text-white" valing="middle"><b>{{ item.status.name }}</b></td>

@@ -2,15 +2,15 @@
 parameters:
     database_host: localhost
     database_port: null
-    database_name: c2360229_spFull
-    database_user: c2360229_spFull
-    database_password: labiZAdi18
+    database_name: c2420954_sp_clea
+    database_user: c2420954_sp_clea
+    database_password: 18SEkuwele
     mailer_transport: smtp
-    mailer_host: c2360229.ferozo.com
+    mailer_host: c2420954.ferozo.com
     mailer_port: 465
     mailer_encryption: ssl
-    mailer_user: sp@mdasoftware.com.ar
-    mailer_password: cRkc*WX6yW
+    mailer_user: tienda@smartpro.com.ar
+    mailer_password: 8IEGAK*1sE
     secret: 99b2af404f070f6d849dea5705fd9375b130a628
     global: 
-        ecommerce: 'http://smartpro.ecommerce.mdasoftware.com.ar/'
+        ecommerce: 'http://smartpro.com.ar/'

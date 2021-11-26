@@ -20,7 +20,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private usersService: UsersService,
     private loginService:LoginService
-    ) { }
+    ) { 
+      this.router.navigate(['/']);
+    }
 
   ngOnInit(): void {
   }
@@ -31,7 +33,8 @@ export class LoginComponent implements OnInit {
     this.usersService.login(this.form).subscribe(
       (data:any) => {
         this.loginService.login(data);
-        location.href="/inicio"
+        this.spinner.hide();
+        location.reload();
       },
       (error) => {
         if(error.status==400)

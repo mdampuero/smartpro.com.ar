@@ -110,7 +110,7 @@ class Product
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="float",nullable=true)
      * @Assert\NotBlank()
      * @Expose
      */
@@ -119,7 +119,7 @@ class Product
     /**
      * @var float
      *
-     * @ORM\Column(name="cost", type="float")
+     * @ORM\Column(name="cost", type="float",nullable=true)
      * @Expose
      */
     private $cost=0;
@@ -222,6 +222,13 @@ class Product
     
     /**
      * @var boolean
+     * @ORM\Column(name="in_stock", type="boolean")
+     * @Expose
+     */
+    private $inStock=true;
+    
+    /**
+     * @var boolean
      * @ORM\Column(name="is_update", type="boolean")
      * @Expose
      */
@@ -238,6 +245,7 @@ class Product
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
+     * @Expose
      */
     private $updatedAt;
 
@@ -885,6 +893,30 @@ class Product
     public function getIsSalient()
     {
         return $this->isSalient;
+    }
+    
+    /**
+     * Set inStock.
+     *
+     * @param bool $inStock
+     *
+     * @return Product
+     */
+    public function setInStock($inStock)
+    {
+        $this->inStock = $inStock;
+
+        return $this;
+    }
+
+    /**
+     * Get inStock.
+     *
+     * @return bool
+     */
+    public function getInStock()
+    {
+        return $this->inStock;
     }
     
     /**

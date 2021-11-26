@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Inamika\BackEndBundle\Entity\Provence;
 use Inamika\BackEndBundle\Entity\Product;
+use Inamika\BackEndBundle\Entity\Sinister;
 use Inamika\BackEndBundle\Entity\Category;
 use Inamika\BackEndBundle\Entity\Department;
 use Inamika\BackEndBundle\Entity\Provider;
@@ -19,6 +20,11 @@ use Inamika\BackEndBundle\Entity\Locality;
 
 class CronsController extends FOSRestController
 {   
+    public function updateDaysAction(){
+        $this->getDoctrine()->getRepository(Sinister::class)->getAllNotClosed();
+        return $this->handleView($this->view("OK"));
+    }
+
     protected $setting=array(
         'uploads_directory'=>'uploads/or/',
         'resize'=>array(
@@ -146,7 +152,7 @@ class CronsController extends FOSRestController
     
     public function importAction(){
         $em = $this->getDoctrine()->getManager();
-        if (($handle = fopen("productos.csv", "r")) !== FALSE) {
+        if (($handle = fopen("productos2.csv", "r")) !== FALSE) {
             $i = 0;
             // [0] => ﻿ID
             // [1] => Tipo
@@ -215,6 +221,7 @@ class CronsController extends FOSRestController
                 $product->setCost(0);
                 $product->setSku($data[2]);
                 $product->setIsSalient(($data[5]==0)?false:true);
+                $product->setInStock(($data[13]==0)?false:true);
                 $product->setBrand(null);
                 $product->setTags($data[27]);
                 $product->setDescription($data[7]);

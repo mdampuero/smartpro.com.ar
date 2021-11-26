@@ -103,8 +103,9 @@
                             <tr>
                                 <th>Número</th>
                                 <th>Monto</th>
+                                <th>Asegurado</th>
                                 <th>F.Ingreso</th>
-                                <th>Días</th>
+                                <th class="text-center">Días</th>
                                 <th>Compañia</th>
                                 <th>Analista</th>
                                 <th>Estado</th>
@@ -116,8 +117,13 @@
                                 <tr *ngFor="let item of todaySinister; let i=index;" >
                                     <td>{{ item.number }}</td>
                                     <td>{{ item.amount | formatNumber }}</td>
+                                    <td>
+                                        <i class="fa fa-user text-secondary"></i>&nbsp;{{ item.customer.name }}<br/>
+                                        <i class="fa fa-phone text-secondary"></i>&nbsp;<a href="tel:{{ item.customer.phone }}">{{ item.customer.phone }}</a><br/>
+                                        <i class="fa fa-envelope text-secondary"></i>&nbsp;<a href="mailto:{{ item.customer.email }}"> {{ item.customer.email }}</a>
+                                    </td>
                                     <td>{{ item.date | date:'dd/MM/Y' }}</td>
-                                    <td>{{ i }}</td>
+                                    <td class="text-center"><span class="badge badge-pill badge-info"><b>{{ item.days }}</b></span></td>
                                     <td>{{ item.company.name }}</td>
                                     <td>{{ item.productor.name }}</td>
                                     <td class="text-center bg-{{ item.status.color }} text-white" valing="middle"><b>{{ item.status.name }}</b></td>

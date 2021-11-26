@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Sinister
@@ -88,6 +89,14 @@ class Sinister
      * @Expose
      */
     private $number;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="days", type="integer", options={"default" : 0})
+     * @Expose
+     */
+    private $days=0;
 
     /**
      * @var \Date
@@ -141,6 +150,18 @@ class Sinister
     private $isDelete=false;
 
     /**
+     * @ORM\OneToMany(targetEntity="SinisterItem", mappedBy="sinister")
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -172,6 +193,30 @@ class Sinister
     public function getNumber()
     {
         return $this->number;
+    }
+    
+    /**
+     * Set days.
+     *
+     * @param integer $days
+     *
+     * @return Sinister
+     */
+    public function setDays($days)
+    {
+        $this->days = $days;
+
+        return $this;
+    }
+
+    /**
+     * Get days.
+     *
+     * @return integer
+     */
+    public function getDays()
+    {
+        return $this->days;
     }
     
     
@@ -445,5 +490,25 @@ class Sinister
     public function setUpdatedAtValue()
     {
         $this->updatedAt=new \DateTime();
+    }
+
+    /**
+     * Get items.
+     *
+     * @return int
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+    
+    /**
+     * Set items.
+     *
+     * @return Order
+     */
+    public function setItems($items)
+    {
+        return $this->items=$items;
     }
 }

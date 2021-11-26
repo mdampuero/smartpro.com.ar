@@ -28,6 +28,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             $qb->andWhere('e.price>=:priceMin')->setParameter('priceMin',$filter['priceMin']);
         if($filter && key_exists('priceMax',$filter) && $filter['priceMax']>0)
             $qb->andWhere('e.price<=:priceMax')->setParameter('priceMax',$filter['priceMax']);
+        if($filter && key_exists('inStock',$filter) && $filter['inStock']>0){
+            $qb->andWhere('e.inStock=:inStock')->setParameter('inStock',true);
+            $qb->andWhere('e.price > 0');
+        }
         if($filter && key_exists('category',$filter) && !empty($filter['category'])){
             $qb->innerJoin("e.categories", "c")
             ->andWhere('c.id=:category')->setParameter('category',$filter['category']);

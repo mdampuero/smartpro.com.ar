@@ -3,13 +3,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SinistersService } from 'src/app/services/api/sinisters.service';
+import { ProductsService } from 'src/app/services/api/products.service';
+import { EventsService } from 'src/app/services/events.service';
+
 /***
  * NEED_TO_DEFINE_PRODUCTS
-WAITING_FOR_PRODUCTS
-UNDELIVERED
-DELIVERED
-INVOICED
-DISCHARDGED
+ WAITING_FOR_PRODUCTS
+ UNDELIVERED
+ DELIVERED
+ INVOICED
+ DISCHARDGED
  */
 @Component({
   selector: 'app-sinister-status',
@@ -17,14 +20,17 @@ DISCHARDGED
   styleUrls: ['./sinister-status.component.css']
 })
 export class SinisterStatusComponent implements OnInit {
+  public newStatusSelect:any=-1;
+  public productList:any=[];
   public id:any;
   public active:string | undefined;
   public data:any;
+  observations:any;
   public breadcrumbs=[
-    {url:'/inicio',title:'Inicio'},
-    {url:'/sinisters',title:'Siniestros'},
-    {url:'',title:''},
-    {url:'',title:'Cambiar estado'},
+    { url:'/inicio',title:'Inicio'},
+    { url:'/sinisters',title:'Siniestros'},
+    { url:'',title:''},
+    { url:'',title:'Cambiar estado'},
   ];
   public status=[
     { id:'NEED_TO_DEFINE_PRODUCTS',disabled:false, label:'Falta definir productos'},
@@ -37,19 +43,22 @@ export class SinisterStatusComponent implements OnInit {
   constructor(private spinner: NgxSpinnerService,
     private router: Router,
     private _snackBar: MatSnackBar,
+    public productsService: ProductsService,
     private activatedRoute: ActivatedRoute,
+    public events: EventsService,
     public sinistersService: SinistersService) {
     this.id=this.activatedRoute.snapshot.paramMap.get('id');
    }
 
+   
   ngOnInit(): void {
     this.getData()
   }
-  newStatus(status:string){
+  newStatus(status:string,data:any){
     this.spinner.show();
-    this.sinistersService.changeStatus(status,this.id).subscribe(
+    this.sinistersService.changeStatus(status,this.id,data,this.observations).subscribe(
       (data:any) => {
-        
+        location.reload();
         console.log(this.data);
       },
       (error) => this.spinner.hide(),
@@ -71,16 +80,41 @@ export class SinisterStatusComponent implements OnInit {
     );
   }
 
+  save(){
+    
+  }
+
   analizeStatus(){
     switch(this.data.status.id){
-      case 'DISCHARDGED':
+      case 'NEED_TO_DEFINE_PRODUCTS':
+          this.events.subscribe('app-form-product-sinister', (product: any) => this.productList.push(product.product));
+          this.status[0].disabled=true;
+        break;
+      case 'WAITING_FOR_PRODUCTS':
+          this.status[0].disabled=true;
+          this.status[1].disabled=true;
+        break;
+      case 'UNDELIVERED':
+          this.status[0].disabled=true;
+          this.status[1].disabled=true;
+          this.status[2].disabled=true;
+        break;
+      case 'DELIVERED':
+          this.status[0].disabled=true;
+          this.status[1].disabled=true;
+          this.status[2].disabled=true;
+          this.status[3].disabled=true;
+        break;
+      case 'INVOICED':
           this.status[0].disabled=true;
           this.status[1].disabled=true;
           this.status[2].disabled=true;
           this.status[3].disabled=true;
           this.status[4].disabled=true;
         break;
-      case 'NEED_TO_DEFINE_PRODUCTS':
+      case 'DISCHARDGED':
+          this.status[0].disabled=true;
+          this.status[1].disabled=true;
           this.status[2].disabled=true;
           this.status[3].disabled=true;
           this.status[4].disabled=true;
@@ -90,5 +124,13 @@ export class SinisterStatusComponent implements OnInit {
         break;
 
     }
+  }
+
+  removeProduct(i:any){
+    this.productList.splice(i,1);
+  }
+
+  ngOnDestroy(){
+    this.events.destroy('app-form-product-sinister');
   }
 }

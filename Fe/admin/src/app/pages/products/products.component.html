@@ -34,15 +34,18 @@
                                     <th (click)="productsService.setOrder('name')">
                                         <app-table-th [title]="'Nombre'" [field]="'name'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
                                     </th>                               
-                                    <!-- <th (click)="productsService.setOrder('brand')">
-                                        <app-table-th [title]="'Marca'" [field]="'brand'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
-                                    </th>                                  -->
                                     <th (click)="productsService.setOrder('price')">
                                         <app-table-th [title]="'Precio'" [field]="'price'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
                                     </th>    
                                     <th (click)="productsService.setOrder('isSalient')">
                                         <app-table-th [title]="'Recomendado'" [field]="'isSalient'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
                                     </th>                             
+                                    <th (click)="productsService.setOrder('inStock')">
+                                        <app-table-th [title]="'En Stock'" [field]="'inStock'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
+                                    </th>                                 
+                                    <th (click)="productsService.setOrder('updatedAt')">
+                                        <app-table-th [title]="'Actualizado'" [field]="'updatedAt'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
+                                    </th>                                 
                                     <th></th>
                                 </tr>
                             </thead>
@@ -53,9 +56,10 @@
                                     </td>
                                     <td>{{ item.sku }}</td>
                                     <td>{{ item.name }}</td>
-                                    <!-- <td>{{ item.brand }}</td> -->
                                     <td>{{ item.price | formatNumber }}</td>
                                     <td class="text-center" [innerHTML]="item.isSalient | badgeBinary"></td>
+                                    <td class="text-center" [innerHTML]="item.inStock | badgeBinary"></td>
+                                    <td>{{ item.updatedAt | date:'H' }}</td>
                                     <td class="text-center">
                                         <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/products/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 
                                         <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash text-danger"></i></a>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a61c21c3c2a0d93b0f6aa6544a3cc385",
+    "content-hash": "7fdc9bbe161451ed0b66e44fdc5e0346",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -184,6 +184,37 @@
                 }
             ],
             "time": "2021-09-13T08:41:34+00:00"
+        },
+        {
+            "name": "decidir2/php-sdk",
+            "version": "V1.5.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/decidir/sdk-php-v2.git",
+                "reference": "09c3ce549f5226bd9f1a35a8c6429d912a73de1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/decidir/sdk-php-v2/zipball/09c3ce549f5226bd9f1a35a8c6429d912a73de1a",
+                "reference": "09c3ce549f5226bd9f1a35a8c6429d912a73de1a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Decidir\\": "Decidir/lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "SDK para Decidir",
+            "support": {
+                "issues": "https://github.com/decidir/sdk-php-v2/issues",
+                "source": "https://github.com/decidir/sdk-php-v2/tree/V1.5.5"
+            },
+            "time": "2021-10-18T15:14:21+00:00"
         },
         {
             "name": "doctrine/annotations",

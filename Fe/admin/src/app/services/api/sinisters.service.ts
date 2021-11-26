@@ -13,7 +13,7 @@ export class SinistersService {
   
   public limit = 30;
   public offset = 0;
-  public sort = "createdAt";
+  public sort = "date";
   public direction = "DESC";
 
   constructor(private http: HttpClient,public events: EventsService, public loginService:LoginService) { 
@@ -64,8 +64,12 @@ export class SinistersService {
     else
       return this.http.post(`${environment.apiUrl}sinisters`, data);
   }
-  changeStatus(status:string,id:string) {
-    return this.http.put(`${environment.apiUrl}sinisters/changeSatus/${id}`, { status:status});
+  changeStatus(status:string,id:string,data:any,observations:any) {
+    return this.http.put(`${environment.apiUrl}sinisters/changeSatus/${id}`, { 
+      status:status,
+      data:data,
+      user:this.loginService.user.name,
+      observations: observations});
   }
   delete(item:Sinisters) {
     return this.http.delete(`${environment.apiUrl}sinisters/${item.id}`);

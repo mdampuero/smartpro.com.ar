@@ -26,8 +26,8 @@
                         <div class="card-body">
                             <p><b>Nombre: </b> {{ data.customer.name }}</p>
                             <p><b>DNI: </b> {{ data.customer.document }}</p>
-                            <p><b>Teléfono: </b> <a href="tel:+549{{ data.phone }}">{{ data.customer.phone }}</a></p>
-                            <p><b>Email: </b> <a href="mailto:{{ data.email }}">{{ data.customer.email }}</a></p>
+                            <p><b>Teléfono: </b> <a href="tel:+549{{ data.customer.phone }}">{{ data.customer.phone }}</a></p>
+                            <p><b>Email: </b> <a href="mailto:{{ data.customer.email }}">{{ data.customer.email }}</a></p>
                             <p><b>Dirección:</b> {{ data.customer.street }} {{ data.customer.streetNumber }} / {{ data.customer.floor }} {{ data.customer.department }}</p>
                             <p><b>Ciudad:</b> {{ data.customer.locality.name }}, {{ data.customer.locality.department.name }}, {{ data.customer.provence.name }} ({{ data.customer.postalCode }})</p>
                         </div>
@@ -38,8 +38,47 @@
                         <h4 class="card-header bg-{{ data.status.color }} text-white"><b>Estado</b></h4>
                         <div class="card-body">
                             <p class="text-center mb-3"><span class="font-16 badge badge-{{ data.status.color }}">{{ data.status.name }}</span></p>
-                            <p><b>Última actualización: </b> {{ data.updatedAt | date }}</p>
-                            <p *ngIf="data.order"><b>Pedido: </b> <a [routerLink]="['/orders/', data.order.id]">Nº {{ data.order.id }}</a></p>
+                            <p>
+                                <b>Última actualización: </b> {{ data.updatedAt | date }}
+                            </p>
+                            <p class=" mb-3">
+                                <a role="button" [routerLink]="['/sinisters/status/', data.id]" class="btn btn-info btn-sm">Cambiar estado</a>
+                            </p>
+                            <ng-container  *ngIf="data.items">
+                                <p *ngIf="data.order"><b>Pedido: </b> <a [routerLink]="['/orders/', data.order.id]">Nº {{ data.order.id }}</a></p>
+                                <h3 class="card-title animated fadeInDown">Productos</h3>
+                                <hr class="">
+                                <div class="table-responsive bg-white" style="clear: both;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th class="text-right">Cantidad</th>
+                                                <th class="text-right">Costo</th>
+                                                <th class="text-right">Precio</th>
+                                                <th>Remito</th>
+                                                <th>Proveedor</th>
+                                                <th>Pedido</th>
+                                                <th>Llegada</th>
+                                                <th>Medio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let product of data.items; let i=index;">
+                                                <td>{{ product.description }}</td>
+                                                <td class="text-right">{{ product.amount }}</td>
+                                                <td class="text-right">{{ product.cost | formatNumber }}</td>
+                                                <td class="text-right">{{ product.price | formatNumber }}</td>
+                                                <td>{{ product.bill }}</td>
+                                                <td>{{ product.provider.name }}</td>
+                                                <td>{{ product.departureDate }}</td>
+                                                <td>{{ product.arrivalDate }}</td>
+                                                <td>{{ product.transport }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>

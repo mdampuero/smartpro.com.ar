@@ -19,6 +19,7 @@ class ProductsController extends DefaultController
 {   
     public function indexAction(Request $request){
         $search = $request->query->get('search', array());
+        $inStock = $request->query->get('inStock', 1);
         $query=(!isset($search['value']))?'':$search['value'];
         $offset = $request->query->get('start', 0);
         $priceMin = $request->query->get('priceMin', 0);
@@ -27,7 +28,7 @@ class ProductsController extends DefaultController
         $limit = $request->query->get('length', 30);
         $sort = $request->query->get('sort', null);
         $direction = $request->query->get('direction', null);
-        $filter=['priceMin'=>$priceMin,'priceMax'=>$priceMax,'category'=>$category];
+        $filter=['priceMin'=>$priceMin,'priceMax'=>$priceMax,'category'=>$category,'inStock'=>$inStock];
         $recordsFiltered = $this->getDoctrine()->getRepository(Product::class)->searchTotal($query, $limit, $offset,$filter);
         return $this->handleView($this->view(array(
             'data' => $this->getDoctrine()->getRepository(Product::class)->search($query, $limit, $offset, $sort, $direction,$filter)->getQuery()->getResult(),
@@ -36,6 +37,15 @@ class ProductsController extends DefaultController
             'offset' => $offset,
             'limit' => $limit,
             'pages' => (($recordsFiltered % $limit)>0)?(int)($recordsFiltered / $limit)+1:$recordsFiltered / $limit
+        )));
+    }
+    
+    public function getListAction(Request $request){
+        return $this->handleView($this->view(array(
+            'data' => $this->getDoctrine()->getRepository(Product::class)->getAll()
+            ->leftJoin('e.provider','p')
+            ->select('e.id',"CONCAT(COALESCE(e.sku,''), ' - ',e.name) as name",'e.price','e.cost', '1 as amount','p.id as provider')
+            ->getQuery()->getResult()
         )));
     }
     
@@ -60,10 +70,11 @@ class ProductsController extends DefaultController
     
     public function salientsAction(){
         return $this->handleView($this->view($this->getDoctrine()->getRepository(Product::class)->getAll()
-        ->andWhere('e.isSalient=:isSalient')
-        ->setParameter('isSalient',true)
+        ->andWhere('e.isSalient=:isSalient')->setParameter('isSalient',true)
+        ->andWhere('e.inStock=:inStock')->setParameter('inStock',true)
+        ->andWhere('e.price>:priceMin')->setParameter('priceMin',0)
         ->orderBy('RAND()')
-        ->setMaxResults(8)
+        ->setMaxResults(100)
         ->getQuery()->getResult()));
     }
 

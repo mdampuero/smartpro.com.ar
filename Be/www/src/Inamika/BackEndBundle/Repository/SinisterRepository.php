@@ -1,6 +1,10 @@
 <?php
 
 namespace Inamika\BackEndBundle\Repository;
+use Inamika\BackEndBundle\Entity\SinisterItem;
+use Inamika\BackEndBundle\Entity\Product;
+use Inamika\BackEndBundle\Entity\SinisterStatus;
+use Inamika\BackEndBundle\Entity\Provider;
 
 /**
  * SinisterRepository
@@ -15,14 +19,34 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
         ->select('e')
         ->where('e.isDelete = :isDelete')
         ->setParameter('isDelete',false)
-        ->orderBy("e.createdAt","DESC");
+        ->orderBy("e.date","DESC");
     }
+
+    public function getAllNotClosed(){
+        $statusClosed=[
+            SinisterStatus::DELIVERED,
+            SinisterStatus::INVOICED,
+            SinisterStatus::DISCHARDGED
+        ];
+        $em = $this->getEntityManager();
+        $sinistersNotClosed=$this->getAll()
+        ->andWhere('e.status NOT IN (:statusClosed)')
+        ->setParameter('statusClosed', $statusClosed)
+        ->getQuery()->getResult();
+        foreach($sinistersNotClosed as $sinister){
+            $sinister->setDays((int)$sinister->getDate()->diff(new \DateTime())->format('%a'));
+            $em->persist($sinister);
+        }
+        $em->flush();
+    }
+
 
     public function search($query=null,$limit=0,$offset=0,$sort=null,$direction=null){
         if($limit>100) $limit=100;
         if($limit==0) $limit=30;
         $qb= $this->getAll()
         ->setFirstResult($offset)
+        ->join('e.customer','customer')
         ->setMaxResults($limit);
         if($sort){
             if(strpos($sort, ".") === false)
@@ -37,12 +61,12 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
             if(count($words)>1){
                 foreach ($words as $key => $word) {
                     $queryString=array();
-                    $queryString[]="e.name LIKE :word".$key;
+                    $queryString[]="CONCAT(customer.name,customer.email,e.number) LIKE :word".$key;
                     $qb->setParameter('word'.$key,"%".$word."%");
                     $qb->andWhere(join(' AND ',$queryString));
                 }
             }else{
-                $qb->andWhere("e.name LIKE :query")->setParameter('query',"%".$query."%");
+                $qb->andWhere("CONCAT(customer.name,customer.email,e.number)  LIKE :query")->setParameter('query',"%".$query."%");
             }
         }
         return $qb;
@@ -91,5 +115,51 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
         ->andWhere('e.number= :number')
         ->setParameter('number',$parameters['number'])
         ->setMaxResults(1)->getQuery()->getResult();
+    }
+
+    public function addProduct($sinister,$productList){
+        $em = $this->getEntityManager();
+        foreach($productList as $item){
+            $product=$em->getRepository(Product::class)->find($item["id"]);
+            $sinisterItem = new SinisterItem();
+            $sinisterItem->setSinister($sinister);
+            $sinisterItem->setProduct($product);
+            $sinisterItem->setPrice($item["price"]);
+            $sinisterItem->setDescription($product->getName());
+            $sinisterItem->setSku($product->getSku());
+            $sinisterItem->setAmount($item["amount"]);
+            $sinisterItem->setSubtotal($item["amount"]*$item["price"]);
+            $sinisterItem->setProvider($em->getRepository(Provider::class)->find($item["provider"]));
+            $sinisterItem->setCost($item["cost"]);
+            $sinisterItem->setBill(@$item["bill_number"]);
+            $sinisterItem->setDepartureDate(@$item["departureDate"]);
+            $sinisterItem->setArrivalDate(@$item["arrivalDate"]);
+            $sinisterItem->setTransport(@$item["transport"]);
+            $em->persist($sinisterItem);
+        }
+        $em->flush();
+    }
+
+    public function addProductByOrder($cart){
+        $em = $this->getEntityManager();
+        $date=new \DateTime();
+        foreach($cart->getItems() as $item){
+            $sinisterItem = new SinisterItem();
+            $sinisterItem->setSinister($cart->getCustomer()->getSinister());
+            $sinisterItem->setProduct($item->getProduct());
+            $sinisterItem->setPrice($item->getProduct()->getPrice());
+            $sinisterItem->setDescription($item->getProduct()->getName());
+            $sinisterItem->setSku($item->getProduct()->getSku());
+            $sinisterItem->setAmount($item->getAmount());
+            $sinisterItem->setSubtotal($item->getTotal());
+            $sinisterItem->setProvider($item->getProduct()->getProvider());
+            $sinisterItem->setCost($item->getProduct()->getCost());
+            $sinisterItem->setBill(null);
+            $sinisterItem->setDepartureDate($date->format('d/m/Y'));
+            $sinisterItem->setArrivalDate($date->format('d/m/Y'));
+            $sinisterItem->setTransport(null);
+            $em->persist($sinisterItem);
+        }
+        $em->flush();
     }
 }

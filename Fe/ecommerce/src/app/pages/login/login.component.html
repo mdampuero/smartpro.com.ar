@@ -22,10 +22,10 @@ height: 100%;">
       <form (ngSubmit)="save(login)" #login="ngForm" autocomplete="disabled" autocomplete="off">
         <div class="px-5">
           <div class="form-group">
-            <input type="text" id="login" class="fadeIn second form-control p-4"  [(ngModel)]="form.username" name="username" autocomplete="new-password" placeholder="Nº de siniestro">
+            <input type="text" id="login" class="fadeIn second form-control p-4"  [(ngModel)]="form.username" name="username" autocomplete="off" placeholder="Nº de siniestro">
           </div>
           <div class="form-group">
-            <input type="password" id="password" class="fadeIn third form-control p-4" [(ngModel)]="form.password" name="password"  autocomplete="new-password" placeholder="Contraseña">
+            <input type="password" id="password" class="fadeIn third form-control p-4" [(ngModel)]="form.password" name="password"  autocomplete="off" placeholder="Contraseña">
           </div>
         </div>
         <input type="submit" class="fadeIn fourth" value="Ingresar">

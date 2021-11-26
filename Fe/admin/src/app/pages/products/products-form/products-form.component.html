@@ -49,7 +49,16 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>¿En Stock?</label>
+                                    <select class="form-control" [(ngModel)]="form.inStock" name="inStock">
+                                        <option value="1">SI</option>
+                                        <option value="0">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Marca</label>
                                     <input type="text" class="form-control" [(ngModel)]="form.brand" name="brand" placeholder="">

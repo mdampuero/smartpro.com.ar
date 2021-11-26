@@ -1,0 +1,2 @@
+
+     ALTER TABLE sinister ADD days INT DEFAULT NULL;

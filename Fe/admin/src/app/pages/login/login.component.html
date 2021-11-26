@@ -2,18 +2,18 @@
     <div class="login-register" style="background-image:url('assets/images/background/login-register.jpg');">
         <div class="login-box card">
             <div class="card-body">
-                <form class="form-horizontal form-material" novalidate (ngSubmit)="save(login)" #login="ngForm" >
+                <form class="form-horizontal form-material" novalidate (ngSubmit)="save(login)" #login="ngForm" autocomplete="off">
                     <h3 class="box-title m-b-20 py-3" style="padding-left: 4rem;padding-right: 4rem;">
                         <img src="assets/images/logo-light-text.png" class="w-100">
                     </h3>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control" autocomplete="new-password" name="email" [(ngModel)]="form.email" type="text"  placeholder="Email"> 
+                            <input class="form-control" autocomplete="off" name="email" [(ngModel)]="form.email" type="text"  placeholder="Email"> 
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control" autocomplete="new-password" type="password" name="password" [(ngModel)]="form.password" placeholder="Contraseña"> 
+                            <input class="form-control" autocomplete="off" type="password" name="password" [(ngModel)]="form.password" placeholder="Contraseña"> 
                         </div>
                     </div>
                     <div class="form-group text-center">

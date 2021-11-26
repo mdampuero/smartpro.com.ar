@@ -3,13 +3,10 @@
         <div class="col-sm-2 text-center">
             <img src="{{ environment.imgUrl.xs }}{{ item.product.picture }}" class="w-50" onerror="this.onerror=null; this.src='assets/imgs/no-photo.png'" >
         </div>
-        <div class="col-sm-6 my-auto">
-            {{ item.product.name }}
+        <div class="col-sm-7 my-auto">
+            {{ item.product.name }} x {{ item.amount }}
         </div>
-        <div class="col-sm-2 my-auto">
-            {{ item.amount }}
-        </div>
-        <div class="col-sm-2 my-auto">
+        <div class="col-sm-3 my-auto">
             <b>
                 {{ (item.product.price * item.amount) | formatNumber }}
             </b>

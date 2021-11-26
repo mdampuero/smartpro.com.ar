@@ -14,7 +14,7 @@ export class FiltersComponent implements OnInit {
   public category=0;
   public categories={data:[{name:'',id:''}]};
   public min=1000;
-  public max=200000;
+  public max=300000;
   minValue: number = this.min;
   value: number=this.min;
   maxValue: number = this.max;
@@ -52,6 +52,7 @@ export class FiltersComponent implements OnInit {
     });
   }
   changeCategory(){
+    
     this.events.publish('filter', {
       filter: {
         priceMin:this.minValue,

@@ -12,6 +12,7 @@ export class Products {
     public picture: any;
     public picturePreview: any;
     public isSalient: number;
+    public inStock: number;
     public categories: any;
     constructor(fields?: any) {
         this.id=fields.id;
@@ -27,6 +28,7 @@ export class Products {
         this.picture=fields.picture;
         this.picturePreview=fields.picturePreview;
         this.isSalient=fields.isSalient;
+        this.inStock=fields.inStock;
         this.categories=fields.categories;
     }
 }

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Inamika\BackEndBundle\Entity\Customer;
+use Inamika\BackEndBundle\Entity\SinisterStatus;
 use Inamika\BackEndBundle\Form\Customer\CustomerType;
 use Inamika\BackEndBundle\Form\Customer\LoginType;
 
@@ -76,6 +77,9 @@ class CustomersController extends FOSRestController
                 'isDelete'=>false,'username'=>$content["username"],'password'=>$content["password"],'isActive'=>true
             ]))
                 return $this->handleView($this->view($this->displayErrors('password','Los datos ingresados no son válidos'), Response::HTTP_BAD_REQUEST));
+            $statusEnabledLogin=[SinisterStatus::NEED_TO_DEFINE_PRODUCTS,SinisterStatus::WAITING_FOR_PRODUCTS];
+            if(!in_array($entity->getSinister()->getStatus()->getId(),$statusEnabledLogin ))
+                return $this->handleView($this->view($this->displayErrors('password','El siniestro no está disponible'), Response::HTTP_BAD_REQUEST));
             return $this->handleView($this->view($entity, Response::HTTP_OK));
         }
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));

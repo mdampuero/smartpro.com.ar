@@ -39,6 +39,10 @@ class ProductType extends AbstractType
             'SI' => 1,
             'NO' =>0
         )))
+        ->add('inStock',ChoiceType::class, array('choices' => array(
+            'SI' => 1,
+            'NO' =>0
+        )))
         ->add('categories', EntityType::class, array(
             'class' => 'InamikaBackEndBundle:Category',
             'choice_label' => 'name',

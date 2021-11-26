@@ -103,6 +103,30 @@ class Order
     }
 
     /**
+     * Set provider.
+     *
+     * @param string|null $provider
+     *
+     * @return Product
+     */
+    public function setProvider($provider = null)
+    {
+        $this->provider = $provider;
+
+        return $this;
+    }
+
+    /**
+     * Get provider.
+     *
+     * @return string|null
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+    
+    /**
      * Set status.
      *
      * @param string|null $status

@@ -67,6 +67,9 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { ProductsUpdateComponent } from './pages/products/products-update/products-update.component';
+import { TypeaheadProductsComponent } from './components/typeahead-products/typeahead-products.component';
+import { FormProductSinisterComponent } from './components/form-product-sinister/form-product-sinister.component';
+import { ProductsSinisterComponent } from './components/products-sinister/products-sinister.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +117,10 @@ import { ProductsUpdateComponent } from './pages/products/products-update/produc
     SinisterStatusComponent,
     OrdersDetailComponent,
     LoginComponent,
-    ProductsUpdateComponent
+    ProductsUpdateComponent,
+    TypeaheadProductsComponent,
+    FormProductSinisterComponent,
+    ProductsSinisterComponent
   ],
   imports: [
     NgbPaginationModule, 

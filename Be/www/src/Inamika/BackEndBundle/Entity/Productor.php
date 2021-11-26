@@ -71,7 +71,7 @@ class Productor
      * @ORM\Column(name="password", type="string", length=36)
      * @Assert\NotBlank()
      * @Assert\Length(
-     *      min = 6,
+     *      min = 4,
      *      max = 36
      * )
      * @Expose

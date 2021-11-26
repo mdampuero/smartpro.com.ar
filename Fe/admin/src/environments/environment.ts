@@ -4,6 +4,15 @@
 
 export const environment = {
   production: false,
+  // apiUrl: 'https://smartpro.com.ar/api/web/app_dev.php/api/',
+  // imgUrl:{
+  //   xs:'https://smartpro.com.ar/api/web/app_dev.php/uploads/xs/',
+  //   sm:'https://smartpro.com.ar/api/web/app_dev.php/uploads/sm/',
+  //   md:'https://smartpro.com.ar/api/web/app_dev.php/uploads/md/',
+  //   lg:'https://smartpro.com.ar/api/web/app_dev.php/uploads/lg/',
+  //   xl:'https://smartpro.com.ar/api/web/app_dev.php/uploads/xl/',
+  //   or:'https://smartpro.com.ar/api/web/app_dev.php/uploads/or/'
+  // }
   apiUrl: 'http://dev.smartpro.com.ar/app_dev.php/api/',
   imgUrl:{
     xs:'http://dev.smartpro.com.ar/uploads/xs/',
@@ -13,15 +22,6 @@ export const environment = {
     xl:'http://dev.smartpro.com.ar/uploads/xl/',
     or:'http://dev.smartpro.com.ar/uploads/or/'
   }
-  // apiUrl: 'http://smartpro.api.mdasoftware.com.ar/web/api/',
-  // imgUrl:{
-  //   xs:'http://smartpro.api.mdasoftware.com.ar/web/uploads/xs/',
-  //   sm:'http://smartpro.api.mdasoftware.com.ar/web/uploads/sm/',
-  //   md:'http://smartpro.api.mdasoftware.com.ar/web/uploads/md/',
-  //   lg:'http://smartpro.api.mdasoftware.com.ar/web/uploads/lg/',
-  //   xl:'http://smartpro.api.mdasoftware.com.ar/web/uploads/xl/',
-  //   or:'http://smartpro.api.mdasoftware.com.ar/web/uploads/or/'
-  // }
 };
 
 /*

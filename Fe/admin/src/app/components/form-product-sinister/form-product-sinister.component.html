@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <ng-template #rt let-r="result" let-t="term">
+                <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+              </ng-template>
+            <input id="typeahead-template" (selectItem)="selectedItem($event)" placeholder="Escriba elnombre o Sku del producto..." type="text" class="form-control" [(ngModel)]="product" [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" />
+        </div>
+    </div>
+    <ng-container *ngIf="product.id">
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Cantidad</label>
+            <input type="text" class="form-control" name="amount" [(ngModel)]="product.amount"/>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Precio de costo</label>
+            <input type="text" class="form-control" name="cost" [(ngModel)]="product.cost"/>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Precio de venta</label>
+            <input type="text" class="form-control" name="price" [(ngModel)]="product.price"/>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Remito de compra</label>
+            <input type="text" class="form-control" name="bill_number" [(ngModel)]="product.bill_number"/>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Proveedor</label>
+            <select class="form-control" [(ngModel)]="product.provider" name="provider">
+                <option value=''>--Seleccione una opción--</option>
+                <option value="{{ provider.id }}" *ngFor="let provider of providersList; let i=index;" >{{ provider.name }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Fecha de pedido</label>
+            <mat-datepicker #picker></mat-datepicker>  
+            <input type="text" [matDatepicker]="picker" autocomplete="off" (click)="picker.open()" class="form-control datetimepicker" [(ngModel)]="departureDate" name="departureDate" value="">
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Fecha de llegada</label>
+            <mat-datepicker #picker1></mat-datepicker>
+            <input type="text" [matDatepicker]="picker1" autocomplete="off" (click)="picker1.open()" class="form-control datetimepicker" [(ngModel)]="arrivalDate" name="arrivalDate" value="">
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Medio</label>
+            <input type="text" class="form-control" name="transport" [(ngModel)]="product.transport"/>
+        </div>
+    </div>
+</ng-container>
+</div>
+<ng-container *ngIf="product.id">
+<div class="text-center">
+    <button type="button" class="btn btn-success" (click)="addProduct()">Aceptar</button>
+</div>
+</ng-container>

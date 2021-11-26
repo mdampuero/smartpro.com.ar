@@ -32,22 +32,25 @@ export class ProductsService {
   }
 
   get(query: string) {
-    return this.http.get(`${environment.apiUrl}products?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}`);
+    return this.http.get(`${environment.apiUrl}products?inStock=0&search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}`);
   }
   
   getOne(id: string) {
     return this.http.get(`${environment.apiUrl}products/${id}`).pipe(map((data:any) => {
       data.provider=(data.provider)?data.provider.id:'';
-      if(data.picture){
-        data.picturePreview=environment.imgUrl.md+data.picture;
-        data.picture=null;
-      }
-      return data;
-    })
-  );
+        if(data.picture){
+          data.picturePreview=environment.imgUrl.md+data.picture;
+          data.picture=null;
+        }
+        return data;
+      })
+    );
   }
   getAll() {
     return this.http.get(`${environment.apiUrl}products?search%5Bvalue%5D=&start=0&length=-1&sort=name&direction=ASC`);
+  }
+  getList() {
+    return this.http.get(`${environment.apiUrl}productsList`);
   }
 
   save(data:Products) {

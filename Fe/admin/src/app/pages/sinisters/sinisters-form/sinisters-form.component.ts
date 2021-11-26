@@ -125,7 +125,7 @@ export class SinistersFormComponent implements OnInit {
     $(".form-control-feedback.text-danger").remove();
     if(this.datePicker)
       this.form.date=this.datePicker.format('YYYY-MM-DD');
-    this.form.date=`${this.dp.year}-${this.dp.month}-${this.dp.day}`;
+    
     this.sinistersService.save(this.form).subscribe(
       (data:any) => {
         this._snackBar.open('Los cambios fueron guardados','Aceptar', { duration: 3000 });

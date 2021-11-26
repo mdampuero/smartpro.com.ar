@@ -11,7 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Inamika\BackEndBundle\Entity\Sinister;
+use Inamika\BackEndBundle\Entity\SinisterItem;
 use Inamika\BackEndBundle\Entity\Customer;
+use Inamika\BackEndBundle\Entity\Product;
+use Inamika\BackEndBundle\Entity\Provider;
 use Inamika\BackEndBundle\Entity\Log;
 use Inamika\BackEndBundle\Entity\Cart;
 use Inamika\BackEndBundle\Entity\SinisterStatus;
@@ -140,7 +143,7 @@ class SinistersController extends FOSRestController
         $log->setTitle("Nuevo");
         $log->setIcon("fa fa-star");
         $log->setStatus("warning");
-        $log->setDescription("Siniestro creado Nº ".$sinister->getNumber()." de la compañia ".$sinister->getCompany()->getName()." por un monto de $ ".number_format($sinister->getAmount(), 0, ',', '.'));
+        $log->setDescription("Siniestro creado <b>Nº ".$sinister->getNumber()."</b> de la compañia <b>".$sinister->getCompany()->getName()."</b> por un monto de <b>$ ".number_format($sinister->getAmount(), 0, ',', '.')."</b>");
         $em->persist($log);
         $em->flush();
 
@@ -170,13 +173,54 @@ class SinistersController extends FOSRestController
         if(!$entity=$this->getDoctrine()->getRepository(Sinister::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $body=json_decode($request->getContent(), true);
+        $oldStatus=$entity->getStatus();
         if(!$newStatus=$this->getDoctrine()->getRepository(SinisterStatus::class)->find($body["status"]))
             return $this->handleView($this->view(null, Response::HTTP_BAD_REQUEST));
+
+
+        $this->getDoctrine()->getRepository(Sinister::class)->addProduct($entity,$body["data"]);
+
         $em = $this->getDoctrine()->getManager();
         $entity->setStatus($newStatus);
         $em->persist($entity);
+
+        /**
+         * Guardo su Log
+         */
+        $log=new Log();
+        $log->setUser($body["user"]);
+        $log->setResource($entity->getId());
+        $log->setTitle("Cambio de estado");
+        $log->setIcon("fa fa-refresh");
+        $log->setStatus($entity->getStatus()->getColor());
+        $log->setDescription("Cambio de '<b>".$oldStatus->getName()."</b>' a '<b>".$entity->getStatus()->getName()."</b>'.<br/>".@$body["observations"]);
+        $em->persist($log);
         $em->flush();
-        return $this->handleView($this->view($entity, Response::HTTP_OK));
+
+        return $this->handleView($this->view($body, Response::HTTP_OK));
+    }
+
+    private function addProduct($sinister,$productList){
+        $em = $this->getDoctrine()->getManager();
+        foreach($productList as $item){
+            $product=$this->getDoctrine()->getRepository(Product::class)->find($item["id"]);
+            $sinisterItem = new SinisterItem();
+            $sinisterItem->setSinister($sinister);
+            $sinisterItem->setProduct($product);
+            $sinisterItem->setPrice($item["price"]);
+            $sinisterItem->setDescription($product->getName());
+            $sinisterItem->setSku($product->getSku());
+            $sinisterItem->setAmount($item["amount"]);
+            $sinisterItem->setSubtotal($item["amount"]*$item["price"]);
+            $sinisterItem->setProvider($this->getDoctrine()->getRepository(Provider::class)->find($item["provider"]));
+            $sinisterItem->setCost($item["cost"]);
+            $sinisterItem->setBill(@$item["bill_number"]);
+            $sinisterItem->setDepartureDate(@$item["departureDate"]);
+            $sinisterItem->setArrivalDate(@$item["arrivalDate"]);
+            $sinisterItem->setTransport(@$item["transport"]);
+            $em->persist($sinisterItem);
+        }
+        $em->flush();
     }
 
     public function deleteAction(Request $request,$id){
