@@ -17,8 +17,11 @@ export class AuthGuard implements CanActivate {
     
     // when the user is logged in and just navigated to another route...
     if (this.loginService.isAutenticate()) { 
-      if((this.loginService.unixtime() - this.loginService.user.lastActivity) > (this.loginService.durationSession * 60) )
+      if((this.loginService.unixtime() - this.loginService.user.lastActivity) > (this.loginService.durationSession * 60) ){
+        this.loginService.logout();
+        location.href='/productor/login'
         return false;    
+      }
       
       this.loginService.saveStorage();
       return true; 
