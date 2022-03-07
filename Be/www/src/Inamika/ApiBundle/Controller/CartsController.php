@@ -20,6 +20,25 @@ class CartsController extends FOSRestController
     public function getAction($customer){
         return $this->handleView($this->view($this->updateTotal($this->getDoctrine()->getRepository(Cart::class)->findOneByCustomer($customer)), Response::HTTP_OK));
     }
+    
+    public function getPreferenceAction($id){
+        $cart=$this->getDoctrine()->getRepository(Cart::class)->find($id);
+
+        \MercadoPago\SDK::setAccessToken("TEST-6855942644171528-030916-9dd174b345a9c9ba5b51294c1f5a0cd9-82841009");
+        $preference = new \MercadoPago\Preference();
+        $item = new \MercadoPago\Item();
+        $item->id = "00001";
+        $item->title = "Pago diferencia Smartpro por siniestro Nº ".$cart->getCustomer()->getSinister()->getNumber(); 
+        $item->quantity = 1;
+        $item->unit_price = $cart->getTotal()-$cart->getCustomer()->getBalance();
+        $preference->items = array($item);
+        $preference->save();
+        $response=[
+            "publicKey"=>"TEST-ec74472f-24a4-4b50-9ef1-ace08b71041f",
+            'preferenceId'=>$preference->id
+        ];
+        return $this->handleView($this->view($response, Response::HTTP_OK));
+    }
 
     private function displayErrors($field,$message){
         return [

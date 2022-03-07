@@ -6,3 +6,7 @@ api_carts_get:
     path:     /carts/{customer}
     defaults: { _controller: InamikaApiBundle:Carts:GET }
     methods: [GET]
+api_carts_get_preference:
+    path:     /carts/api_carts_get_preference/{id}
+    defaults: { _controller: InamikaApiBundle:Carts:getPreference }
+    methods: [GET]

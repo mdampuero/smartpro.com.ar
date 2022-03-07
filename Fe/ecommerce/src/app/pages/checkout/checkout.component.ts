@@ -3,12 +3,14 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomerService } from 'src/app/services/api/customer.service';
+import { CartService } from 'src/app/services/api/cart.service';
 import { LocalitiesService } from 'src/app/services/api/localities.service';
 import { OrderService } from 'src/app/services/api/orders.service';
 import { ProvencesService } from 'src/app/services/api/provences.service';
 import { LoginService } from 'src/app/services/db/login.service';
 import { ToastService } from 'src/app/services/toast.service';
 import Swal from 'sweetalert2';
+declare function btnPay(publicKey:any,preferenceId:any): any; 
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+  
   public remaind:any
   public loadingLocalities=true;
   public provences: any[]=[];
@@ -26,6 +29,7 @@ export class CheckoutComponent implements OnInit {
   }
   constructor(
     public localitiesService: LocalitiesService,
+    public cartService: CartService,
     public provencesService: ProvencesService,public toast:ToastService,private router: Router,public loginService:LoginService,private spinner: NgxSpinnerService,private customerService:CustomerService,private ordersService:OrderService) { }
   ngOnInit(): void { 
     if(this.loginService.user.cart.items.length == 0){
@@ -37,6 +41,15 @@ export class CheckoutComponent implements OnInit {
       this.onChange(true);      
     });
     this.remaind=this.loginService.user.balance - this.loginService.user.cart.total;
+    this.cartService.getPreference().subscribe(
+      (data:any) =>  {
+        btnPay(data.publicKey, data.preferenceId);
+      },
+      (error) => {
+        
+      }
+    );
+    
   }
   onChange(selected:boolean) {
     this.loadingLocalities=true;

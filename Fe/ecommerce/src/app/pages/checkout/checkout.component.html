@@ -15,9 +15,9 @@
     </div>
     <div class="bg-white py-4">
         <ng-container>
-            <form class="" (ngSubmit)="save(customer)" #customer="ngForm">
-                <div class="row">
-                    <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6">
+                    <form class="" (ngSubmit)="save(customer)" #customer="ngForm">
                         <h4>Datos de envío</h4>
                         <hr>
                         <div class="row">
@@ -98,31 +98,33 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Confirma tu pedido</h4>
+                    <hr>
+                    <div class="card my-3 animate__animated animate__fadeInUp animate__faster animate__delay-{{ i+1 }}s"
+                        *ngFor="let item of loginService.user.cart.items; let i=index;">
+                        <app-checkout-item [item]="item"></app-checkout-item>
                     </div>
-                    <div class="col-sm-6">
-                        <h4>Confirma tu pedido</h4>
-                        <hr>
-                        <div class="card my-3 animate__animated animate__fadeInUp animate__faster animate__delay-{{ i+1 }}s"
-                            *ngFor="let item of loginService.user.cart.items; let i=index;">
-                            <app-checkout-item [item]="item"></app-checkout-item>
-                        </div>
-                        <div
-                            class="text-right mt-3 mb-3  animate__animated animate__fadeInUp animate__faster animate__delay-5s">
-                            <h4 class="mb-1"> Total : {{ loginService.user.cart.total | formatNumber }} </h4>
-                            <h4 class="mb-1"> Costo de envío : {{ 0 | formatNumber }} </h4>
-                            <h4 class="mb-1"> Crédito : {{ loginService.user.balance | formatNumber }} </h4>
-                            <h4 class="mb-1"
-                                [ngClass]="(loginService.user.balance - this.loginService.user.cart.total) > 0 ? 'text-success' : 'text-danger' ">
-                                Saldo : {{ remaind | formatNumber }}
-                            </h4>
-                        </div>
+                    <div
+                        class="text-right mt-3 mb-3  animate__animated animate__fadeInUp animate__faster animate__delay-5s">
+                        <h4 class="mb-1"> Total : {{ loginService.user.cart.total | formatNumber }} </h4>
+                        <h4 class="mb-1"> Costo de envío : {{ 0 | formatNumber }} </h4>
+                        <h4 class="mb-1"> Crédito : {{ loginService.user.balance | formatNumber }} </h4>
+                        <h4 class="mb-1"
+                            [ngClass]="(loginService.user.balance - this.loginService.user.cart.total) > 0 ? 'text-success' : 'text-danger' ">
+                            Saldo : {{ remaind | formatNumber }}
+                        </h4>
+                        <div class="cho-container"></div>
                     </div>
                 </div>
-                <hr class="animate__animated animate__fadeInUp animate__faster animate__delay-5s">
-                <div class="text-center my-4 animate__animated animate__fadeInUp animate__faster animate__delay-6s">
-                    <button type="submit" class="btn btn-info align-center" *ngIf="remaind==0">Confirmar pedido</button>
-                </div>
-            </form>
+            </div>
+            <hr class="animate__animated animate__fadeInUp animate__faster animate__delay-5s">
+            <div class="text-center my-4 animate__animated animate__fadeInUp animate__faster animate__delay-6s">
+                <button type="submit" class="btn btn-info align-center" *ngIf="remaind==0">Confirmar pedido</button>
+            </div>
+            
         </ng-container>
     </div>
 </div>

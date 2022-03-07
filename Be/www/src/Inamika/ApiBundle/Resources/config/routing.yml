@@ -60,3 +60,6 @@ api_localities:
 
 api_stats:
     resource: "@InamikaApiBundle/Resources/config/stats.yml"
+
+api_pays:
+    resource: "@InamikaApiBundle/Resources/config/pays.yml"

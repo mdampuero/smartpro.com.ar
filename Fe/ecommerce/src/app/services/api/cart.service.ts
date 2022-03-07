@@ -34,6 +34,9 @@ export class CartService {
   get() {
     return this.http.get(`${environment.apiUrl}carts/${this.loginService.user.id}`);
   }
+  getPreference() {
+    return this.http.get(`${environment.apiUrl}carts/api_carts_get_preference/${this.loginService.user.cart.id}`);
+  }
   
   save(product:Products,amount:number) {
     let data={
