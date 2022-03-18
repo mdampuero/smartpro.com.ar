@@ -123,7 +123,7 @@ export class CheckoutComponent implements OnInit {
           focusConfirm: false,
           title: '¡Felicitaciones!',
           text: 'Hemos recibido tu pedido Nº #'+data.id+' y ya lo estamos preparando, te notificaremos por email cuando lo despachemos.',
-          footer: 'Si tienes alguna pregunta, puedes escribirnos &nbsp;<a href="mailto:hola@smartpro.com.ar">aquí </a>',
+          footer: 'Si tienes alguna pregunta, puedes escribirnos &nbsp;<a href="mailto:tienda@smartpro.com.ar">aquí </a>',
           confirmButtonText: 'Aceptar',
         }).then((result) => {
           if (result.isConfirmed) {
