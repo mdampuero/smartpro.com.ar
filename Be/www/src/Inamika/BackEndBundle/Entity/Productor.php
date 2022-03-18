@@ -48,6 +48,15 @@ class Productor
     private $name;
 
     /**
+     * Many Sinister have one Company. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Company")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $company;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
@@ -108,6 +117,14 @@ class Productor
      */
     private $isDelete=false;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_super", type="boolean")
+     * @Expose
+     */
+    private $isSuper=false;
+
 
     /**
      * Get id.
@@ -141,6 +158,30 @@ class Productor
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Set company.
+     *
+     * @param string $company
+     *
+     * @return Sinister
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company.
+     *
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
     
     /**
@@ -309,6 +350,30 @@ class Productor
     public function getIsDelete()
     {
         return $this->isDelete;
+    }
+    
+    /**
+     * Set isSuper.
+     *
+     * @param bool $isSuper
+     *
+     * @return Productor
+     */
+    public function setIsSuper($isSuper)
+    {
+        $this->isSuper = $isSuper;
+
+        return $this;
+    }
+
+    /**
+     * Get isSuper.
+     *
+     * @return bool
+     */
+    public function getIsSuper()
+    {
+        return $this->isSuper;
     }
 
     /**

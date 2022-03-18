@@ -6,6 +6,9 @@ import * as $ from 'jquery';
 import {Router, ActivatedRoute} from '@angular/router';
 import { Productors } from 'src/app/models/productors.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Companies } from 'src/app/models/companies.model';
+import { CompaniesService } from 'src/app/services/api/companies.service';
+
 @Component({
   selector: 'app-productors-form',
   templateUrl: './productors-form.component.html'
@@ -13,14 +16,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ProductorsFormComponent implements OnInit {
   public form: Productors={
     id:'',
+    company:'',
     name:'',
     email:'',
+    isSuper:0,
     phone:'',
     password:'',
     observation:'',
   };
   public titlePage:string='Nuevo';
-
+  public companies: Companies[]=[];
   public breadcrumbs=[
     {url:'/inicio',title:'Inicio'},
     {url:'/productors',title:'Analistas de siniestros'},
@@ -30,6 +35,7 @@ export class ProductorsFormComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private router: Router,
+    public companiesService: CompaniesService,
     private _snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
     public productorsService: ProductorsService) {
@@ -38,21 +44,29 @@ export class ProductorsFormComponent implements OnInit {
         this.getOne(id);
         this.breadcrumbs[(this.breadcrumbs.length - 1 )].title='Editar';
         this.titlePage='Editar';
+      }else{
+        this.loadForm();
       }
     }
 
-  getOne(id:string){
-    this.spinner.show();
-    this.productorsService.getOne(id).subscribe(
-      (data:any) => {
-        this.form=data;
-        this.spinner.hide();
-      },
-      (error) => {
-        this.spinner.hide();
-      }
-    );
-  }
+    loadForm(){
+      this.companiesService.getAll().subscribe((data:any) => this.companies=data.data);
+    }
+    getOne(id:string){
+      this.spinner.show();
+      this.productorsService.getOne(id).subscribe(
+        (data:any) => {
+          this.form=data;
+          this.form.company=data.company.id;
+          this.form.isSuper=(data.isSuper)?1:0;
+          this.loadForm();
+          this.spinner.hide();
+        },
+        (error) => {
+          this.spinner.hide();
+        }
+      );
+    }
 
   ngOnInit(): void {
   }

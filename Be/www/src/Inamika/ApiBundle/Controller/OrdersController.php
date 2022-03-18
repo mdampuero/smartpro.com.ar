@@ -14,6 +14,7 @@ use Inamika\BackEndBundle\Entity\Order;
 use Inamika\BackEndBundle\Entity\Cart;
 use Inamika\BackEndBundle\Entity\Log;
 use Inamika\BackEndBundle\Entity\OrderItem;
+use Inamika\BackEndBundle\Entity\OrderPay;
 use Inamika\BackEndBundle\Entity\SinisterStatus;
 use Inamika\BackEndBundle\Entity\Sinister;
 use Inamika\BackEndBundle\Form\Order\OrderType;
@@ -63,6 +64,26 @@ class OrdersController extends FOSRestController
         return $this->handleView($this->view($this->getDoctrine()->getRepository(Order::class)->getAll()->andWhere('e.createdAt>=:today')->setParameter('today',$today->format('Y-m-d').' 00:00:00')->getQuery()->getResult()));
     }
 
+    public function checkAction(Request $request){
+        $entity = new Order();
+        $form = $this->createForm(OrderType::class, $entity);
+        $content=json_decode($request->getContent(), true);
+        $form->submit($content);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if(!key_exists('cart',$content) || !key_exists('items',$content["cart"]) || !count($content["cart"]["items"]))
+                return $this->handleView($this->view($this->displayErrors('items','No hay productos en su carrito'), Response::HTTP_BAD_REQUEST));
+            $cart=$this->getDoctrine()->getRepository(Cart::class)->find($content["cart"]["id"]);
+            if($cart->getTotal()!=$content["total"])
+                return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
+            if(!$cart->getCustomer()->getIsActive())
+                return $this->handleView($this->view($this->displayErrors('items','El cliente no esta activo'), Response::HTTP_BAD_REQUEST));
+            if($cart->getCustomer()->getSinister()->getIsDelete())
+                return $this->handleView($this->view($this->displayErrors('items','El siniestro esta eliminado'), Response::HTTP_BAD_REQUEST));
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
+        }
+        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));   
+    }
+
     public function postAction(Request $request){
         $entity = new Order();
         $form = $this->createForm(OrderType::class, $entity);
@@ -72,14 +93,13 @@ class OrdersController extends FOSRestController
             if(!key_exists('cart',$content) || !key_exists('items',$content["cart"]) || !count($content["cart"]["items"]))
             return $this->handleView($this->view($this->displayErrors('items','No hay productos en su carrito'), Response::HTTP_BAD_REQUEST));
             $cart=$this->getDoctrine()->getRepository(Cart::class)->find($content["cart"]["id"]);
-            if($cart->getTotal()!=$cart->getCustomer()->getBalance())
-                return $this->handleView($this->view($this->displayErrors('items','Saldo difiere de cero'), Response::HTTP_BAD_REQUEST));
             if($cart->getTotal()!=$content["total"])
                 return $this->handleView($this->view($this->displayErrors('items','Los totales no coinciden'), Response::HTTP_BAD_REQUEST));
             if(!$cart->getCustomer()->getIsActive())
                 return $this->handleView($this->view($this->displayErrors('items','El cliente no esta activo'), Response::HTTP_BAD_REQUEST));
             if($cart->getCustomer()->getSinister()->getIsDelete())
                 return $this->handleView($this->view($this->displayErrors('items','El siniestro esta eliminado'), Response::HTTP_BAD_REQUEST));
+                
             /**
              * Guardo la orden
              */
@@ -91,6 +111,19 @@ class OrdersController extends FOSRestController
                 $em->persist($orderItem);
             }
             
+            /**
+             * Guardo el pago
+             */
+            if($cart->getTotal()!=$cart->getCustomer()->getBalance()){
+                if(key_exists('pay',$content) && key_exists('status',$content["pay"]) && $content["pay"]["status"]=="approved" && $content["pay"]["external_reference"]==$cart->getId()){
+                    $orderPay=new OrderPay($content["pay"]);
+                    $orderPay->setOrder($entity);
+                    $em->persist($orderPay);
+                }else{
+                    return $this->handleView($this->view($this->displayErrors('items','Error al procesar el pago'), Response::HTTP_BAD_REQUEST));
+                }
+            }
+
             /**
              * Inactivo el usuario
              */

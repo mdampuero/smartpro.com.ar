@@ -27,9 +27,16 @@
                             <p><b>Nº: </b> {{ data.id }}</p>
                             <p><b>Total: </b> {{ data.total | formatNumber }}</p>
                             <p><b>Fecha: </b> {{ data.createdAt | date:'H' }}</p>
-                            <p><b>Total de items: </b> {{ data.items.length }}</p>
-                            <p>&nbsp;</p>
-                            <p>&nbsp;</p>
+                            <ng-container *ngIf="data.pays.length > 0">
+                                <p><b>Diferencia: </b> {{ (data.total - data.customer.sinister.amount) | formatNumber }}</p>
+                                <p><b>Estado: </b> {{ data.pays[0].status }}</p>
+                                <p><b>ID colección: </b> {{ data.pays[0].collectionId }}</p>
+                                <p><b>ID de pago: </b> {{ data.pays[0].paymentId }}</p>
+                            </ng-container>
+                            <ng-container *ngIf="data.pays.length <= 0">
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                            </ng-container>
                         </div>
                     </div>
                 </div>

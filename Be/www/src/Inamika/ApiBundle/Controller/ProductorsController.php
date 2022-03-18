@@ -53,6 +53,10 @@ class ProductorsController extends FOSRestController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
+    
+    public function getByCompanyAction($companyId){
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Productor::class)->getAll()->andWhere('e.company=:company')->setParameter('company',$companyId)->getQuery()->getResult()));
+    }
 
     public function loginAction(Request $request){
         $form = $this->createForm(LoginType::class);

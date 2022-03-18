@@ -5,19 +5,12 @@
             <li class="breadcrumb-item"><a routerLink="/carrito">Carrito</a></li>
             <li class="breadcrumb-item active" aria-current="page">Checkout</li>
         </ol>
-    </nav>
-    <div class="alert alert-warning" *ngIf="remaind > 0">
-        Para poder confirmar tu compra es necesario que gastes todo el crédito disponibles que posees, aún tienes disponible <b>{{ remaind | formatNumber }}</b> para seguir comprando. 
-        Recuerda que puedes utilizar el filtro de rango de precios para encontrar los productos que puedes agregar al carrito con dicho saldo. <a routerLink='/productos'>Seguir comprando</a>
-    </div>
-    <div class="alert alert-danger" *ngIf="remaind < 0">
-        No puedes confirmar la compra porque te has excedido de tu saldo en <b>{{ remaind | formatNumber }}</b>. Si necesitas que te ayudemos puedes escribirnos a <a href="mailto:hola@smartpro.com.ar?Subject=Siniestro {{ loginService.user.sinister.number}}">hola@smartpro.com.ar</a> 
-    </div>
+    </nav>    
     <div class="bg-white py-4">
         <ng-container>
             <div class="row">
                 <div class="col-sm-6">
-                    <form class="" (ngSubmit)="save(customer)" #customer="ngForm">
+                    <form class="" (ngSubmit)="check(customer)" #customer="ngForm">
                         <h4>Datos de envío</h4>
                         <hr>
                         <div class="row">
@@ -25,14 +18,14 @@
                                 class="col-sm-12 animate__animated animate__fadeInUp animate__faster animate__delay-1s">
                                 <div class="form-group">
                                     <label>Nombre completo</label>
-                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.name"
+                                    <input type="text" [disabled]="checkAddress" class="form-control" [(ngModel)]="loginService.user.name"
                                         name="name" placeholder="">
                                 </div>
                             </div>
                             <div class="col-sm-6 animate__animated animate__fadeInUp animate__faster animate__delay-2s">
                                 <div class="form-group">
                                     <label>Provincia</label>
-                                    <select class="form-control" [(ngModel)]="form.provence" name="provence"
+                                    <select class="form-control" [disabled]="checkAddress" [(ngModel)]="form.provence" name="provence"
                                         (change)="onChange(false)">
                                         <option value=''>--Seleccione una opción--</option>
                                         <option value="{{ provence.id }}"
@@ -46,7 +39,7 @@
                                 <div class="form-group">
                                     <label>Localidad</label>
                                     <ng-container *ngIf="!loadingLocalities">
-                                        <select class="form-control" [(ngModel)]="form.locality" name="locality">
+                                        <select class="form-control" [disabled]="checkAddress" [(ngModel)]="form.locality" name="locality">
                                             <option value=''>--Seleccione una opción--</option>
                                             <option value="{{ locality.id }}"
                                                 *ngFor="let locality of localities; let i=index;">{{ locality.name }}
@@ -65,39 +58,45 @@
                                 class="col-sm-12 animate__animated animate__fadeInUp animate__faster animate__delay-3s">
                                 <div class="form-group">
                                     <label>Calle</label>
-                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.street"
+                                    <input type="text" [disabled]="checkAddress" class="form-control" [(ngModel)]="loginService.user.street"
                                         name="street" placeholder="">
                                 </div>
                             </div>
                             <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
                                 <div class="form-group">
                                     <label>Número</label>
-                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.streetNumber"
+                                    <input type="text" [disabled]="checkAddress" class="form-control" [(ngModel)]="loginService.user.streetNumber"
                                         name="streetNumber" placeholder="">
                                 </div>
                             </div>
                             <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
                                 <div class="form-group">
                                     <label>Cód. postal</label>
-                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.postalCode"
+                                    <input type="text" [disabled]="checkAddress" class="form-control" [(ngModel)]="loginService.user.postalCode"
                                         name="postalCode" placeholder="">
                                 </div>
                             </div>
                             <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
                                 <div class="form-group">
                                     <label>Dpto</label>
-                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.department"
+                                    <input type="text" [disabled]="checkAddress" class="form-control" [(ngModel)]="loginService.user.department"
                                         name="department" placeholder="">
                                 </div>
                             </div>
                             <div class="col-sm-3 animate__animated animate__fadeInUp animate__faster animate__delay-4s">
                                 <div class="form-group">
                                     <label>Piso</label>
-                                    <input type="text" class="form-control" [(ngModel)]="loginService.user.floor"
+                                    <input type="text" [disabled]="checkAddress" class="form-control" [(ngModel)]="loginService.user.floor"
                                         name="floor" placeholder="">
                                 </div>
                             </div>
                         </div>
+                        <ng-container *ngIf="!checkAddress">
+                            <hr class="animate__animated animate__fadeInUp animate__faster animate__delay-5s">
+                            <div class="text-center my-4 animate__animated animate__fadeInUp animate__faster animate__delay-6s">
+                                <button type="submit" [disabled]="checkAddress" class="btn btn-info align-center" >1 - Confirmar datos de envío</button>
+                            </div>
+                        </ng-container>
                     </form>
                 </div>
                 <div class="col-sm-6">
@@ -116,15 +115,40 @@
                             [ngClass]="(loginService.user.balance - this.loginService.user.cart.total) > 0 ? 'text-success' : 'text-danger' ">
                             Saldo : {{ remaind | formatNumber }}
                         </h4>
-                        <div class="cho-container"></div>
+                        <ng-container *ngIf="checkAddress">
+
+                            <div *ngIf="remaind < 0" class="text-center">
+                                <div class="alert alert-danger">
+                                    Tu compra ha excedido tu saldo disponible en <b>{{ remaindLabel  | formatNumber }}</b>, puedes pagar esta diferencia y finalizar tu pedido. 
+                                </div>
+                                <hr class="animate__animated animate__fadeInUp animate__faster animate__delay-5s">
+                                <div class="cho-container"></div>
+                            </div>
+                            <div *ngIf="remaind > 0" class="text-center">
+                                <div class="alert alert-warning">
+                                    Para poder confirmar tu compra es necesario que gastes todo el crédito disponibles que posees, aún tienes disponible <b>{{ remaind | formatNumber }}</b> para seguir comprando. 
+                                    Recuerda que puedes utilizar el filtro de rango de precios para encontrar los productos que puedes agregar al carrito con dicho saldo. <a routerLink='/productos'>Seguir comprando</a>
+                                </div>
+                            </div>
+                            <div *ngIf="remaind == 0" class="text-center">
+                                <hr class="animate__animated animate__fadeInUp animate__faster animate__delay-5s">
+                                <div class="text-center my-4 animate__animated animate__fadeInUp animate__faster animate__delay-6s">
+                                    <button type="button" class="btn btn-info align-center" (click)="saveOrder()">2 - Confirmar pedido</button>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <!-- <div *ngIf="remaind > 0" class="text-center">
+                            <div class="alert alert-danger">
+                                Tu compra ha excedido tu saldo disponible en <b>{{ remaind  | formatNumber }}</b>, puedes pagar esta diferencia y finalizar tu pedido. 
+                            </div>
+                            <div class="cho-container"></div>
+                        </div> -->
                     </div>
                 </div>
             </div>
-            <hr class="animate__animated animate__fadeInUp animate__faster animate__delay-5s">
-            <div class="text-center my-4 animate__animated animate__fadeInUp animate__faster animate__delay-6s">
-                <button type="submit" class="btn btn-info align-center" *ngIf="remaind==0">Confirmar pedido</button>
-            </div>
-            
+            <!-- <div class="text-center my-4 animate__animated animate__fadeInUp animate__faster animate__delay-6s">
+                <button type="submit" class="btn btn-info align-center" >Confirmar pedido</button>
+            </div> -->
         </ng-container>
     </div>
 </div>

@@ -10,9 +10,17 @@ namespace Inamika\ApiBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
+use Inamika\BackEndBundle\Entity\Cart;
 
 class PaysController extends FOSRestController
 {   
+    public function saveAction(Request $request){
+        $content=json_decode($request->getContent(), true);
+        if(!$entity=$this->getDoctrine()->getRepository(Cart::class)->find($content["external_reference"]))
+            return $this->handleView($this->view($content, Response::HTTP_NOT_FOUND));
+        return $this->handleView($this->view($entity, Response::HTTP_OK));
+    }
+
     public function testAction(){
 
         \MercadoPago\SDK::setAccessToken("TEST-6855942644171528-030916-9dd174b345a9c9ba5b51294c1f5a0cd9-82841009");

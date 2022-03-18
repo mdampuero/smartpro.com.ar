@@ -37,6 +37,12 @@
                                     <th (click)="productorsService.setOrder('phone')">
                                         <app-table-th [title]="'Teléfono'" [field]="'phone'" [sort]="productorsService.sort" [direction]="productorsService.direction"></app-table-th>
                                     </th>                                    
+                                    <th >
+                                        <app-table-th [title]="'Compañia'"></app-table-th>
+                                    </th>   
+                                    <th (click)="productorsService.setOrder('isSuper')">
+                                        <app-table-th [title]="'¿Es supervisor?'" [field]="'isSuper'" [sort]="productorsService.sort" [direction]="productorsService.direction"></app-table-th>
+                                    </th>                                 
                                     <th></th>
                                 </tr>
                             </thead>
@@ -46,6 +52,8 @@
                                     <td>{{ item.email }}</td>
                                     <td>{{ item.password }}</td>
                                     <td>{{ item.phone }}</td>
+                                    <td>{{ item.company["name"] }}</td>
+                                    <td class="text-center" [innerHTML]="item.isSuper | badgeBinary"></td>
                                     <td class="text-center">
                                         <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/productors/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 
                                         <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash text-danger"></i></a>

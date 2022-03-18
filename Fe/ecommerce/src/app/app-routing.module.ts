@@ -10,6 +10,8 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
 import { ProductsComponent } from './pages/products/products.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { AuthGuard } from './services/auth.guard';
+import { FeeedbackComponent } from './pages/feeedback/feeedback.component';
+import { PayComponent } from './pages/pay/pay.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'carrito', component: CartComponent,canActivate:[AuthGuard]},
   { path: 'micuenta', component: AccountComponent,canActivate:[AuthGuard]},
   { path: 'checkout', component: CheckoutComponent,canActivate:[AuthGuard]},
+  { path: 'feedback', component: FeeedbackComponent,canActivate:[AuthGuard]},
+  { path: 'pay', component: PayComponent,canActivate:[AuthGuard]},
   { path: 'terminosYcondiciones', component: TermsComponent,canActivate:[AuthGuard]},
   { path: 'nosotros', component: AboutComponent,canActivate:[AuthGuard]},
   { path: '', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},

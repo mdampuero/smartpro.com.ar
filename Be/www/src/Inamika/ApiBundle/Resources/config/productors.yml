@@ -8,6 +8,11 @@ api_productors_get:
     defaults: { _controller: InamikaApiBundle:Productors:get }
     methods: [GET]
 
+api_productors_get_byCompany:
+    path:     /productorsByCompany/{companyId}
+    defaults: { _controller: InamikaApiBundle:Productors:getByCompany }
+    methods: [GET]
+
 api_productors_post:
     path:     /productors
     defaults: { _controller: InamikaApiBundle:Productors:post }

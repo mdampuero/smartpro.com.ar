@@ -22,19 +22,28 @@ class CartsController extends FOSRestController
     }
     
     public function getPreferenceAction($id){
+        $credentials=$this->getParameter('credentials');
         $cart=$this->getDoctrine()->getRepository(Cart::class)->find($id);
 
-        \MercadoPago\SDK::setAccessToken("TEST-6855942644171528-030916-9dd174b345a9c9ba5b51294c1f5a0cd9-82841009");
+        \MercadoPago\SDK::setAccessToken($credentials["access_token"]);
         $preference = new \MercadoPago\Preference();
         $item = new \MercadoPago\Item();
         $item->id = "00001";
-        $item->title = "Pago diferencia Smartpro por siniestro Nº ".$cart->getCustomer()->getSinister()->getNumber(); 
+        $item->title = "Smartpro diferencia siniestro Nº ".$cart->getCustomer()->getSinister()->getNumber(); 
         $item->quantity = 1;
         $item->unit_price = $cart->getTotal()-$cart->getCustomer()->getBalance();
         $preference->items = array($item);
+        $preference->external_reference = $cart->getId();
+        $global=$this->getParameter('global');
+        $preference->back_urls = array(
+            "success" => $global["ecommerce"]."feedback",
+            "failure" => $global["ecommerce"]."feedback", 
+            "pending" => $global["ecommerce"]."feedback",
+        );
+        //http://localhost:8080/feedback?collection_id=1246874958&collection_status=approved&payment_id=1246874958&status=dsa&external_reference=cc5ba127-a640-11ec-b62f-0242ac120002&payment_type=credit_card&merchant_order_id=4353290153&preference_id=b97f4484-a5e7-11ec-b62f-0242ac120002&site_id=MLA&processing_mode=aggregator&merchant_account_id=null
         $preference->save();
         $response=[
-            "publicKey"=>"TEST-ec74472f-24a4-4b50-9ef1-ace08b71041f",
+            "publicKey"=>$credentials["public_key"],
             'preferenceId'=>$preference->id
         ];
         return $this->handleView($this->view($response, Response::HTTP_OK));

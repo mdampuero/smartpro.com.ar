@@ -32,6 +32,8 @@ import { CartfullComponent } from './components/utils/cartfull/cartfull.componen
 import { PinchZoomModule } from 'ngx-pinch-zoom';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {Nl2BrPipeModule} from 'nl2br-pipe';
+import { FeeedbackComponent } from './pages/feeedback/feeedback.component';
+import { PayComponent } from './pages/pay/pay.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import {Nl2BrPipeModule} from 'nl2br-pipe';
     ProductDetailComponent,
     DetailProductComponent,
     AccountComponent,
-    CartfullComponent
+    CartfullComponent,
+    FeeedbackComponent,
+    PayComponent
   ],
   imports: [
     BrowserModule,

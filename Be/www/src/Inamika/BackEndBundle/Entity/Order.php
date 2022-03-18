@@ -86,9 +86,16 @@ class Order
      */
     private $items;
 
+    /**
+     * @ORM\OneToMany(targetEntity="OrderPay", mappedBy="order")
+     * @Assert\NotBlank()
+     */
+    private $pays;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->pays = new ArrayCollection();
     }
 
 
@@ -329,6 +336,26 @@ class Order
     public function setItems($items)
     {
         return $this->items=$items;
+    }
+    
+    /**
+     * Get pays.
+     *
+     * @return int
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+    
+    /**
+     * Set pays.
+     *
+     * @return Order
+     */
+    public function setPays($pays)
+    {
+        return $this->pays=$pays;
     }
     
 

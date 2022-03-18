@@ -10,6 +10,7 @@ import { ProvencesService } from 'src/app/services/api/provences.service';
 import { LoginService } from 'src/app/services/db/login.service';
 import { ToastService } from 'src/app/services/toast.service';
 import Swal from 'sweetalert2';
+import { PayService } from 'src/app/services/db/pay.service';
 declare function btnPay(publicKey:any,preferenceId:any): any; 
 
 @Component({
@@ -18,8 +19,10 @@ declare function btnPay(publicKey:any,preferenceId:any): any;
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-  
+  public checkAddress=false;
   public remaind:any
+  public remaindLabel:any
+  public pay:any;
   public loadingLocalities=true;
   public provences: any[]=[];
   public localities: any[]=[];
@@ -28,10 +31,24 @@ export class CheckoutComponent implements OnInit {
     locality:''
   }
   constructor(
+    public payService:PayService,
     public localitiesService: LocalitiesService,
     public cartService: CartService,
     public provencesService: ProvencesService,public toast:ToastService,private router: Router,public loginService:LoginService,private spinner: NgxSpinnerService,private customerService:CustomerService,private ordersService:OrderService) { }
-  ngOnInit(): void { 
+    ngOnInit(): void { 
+      this.pay=this.payService.loadStorage();
+      if(this.pay){
+        this.payService.savePay(null);
+        if(this.pay["status"]=="approved"){
+          this.checkAddress=true;
+          this.saveOrder();
+        }else{
+          this.toast.show('EL Pago no pudo ser procesado, reintenta nuevamente');
+          this.pay=null;
+        }
+      }else{
+        this.pay=null;
+      }
     if(this.loginService.user.cart.items.length == 0){
       this.router.navigate(['/home']);
     }
@@ -40,15 +57,8 @@ export class CheckoutComponent implements OnInit {
       this.form.provence=this.loginService.user.provence.id;
       this.onChange(true);      
     });
-    this.remaind=this.loginService.user.balance - this.loginService.user.cart.total;
-    this.cartService.getPreference().subscribe(
-      (data:any) =>  {
-        btnPay(data.publicKey, data.preferenceId);
-      },
-      (error) => {
-        
-      }
-    );
+    this.remaind=(this.loginService.user.balance - this.loginService.user.cart.total );
+    this.remaindLabel=this.remaind*-1;
     
   }
   onChange(selected:boolean) {
@@ -60,13 +70,35 @@ export class CheckoutComponent implements OnInit {
       this.loadingLocalities=false;
     });
   }
-  save(form:NgForm){
+  
+  check(form:NgForm){
     this.spinner.show();
     $(".form-control-feedback.text-danger").remove();
     this.loginService.user.provence=this.form.provence;
     this.loginService.user.locality=this.form.locality;
     this.customerService.save(this.loginService.user).subscribe(
-      () =>  this.saveOrder(),
+      () =>  {
+        this.ordersService.check({ customer:this.loginService.user.id,total:this.loginService.user.cart.total, cart:this.loginService.user.cart,pay:this.pay}).subscribe(
+          (data:any) => {
+            this.checkAddress=true;
+            if(this.remaind<0){
+              this.cartService.getPreference().subscribe(
+                (data:any) =>  {
+                  btnPay(data.publicKey, data.preferenceId);
+                },
+                (error) => {
+                  
+                }
+              );
+            }
+          },
+          (error) => {
+            this.toast.show('UPS! Algo no salió bien');
+            this.spinner.hide();
+          },
+          ()=> this.spinner.hide()
+        );
+      },
       (error) => {
         if(error.status==400)
           Object.entries(error.error.form.errors.children).forEach(
@@ -77,11 +109,12 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  
+
 
   saveOrder(){
+    this.spinner.show();
     $(".form-control-feedback.text-danger").remove();
-    this.ordersService.save({ customer:this.loginService.user.id,total:this.loginService.user.cart.total, cart:this.loginService.user.cart}).subscribe(
+    this.ordersService.save({ customer:this.loginService.user.id,total:this.loginService.user.cart.total, cart:this.loginService.user.cart,pay:this.pay}).subscribe(
       (data:any) => {
         this.loginService.logout();
         Swal.fire({

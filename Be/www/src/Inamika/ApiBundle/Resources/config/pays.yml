@@ -2,3 +2,8 @@ api_pays_test:
     path:     /pays/test
     defaults: { _controller: InamikaApiBundle:Pays:test }
     methods: [GET]
+
+api_pays_save:
+    path:     /pays
+    defaults: { _controller: InamikaApiBundle:Pays:save }
+    methods: [POST]

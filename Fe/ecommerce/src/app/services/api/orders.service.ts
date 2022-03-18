@@ -44,5 +44,8 @@ export class OrderService {
   save(data:any) {
     return this.http.post(`${environment.apiUrl}orders`, data);
   }
+  check(data:any) {
+    return this.http.post(`${environment.apiUrl}orders_check`, data);
+  }
 
 }

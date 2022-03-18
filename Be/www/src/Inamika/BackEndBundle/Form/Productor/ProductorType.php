@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ProductorType extends AbstractType
 {
@@ -27,6 +30,17 @@ class ProductorType extends AbstractType
         ->add('phone',TextType::class)
         ->add('password',TextType::class)
         ->add('observation',TextareaType::class)
+        ->add('company', EntityType::class, array(
+            'class' => 'InamikaBackEndBundle:Company',
+            'query_builder' => function (EntityRepository $er) {
+                $qb = $er->createQueryBuilder('e');
+                return $qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)->orderBy('e.name', 'ASC');
+            }
+        ))
+        ->add('isSuper',ChoiceType::class, array('choices' => array(
+            'SI' => 1,
+            'NO' =>0
+        )))
         ;
     }
 
