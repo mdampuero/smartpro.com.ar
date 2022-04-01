@@ -57,7 +57,8 @@ export class ProductorsFormComponent implements OnInit {
       this.productorsService.getOne(id).subscribe(
         (data:any) => {
           this.form=data;
-          this.form.company=data.company.id;
+          if(data.company)
+            this.form.company=data.company.id;
           this.form.isSuper=(data.isSuper)?1:0;
           this.loadForm();
           this.spinner.hide();

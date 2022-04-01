@@ -15,5 +15,8 @@ parameters:
     mailer_user: 'a4140ccebccb5f'
     mailer_password: 'ad647ff494915d'
     secret: 99b2af404f070f6d849dea5705fd9375b130a628
-    global: 
-        ecommerce: 'http://smartpro.ecommerce.mdasoftware.com.ar/'
+    global:
+        ecommerce: 'http://localhost:45327/'
+    credentials:
+        access_token: TEST-6855942644171528-030916-9dd174b345a9c9ba5b51294c1f5a0cd9-82841009
+        public_key: TEST-ec74472f-24a4-4b50-9ef1-ace08b71041f

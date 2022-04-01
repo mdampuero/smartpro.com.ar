@@ -14,3 +14,6 @@ parameters:
     secret: 99b2af404f070f6d849dea5705fd9375b130a628
     global: 
         ecommerce: 'http://smartpro.com.ar/'
+    credentials:
+        access_token: APP_USR-5705258280776840-032914-cb1fd2bc3ec8aad9798c363569501793-761414442
+        public_key: APP_USR-134cf49b-c69c-4ea5-b5bf-6881f8725cda

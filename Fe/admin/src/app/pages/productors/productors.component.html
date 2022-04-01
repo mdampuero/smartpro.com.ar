@@ -52,7 +52,8 @@
                                     <td>{{ item.email }}</td>
                                     <td>{{ item.password }}</td>
                                     <td>{{ item.phone }}</td>
-                                    <td>{{ item.company["name"] }}</td>
+                                    <td *ngIf="item.company">{{ item.company["name"] }}</td>
+                                    <td *ngIf="!item.company"></td>
                                     <td class="text-center" [innerHTML]="item.isSuper | badgeBinary"></td>
                                     <td class="text-center">
                                         <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/productors/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 
