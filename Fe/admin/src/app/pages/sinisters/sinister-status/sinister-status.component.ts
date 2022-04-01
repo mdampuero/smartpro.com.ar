@@ -87,38 +87,38 @@ export class SinisterStatusComponent implements OnInit {
   analizeStatus(){
     switch(this.data.status.id){
       case 'NEED_TO_DEFINE_PRODUCTS':
-          this.events.subscribe('app-form-product-sinister', (product: any) => this.productList.push(product.product));
-          this.status[0].disabled=true;
+          //this.events.subscribe('app-form-product-sinister', (product: any) => this.productList.push(product.product));
+          //this.status[0].disabled=true;
         break;
       case 'WAITING_FOR_PRODUCTS':
-          this.status[0].disabled=true;
-          this.status[1].disabled=true;
+          //this.status[0].disabled=true;
+          //this.status[1].disabled=true;
         break;
       case 'UNDELIVERED':
-          this.status[0].disabled=true;
-          this.status[1].disabled=true;
-          this.status[2].disabled=true;
+          //this.status[0].disabled=true;
+          //this.status[1].disabled=true;
+          //this.status[2].disabled=true;
         break;
       case 'DELIVERED':
-          this.status[0].disabled=true;
-          this.status[1].disabled=true;
-          this.status[2].disabled=true;
-          this.status[3].disabled=true;
+          //this.status[0].disabled=true;
+          //this.status[1].disabled=true;
+          //this.status[2].disabled=true;
+          //this.status[3].disabled=true;
         break;
       case 'INVOICED':
-          this.status[0].disabled=true;
-          this.status[1].disabled=true;
-          this.status[2].disabled=true;
-          this.status[3].disabled=true;
-          this.status[4].disabled=true;
+          //this.status[0].disabled=true;
+          //this.status[1].disabled=true;
+          //this.status[2].disabled=true;
+          //this.status[3].disabled=true;
+          //this.status[4].disabled=true;
         break;
       case 'DISCHARDGED':
-          this.status[0].disabled=true;
-          this.status[1].disabled=true;
-          this.status[2].disabled=true;
-          this.status[3].disabled=true;
-          this.status[4].disabled=true;
-          this.status[5].disabled=true;
+          //this.status[0].disabled=true;
+          //this.status[1].disabled=true;
+          //this.status[2].disabled=true;
+          //this.status[3].disabled=true;
+          //this.status[4].disabled=true;
+          //this.status[5].disabled=true;
         break;
       default:
         break;

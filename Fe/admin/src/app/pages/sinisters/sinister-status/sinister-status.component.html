@@ -13,7 +13,8 @@ DISCHARDGED -->
 			<div class="alert alert-{{ data.status.color }}">{{ data.status.name }}</div>
 			<h2 class="card-title animated fadeInDown">Cambiar estado</h2>
 			<hr class="mb-4">
-			<ng-container *ngIf="data.status.id != 'INVOICED' && data.status.id != 'DISCHARDGED'">
+			<!-- <ng-container *ngIf="data.status.id != 'INVOICED' && data.status.id != 'DISCHARDGED'"> -->
+			<ng-container >
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
@@ -103,10 +104,10 @@ DISCHARDGED -->
 					</div>
 				</div>
 			</ng-container>
-			<ng-container *ngIf="data.status.id == 'INVOICED' || data.status.id == 'DISCHARDGED'">
+			<!-- <ng-container *ngIf="data.status.id == 'INVOICED' || data.status.id == 'DISCHARDGED'">
 				<div class="alert alert-warning">
 					El siniestro se encuentra un un estado irreversible
 				</div>
-			</ng-container>
+			</ng-container> -->
 		</div>
 	</div>
