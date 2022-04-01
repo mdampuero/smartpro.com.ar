@@ -14,6 +14,7 @@ export class Products {
     public isSalient: number;
     public inStock: number;
     public categories: any;
+    public userLastEdit:any;
     constructor(fields?: any) {
         this.id=fields.id;
         this.name=fields.name;
@@ -30,5 +31,6 @@ export class Products {
         this.isSalient=fields.isSalient;
         this.inStock=fields.inStock;
         this.categories=fields.categories;
+        this.userLastEdit=fields.userLastEdit;
     }
 }

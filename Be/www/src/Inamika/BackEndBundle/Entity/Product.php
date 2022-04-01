@@ -51,6 +51,15 @@ class Product
     private $provider;
 
     /**
+     * Many Products have one UserLastEdit. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_last_edit_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $userLastEdit;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="category", type="string", length=64,nullable=true)
@@ -483,6 +492,30 @@ class Product
     public function getProvider()
     {
         return $this->provider;
+    }
+
+    /**
+     * Set userLastEdit.
+     *
+     * @param string|null $userLastEdit
+     *
+     * @return Product
+     */
+    public function setUserLastEdit($userLastEdit = null)
+    {
+        $this->userLastEdit = $userLastEdit;
+
+        return $this;
+    }
+
+    /**
+     * Get userLastEdit.
+     *
+     * @return string|null
+     */
+    public function getUserLastEdit()
+    {
+        return $this->userLastEdit;
     }
     
     /**

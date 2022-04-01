@@ -63,7 +63,8 @@ export class ProductsFormComponent implements OnInit {
     picturePreview:'',
     isSalient:0,
     inStock:1,
-    categories:[]
+    categories:[],
+    userLastEdit:''
   };
  
   public providers: Providers[]=[];

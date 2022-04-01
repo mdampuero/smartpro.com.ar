@@ -59,7 +59,12 @@
                                     <td>{{ item.price | formatNumber }}</td>
                                     <td class="text-center" [innerHTML]="item.isSalient | badgeBinary"></td>
                                     <td class="text-center" [innerHTML]="item.inStock | badgeBinary"></td>
-                                    <td>{{ item.updatedAt | date:'H' }}</td>
+                                    <td class="text-center">
+                                        {{ item.updatedAt | date:'H' }}
+                                        <ng-container *ngIf="item.userLastEdit">
+                                            por <b>{{ item.userLastEdit.name }}</b>
+                                        </ng-container>
+                                    </td>
                                     <td class="text-center">
                                         <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/products/editar', item.id]"  class="btn-edit btn btn-outline-info btn-circle mr-1"><i class="fa fa-pencil text-info"></i></a> 
                                         <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash text-danger"></i></a>

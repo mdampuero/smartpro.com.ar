@@ -30,9 +30,10 @@ class SinistersController extends FOSRestController
         $limit = $request->query->get('length', 30);
         $sort = $request->query->get('sort', null);
         $direction = $request->query->get('direction', null);
-        $recordsFiltered = $this->getDoctrine()->getRepository(Sinister::class)->searchTotal($query, $limit, $offset);
+        $filters = json_decode($request->query->get('filters', null),true);
+        $recordsFiltered = $this->getDoctrine()->getRepository(Sinister::class)->searchTotal($query, $limit, $offset,$filters);
         return $this->handleView($this->view(array(
-            'data' => $this->getDoctrine()->getRepository(Sinister::class)->search($query, $limit, $offset, $sort, $direction)->getQuery()->getResult(),
+            'data' => $this->getDoctrine()->getRepository(Sinister::class)->search($query, $limit, $offset, $sort, $direction,$filters)->getQuery()->getResult(),
             'recordsTotal' => $this->getDoctrine()->getRepository(Sinister::class)->total(),
             'recordsFiltered' => $recordsFiltered,
             'offset' => $offset,

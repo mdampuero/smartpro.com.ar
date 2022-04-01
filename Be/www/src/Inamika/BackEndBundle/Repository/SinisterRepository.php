@@ -41,7 +41,7 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function search($query=null,$limit=0,$offset=0,$sort=null,$direction=null){
+    public function search($query=null,$limit=0,$offset=0,$sort=null,$direction=null,$filters=[]){
         if($limit>100) $limit=100;
         if($limit==0) $limit=30;
         $qb= $this->getAll()
@@ -69,11 +69,17 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
                 $qb->andWhere("CONCAT(customer.name,customer.email,e.number)  LIKE :query")->setParameter('query',"%".$query."%");
             }
         }
+        if($filters && key_exists('company',$filters) && $filters['company'])
+            $qb->andWhere('e.company=:company')->setParameter('company',$filters['company']);
+        if($filters && key_exists('status',$filters) && $filters['status'])
+            $qb->andWhere('e.status=:status')->setParameter('status',$filters['status']);
+        if($filters && key_exists('productor',$filters) && $filters['productor'])
+            $qb->andWhere('e.productor=:productor')->setParameter('productor',$filters['productor']);
         return $qb;
     }
 
-    public function searchTotal($query=null,$limit=0,$offset=0){
-        $resultTotal=$this->search($query,$limit=0,$offset=0)
+    public function searchTotal($query=null,$limit=0,$offset=0,$filters=[]){
+        $resultTotal=$this->search($query,$limit=0,$offset=0,null,null,$filters)
         ->setFirstResult(null)
         ->select('COUNT(e.id) as total')
         ->setMaxResults(1)

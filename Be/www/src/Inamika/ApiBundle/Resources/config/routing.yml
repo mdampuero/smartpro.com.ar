@@ -63,3 +63,6 @@ api_stats:
 
 api_pays:
     resource: "@InamikaApiBundle/Resources/config/pays.yml"
+
+api_sinister_status:
+    resource: "@InamikaApiBundle/Resources/config/sinister_status.yml"

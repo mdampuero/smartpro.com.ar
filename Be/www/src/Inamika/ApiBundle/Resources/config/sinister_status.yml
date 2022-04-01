@@ -1,0 +1,4 @@
+api_sinister_status:
+    path:     /sinisterStatus
+    defaults: { _controller: InamikaApiBundle:SinisterStatus:index }
+    methods: [GET]

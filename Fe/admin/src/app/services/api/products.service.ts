@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Products } from 'src/app/models/products.model';
 import { EventsService } from '../events.service';
+import { LoginService } from '../db/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ProductsService {
   public sort = "updatedAt";
   public direction = "DESC";
 
-  constructor(private http: HttpClient,public events: EventsService) { 
+  constructor(private http: HttpClient,public events: EventsService,public loginService:LoginService) { 
 
   }
 
@@ -54,6 +55,7 @@ export class ProductsService {
   }
 
   save(data:Products) {
+    data.userLastEdit=this.loginService.user.id;
     if(data.id !=='')
       return this.http.put(`${environment.apiUrl}products/${data.id}`, data);
     else

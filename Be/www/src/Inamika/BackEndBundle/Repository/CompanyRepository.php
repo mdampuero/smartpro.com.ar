@@ -30,7 +30,8 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
                 $sort='e.'.$sort;
             $qb->orderBy($sort,$direction);
         }else{
-            $qb->orderBy("e.createdAt","DESC");        }
+            $qb->orderBy("e.createdAt","DESC");        
+        }
         if($query){
             $words=explode(" ",$query);
             if(count($words)>1){

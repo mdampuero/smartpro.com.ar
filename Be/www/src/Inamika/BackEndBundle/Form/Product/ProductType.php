@@ -63,6 +63,15 @@ class ProductType extends AbstractType
                 return $choices;
             }
         ))
+        ->add('userLastEdit', EntityType::class, array(
+            'class' => 'InamikaBackEndBundle:User',
+            'query_builder' => function (EntityRepository $er) {
+                $qb = $er->createQueryBuilder('e');
+                $choices=$qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)
+                    ->orderBy('e.name', 'ASC');
+                return $choices;
+            }
+        ))
         ;
     }
 
