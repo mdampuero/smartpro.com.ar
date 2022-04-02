@@ -41,7 +41,10 @@
                                         <app-table-th [title]="'Recomendado'" [field]="'isSalient'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
                                     </th>                             
                                     <th (click)="productsService.setOrder('inStock')">
-                                        <app-table-th [title]="'En Stock'" [field]="'inStock'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
+                                        <app-table-th [title]="'Disponible'" [field]="'inStock'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
+                                    </th>  
+                                    <th (click)="productsService.setOrder('stock')">
+                                        <app-table-th [title]="'Stock'" [field]="'stock'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
                                     </th>                                 
                                     <th (click)="productsService.setOrder('updatedAt')">
                                         <app-table-th [title]="'Actualizado'" [field]="'updatedAt'" [sort]="productsService.sort" [direction]="productsService.direction"></app-table-th>
@@ -59,6 +62,7 @@
                                     <td>{{ item.price | formatNumber }}</td>
                                     <td class="text-center" [innerHTML]="item.isSalient | badgeBinary"></td>
                                     <td class="text-center" [innerHTML]="item.inStock | badgeBinary"></td>
+                                    <td class="text-center"><span class="badge badge-pill badge-info">{{ item.stock }}</span></td>
                                     <td class="text-center">
                                         {{ item.updatedAt | date:'H' }}
                                         <ng-container *ngIf="item.userLastEdit">

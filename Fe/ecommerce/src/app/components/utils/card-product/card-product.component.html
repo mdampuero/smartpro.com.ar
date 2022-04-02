@@ -1,8 +1,10 @@
 
 <div class="card h-100 box" >
     <div class="ribbon" *ngIf="item.isSalient"><span>Recomendado</span></div>
+    
     <img (click)="goToProduct()" class="card-img-top cursor-pointer" src="{{ environment.imgUrl.md }}{{ item.picture }}"  onerror="this.onerror=null; this.src='assets/imgs/no-photo.png'" >
-    <div class="card-body cursor-pointer" (click)="goToProduct()">
+    <div class="card-body cursor-pointer" (click)="goToProduct()" style="border-top: #DDD solid 1px; position:relative">
+        <div class="ribbon_brand" *ngIf="item.brand"><span>{{ item.brand }}</span></div>
         <h3 class="card-title" *ngIf="item.price > 0 && item.inStock">
             <b>{{ item.price | formatNumber }}</b>
         </h3>

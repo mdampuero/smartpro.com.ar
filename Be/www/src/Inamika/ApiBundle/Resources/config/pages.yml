@@ -1,0 +1,24 @@
+api_pages:
+    path:     /pages
+    defaults: { _controller: InamikaApiBundle:Pages:index }
+    methods: [GET]
+
+api_pages_get:
+    path:     /pages/{id}
+    defaults: { _controller: InamikaApiBundle:Pages:get }
+    methods: [GET]
+
+api_pages_post:
+    path:     /pages
+    defaults: { _controller: InamikaApiBundle:Pages:post }
+    methods: [POST]
+
+api_pages_put:
+    path:     /pages/{id}
+    defaults: { _controller: InamikaApiBundle:Pages:put }
+    methods: [PUT]
+
+api_pages_delete:
+    path:     /pages/{id}
+    defaults: { _controller: InamikaApiBundle:Pages:delete }
+    methods: [DELETE]

@@ -34,6 +34,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {Nl2BrPipeModule} from 'nl2br-pipe';
 import { FeeedbackComponent } from './pages/feeedback/feeedback.component';
 import { PayComponent } from './pages/pay/pay.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { PayComponent } from './pages/pay/pay.component';
     AccountComponent,
     CartfullComponent,
     FeeedbackComponent,
-    PayComponent
+    PayComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

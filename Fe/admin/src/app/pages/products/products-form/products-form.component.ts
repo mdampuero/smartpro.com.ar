@@ -62,6 +62,7 @@ export class ProductsFormComponent implements OnInit {
     picture:'',
     picturePreview:'',
     isSalient:0,
+    stock:0,
     inStock:1,
     categories:[],
     userLastEdit:''
@@ -112,6 +113,8 @@ export class ProductsFormComponent implements OnInit {
 		this.spinner.show();
 		this.productsService.getOne(id).subscribe(
 		(data:any) => {
+      if(!data.picturePreview)
+        data.picturePreview='';
 			this.form=data;
       this.loadForm();
       this.form.isSalient=(data.isSalient)?1:0;
@@ -130,6 +133,11 @@ export class ProductsFormComponent implements OnInit {
 			this.form.picturePreview=data.base64;
 		});
 	}
+  
+  removeFile(){
+    this.form.picture='##delete##';
+    this.form.picturePreview='assets/images/no-photo.png';
+  }
 
 	save(form:NgForm){
     this.form.categories=[];
@@ -140,7 +148,9 @@ export class ProductsFormComponent implements OnInit {
     });
 		this.spinner.show();
 		$(".form-control-feedback.text-danger").remove();
-
+    // console.log(this.form);
+    
+    // return false;
 		this.productsService.save(this.form).subscribe(
 		(data:any) => {
 			this._snackBar.open('Los cambios fueron guardados','Aceptar', { duration: 3000 });

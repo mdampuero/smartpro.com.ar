@@ -10,6 +10,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { PagesFormComponent } from './pages/pages/pages-form/pages-form.component';
+import { PagesComponent } from './pages/pages/pages.component';
 import { ProductorsFormComponent } from './pages/productors/productors-form/productors-form.component';
 import { ProductorsComponent } from './pages/productors/productors.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
@@ -57,6 +59,10 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesComponent,canActivate:[AuthGuard]},
   { path: 'categories/nuevo', component: CategoriesFormComponent ,canActivate:[AuthGuard]},
   { path: 'categories/editar/:id', component: CategoriesFormComponent ,canActivate:[AuthGuard]},
+
+  { path: 'pages', component: PagesComponent,canActivate:[AuthGuard]},
+  { path: 'pages/nuevo', component: PagesFormComponent ,canActivate:[AuthGuard]},
+  { path: 'pages/editar/:id', component: PagesFormComponent ,canActivate:[AuthGuard]},
   
   { path: 'providers', component: ProvidersComponent,canActivate:[AuthGuard]},
   { path: 'providers/nuevo', component: ProvidersFormComponent ,canActivate:[AuthGuard]},

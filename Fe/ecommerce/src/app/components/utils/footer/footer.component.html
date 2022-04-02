@@ -1,8 +1,6 @@
 <footer class="container mt-4 animate__animated animate__zoomIn">
     <img src="assets/imgs/banner-smartpro.jpeg" class="w-100 ">
-    <p class="text-center my-5">
-        Cómo lo estamos haciendo? <a href="mailto:tienda@smartpro.com.ar">Dejanos tu comentario</a>. <br/>Para nosotros es muy importante mejorar sus experiencias, muchas gracias por sus contribuciones.
-    </p>
+    <p class="text-center my-5" [innerHTML]="content.content"></p>
     <hr class="mb-5">
     <p class="float-right">
         <a javascript="void(0)" (click)="onActivate($event)">

@@ -33,7 +33,9 @@ import { CompaniesFormComponent } from './pages/companies/companies-form/compani
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { PagesComponent } from './pages/pages/pages.component';
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
+import { PagesFormComponent } from './pages/pages/pages-form/pages-form.component';
 import { TransportersComponent } from './pages/transporters/transporters.component';
 import { TransportersFormComponent } from './pages/transporters/transporters-form/transporters-form.component';
 import { ProvidersComponent } from './pages/providers/providers.component';
@@ -85,6 +87,8 @@ import { ProductsSinisterComponent } from './components/products-sinister/produc
     TransportersFormComponent,
     CompaniesComponent,
     CompaniesFormComponent,
+    PagesComponent,
+    PagesFormComponent,
     ProductsComponent,
     ProductsFormComponent,
     CategoriesComponent,

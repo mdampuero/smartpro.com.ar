@@ -1,0 +1,21 @@
+{% extends "InamikaApiBundle::Emails/layout.html.twig" %}
+{% block body %}
+<h4>Consulta desde el formulario de la tienda</h4>
+<hr>
+    <p>
+        <b>Nombre: </b>
+        <span>{{ content.name }}</span>
+    </p>
+    <p>
+        <b>Email: </b>
+        <span>{{ content.email }}</span>
+    </p>
+    <p>
+        <b>Teléfono: </b>
+        <span>{{ content.phone }}</span>
+    </p>
+    <p>
+        <b>Consulta: </b>
+        <span>{{ content.query | nl2br }}</span>
+    </p>
+{% endblock %}

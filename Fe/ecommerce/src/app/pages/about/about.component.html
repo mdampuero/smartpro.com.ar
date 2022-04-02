@@ -2,26 +2,16 @@
     <nav aria-label="breadcrumb ">
         <ol class="breadcrumb mt-2">
             <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Nosotros</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ content.name }}</li>
         </ol>
     </nav>
     <div class="bg-white pt-4">
-        <h4 class="animate__animated animate__fadeInLeft">Nosotros</h4>
+        <h4 class="animate__animated animate__fadeInLeft">{{ content.name }}</h4>
         <hr class="featurette-divider mb-4 animate__animated animate__fadeInRight">
         <div class="row featurette animate__animated animate__fadeInUp">
-            <div class="col-md-7">
-                <!-- <h2 class="featurette-heading">Sobre nosotros <span class="text-muted"></span></h2> -->
-                <p class="lead">Con más de 10 años de trayectoria innovando en el cierre
-                    de procesos para compañías de seguros, te ofrecemos una
-                    experiencia única al momento de reponer los productos que deseás.
-                </p>
-                <p class="lead">Con la máxima comodidad, riesgo sanitario cero,
-                    desde tu casa y con envío express.
-                </p>
-            </div>
+            <div class="col-md-7" [innerHTML]="content.content"></div>
             <div class="col-md-5">
                 <img src="assets/imgs/smartpro_nosotros.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-                
             </div>
         </div>
     </div>

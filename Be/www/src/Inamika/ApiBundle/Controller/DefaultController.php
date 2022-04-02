@@ -47,7 +47,7 @@ class DefaultController extends FOSRestController{
      */
     public function base64ToFile($string)
     {
-        if($string=='') return null;
+        if($string=='' || $string=='##delete##') return null;
         $extensionImage=['jpg','png','gif','jpeg'];
         $path=$this->setting['uploads_directory'];
 

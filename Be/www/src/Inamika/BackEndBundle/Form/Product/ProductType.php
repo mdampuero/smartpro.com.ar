@@ -31,6 +31,7 @@ class ProductType extends AbstractType
         ->add('brand',TextType::class)
         ->add('picture',TextType::class,array('mapped'=>false))
         ->add('price',NumberType::class)
+        ->add('stock',NumberType::class)
         ->add('cost',NumberType::class)
         ->add('tags',TextType::class)
         ->add('description',TextareaType::class)

@@ -12,6 +12,7 @@ import { TermsComponent } from './pages/terms/terms.component';
 import { AuthGuard } from './services/auth.guard';
 import { FeeedbackComponent } from './pages/feeedback/feeedback.component';
 import { PayComponent } from './pages/pay/pay.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'pay', component: PayComponent,canActivate:[AuthGuard]},
   { path: 'terminosYcondiciones', component: TermsComponent,canActivate:[AuthGuard]},
   { path: 'nosotros', component: AboutComponent,canActivate:[AuthGuard]},
+  { path: 'contacto', component: ContactComponent,canActivate:[AuthGuard]},
   { path: '', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
   { path: '**', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
   

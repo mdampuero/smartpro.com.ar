@@ -49,16 +49,22 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
-                                    <label>¿En Stock?</label>
+                                    <label>Disponible</label>
                                     <select class="form-control" [(ngModel)]="form.inStock" name="inStock">
                                         <option value="1">SI</option>
                                         <option value="0">NO</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Stock</label>
+                                    <input type="text" class="form-control" [(ngModel)]="form.stock" name="stock" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Marca</label>
                                     <input type="text" class="form-control" [(ngModel)]="form.brand" name="brand" placeholder="">
@@ -91,6 +97,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <app-input-file [maxSize]="2000" [accept]="'image/png, image/jpeg, image/jpg'"></app-input-file>
+                                <button *ngIf="this.form.picturePreview" class="btn btn-danger btn-xs" (click)="removeFile()" type="button"><i class="fa fa-trash"></i> Quitar imagen</button>
                             </div>
                         </div>
                         <h4 class="card-title animated fadeInDown">Categorías</h4>

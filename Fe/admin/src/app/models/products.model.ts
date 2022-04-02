@@ -12,6 +12,7 @@ export class Products {
     public picture: any;
     public picturePreview: any;
     public isSalient: number;
+    public stock: number;
     public inStock: number;
     public categories: any;
     public userLastEdit:any;
@@ -32,5 +33,6 @@ export class Products {
         this.inStock=fields.inStock;
         this.categories=fields.categories;
         this.userLastEdit=fields.userLastEdit;
+        this.stock=fields.stock;
     }
 }

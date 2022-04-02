@@ -125,6 +125,14 @@ class Product
      */
     private $price=0;
 
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="stock", type="float",nullable=true,options={"default" : 0})
+     * @Expose
+     */
+    private $stock=0;
+
     /**
      * @var float
      *
@@ -636,6 +644,30 @@ class Product
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set stock.
+     *
+     * @param float|null $stock
+     *
+     * @return Product
+     */
+    public function setStock($stock = null)
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Get stock.
+     *
+     * @return float|null
+     */
+    public function getStock()
+    {
+        return $this->stock;
     }
     
     /**
