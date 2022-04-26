@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'siniestro/:id', component: SinisterComponent,canActivate:[AuthGuard]},
   { path: 'nuevo', component: NewComponent,canActivate:[AuthGuard]},
+  { path: ':user', component: HomeComponent,canActivate:[AuthGuard]},
   { path: '', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
   { path: '**', pathMatch:'full', component: HomeComponent,canActivate:[AuthGuard]},
   

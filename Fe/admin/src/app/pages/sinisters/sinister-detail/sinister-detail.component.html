@@ -7,7 +7,7 @@
             </h3>
             <hr>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card bg-light">
                         <h4 class="card-header bg-info text-white"><b>Datos del siniestro</b></h4>
                         <div class="card-body">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card bg-light">
                         <h4 class="card-header bg-success text-white"><b>Siniestrado</b></h4>
                         <div class="card-body">
@@ -33,21 +33,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <h4 class="card-header bg-{{ data.status.color }} text-white text-center"><b>{{ data.status.name }}</b></h4>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <select name="newStatus" class="form-control" [(ngModel)]="newStatusSelect">
+                                    <option value="-1">-- Seleccione el nuevo estado --</option>
+                                    <ng-container *ngFor="let item of status; let i=index;">
+                                        <option value="{{ i }}" *ngIf="data.status.id != item.id">{{ item.label }}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="observations" [(ngModel)]="observations" class="form-control"
+                                    rows="3" placeholder="Observaciones"></textarea>
+                            </div>
+                            <button class="btn btn-info btn-sm" 
+                                (click)="newStatus()">Cambiar
+                                estado</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="card bg-light">
-                        <h4 class="card-header bg-{{ data.status.color }} text-white"><b>Estado</b></h4>
+                        <h4 class="card-header bg-primary text-white"><b>Productos</b></h4>
                         <div class="card-body">
-                            <p class="text-center mb-3"><span class="font-16 badge badge-{{ data.status.color }}">{{ data.status.name }}</span></p>
-                            <p>
-                                <b>Última actualización: </b> {{ data.updatedAt | date }}
-                            </p>
-                            <p class=" mb-3">
-                                <a role="button" [routerLink]="['/sinisters/status/', data.id]" class="btn btn-info btn-sm">Cambiar estado</a>
-                            </p>
-                            <ng-container  *ngIf="data.items">
+                            <app-form-product-sinister></app-form-product-sinister>
+                            <hr>
+                            <ng-container *ngIf="data.items">
                                 <p *ngIf="data.order"><b>Pedido: </b> <a [routerLink]="['/orders/', data.order.id]">Nº {{ data.order.id }}</a></p>
-                                <h3 class="card-title animated fadeInDown">Productos</h3>
-                                <hr class="">
                                 <div class="table-responsive bg-white" style="clear: both;">
                                     <table class="table table-hover">
                                         <thead>
@@ -61,6 +76,7 @@
                                                 <th>Pedido</th>
                                                 <th>Llegada</th>
                                                 <th>Medio</th>
+                                                <th class="text-center"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -74,11 +90,12 @@
                                                 <td>{{ product.departureDate }}</td>
                                                 <td>{{ product.arrivalDate }}</td>
                                                 <td>{{ product.transport }}</td>
+                                                <td><a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(product)" class="btn-remove btn btn-outline-danger btn-sm"><i class="fa fa-trash text-danger"></i></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            </ng-container>
+                            </ng-container> 
                         </div>
                     </div>
                 </div>

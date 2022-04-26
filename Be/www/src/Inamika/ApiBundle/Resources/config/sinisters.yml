@@ -18,6 +18,16 @@ api_sinisters_changeSatus:
     defaults: { _controller: InamikaApiBundle:Sinisters:changeSatus }
     methods: [PUT]
 
+api_sinisters_addProduct:
+    path:     /sinisters/addProduct/{id}
+    defaults: { _controller: InamikaApiBundle:Sinisters:addProduct }
+    methods: [PUT]
+
+api_sinisters_removeProduct:
+    path:     /sinisters/removeProduct/{id}
+    defaults: { _controller: InamikaApiBundle:Sinisters:removeProduct }
+    methods: [PUT]
+
 api_sinisters_today:
     path:     /sinistersToday
     defaults: { _controller: InamikaApiBundle:Sinisters:today }

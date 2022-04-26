@@ -68,14 +68,17 @@
                                     <td>{{ item.productor.name }}</td>
                                     <td class="text-center bg-{{ item.status.color }} text-white" valing="middle"><b>{{ item.status.name }}</b></td>
                                     <td class="text-center">
-                                        <a matTooltip="Cambiar estado" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/status/', item.id]"  class="btn-edit btn btn-outline-warning btn-sm mr-1"><i class="fa fa-refresh text-warning"></i></a> 
+                                        <a matTooltip="Editar" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/editar/', item.id]"  class="btn-edit btn btn-outline-info btn-sm mr-1"><i class="fa fa-pencil text-info"></i></a> 
                                         <a matTooltip="Ver más" matTooltipPosition="above" role="button" [routerLink]="['/sinisters/', item.id]"  class="btn-edit btn btn-outline-success btn-sm mr-1"><i class="fa fa-eye text-success"></i></a> 
-                                        <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-sm"><i class="fa fa-trash text-danger"></i></a>
+                                        <a matTooltip="Eliminar" matTooltipPosition="above" role="button" (click)="remove(i)" class="btn-remove btn btn-outline-danger btn-sm"><i class="fa fa-trash text-danger"></i></a> 
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <app-count-results [total]="data.recordsFiltered"></app-count-results>
+                        <div class="float-left">
+                            <app-count-results [total]="data.recordsFiltered"></app-count-results>
+                        </div>
+                        <app-pagination  [total]="data.recordsFiltered" [limit]="sinistersService.limit" [pages]="data.pages"></app-pagination>
                     </div>
                 </div>
             </div>

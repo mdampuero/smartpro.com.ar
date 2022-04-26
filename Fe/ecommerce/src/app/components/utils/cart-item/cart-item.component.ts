@@ -20,9 +20,14 @@ export class CartItemComponent implements OnInit {
   }
   
   plus(){
-    this.item.amount++;    
-    this.spinner.show();
-    this.update();
+    if(this.item.amount<this.item.product.stock){
+      this.item.amount++;    
+      this.spinner.show();
+      this.update();
+    }else{ 
+      this.toast.show('La cantidad no puede superar a '+this.item.product.stock);
+    }
+    
   }
   minus(){
     if(this.item.amount>1){

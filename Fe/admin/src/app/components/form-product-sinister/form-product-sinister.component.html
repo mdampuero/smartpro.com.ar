@@ -1,12 +1,14 @@
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <div class="form-group">
             <ng-template #rt let-r="result" let-t="term">
                 <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
               </ng-template>
-            <input id="typeahead-template" (selectItem)="selectedItem($event)" placeholder="Escriba elnombre o Sku del producto..." type="text" class="form-control" [(ngModel)]="product" [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" />
+            <input id="typeahead-template" (selectItem)="selectedItem($event)" placeholder="Agregar producto - Escriba el nombre o Sku..." type="text" class="form-control" [(ngModel)]="product" [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" />
         </div>
     </div>
+</div>
+<div class="row">
     <ng-container *ngIf="product.id">
     <div class="col-sm-3">
         <div class="form-group">

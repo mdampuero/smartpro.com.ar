@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/services/api/products.service';
 import { EventsService } from 'src/app/services/events.service';
@@ -20,7 +20,7 @@ export class ProductsComponent implements OnInit {
 		{ label: 'Menor precio', sort:'price', direction:'ASC'},
 		{ label: 'Mayor precio', sort:'price', direction:'DESC'}
 	]
-	constructor(public productsService: ProductsService,private spinner: NgxSpinnerService,private activatedRoute: ActivatedRoute,public events: EventsService) { 
+	constructor(public productsService: ProductsService, private router: Router,private spinner: NgxSpinnerService,private activatedRoute: ActivatedRoute,public events: EventsService) { 
 		this.query=this.activatedRoute.snapshot.paramMap.get('query');
 		this.events.subscribe('searchInput', (data: any) => {
 			this.query=data.query;
@@ -28,11 +28,17 @@ export class ProductsComponent implements OnInit {
 			this.getResult();
 		});
 		this.events.subscribe('filter', (data: any) => {
+			this.router.navigate([]);
+			this.query='';
 			this.productsService.priceMin=data.filter.priceMin;			
 			this.productsService.priceMax=data.filter.priceMax;		
 			this.productsService.category=data.filter.category;
 			this.page=0;
 			this.getResult();
+		});
+
+		this.activatedRoute.queryParams.subscribe(params => {
+			this.query=params["q"];
 		});
 	}
 

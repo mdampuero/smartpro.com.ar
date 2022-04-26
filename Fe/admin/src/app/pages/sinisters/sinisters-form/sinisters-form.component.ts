@@ -14,6 +14,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ProvencesService } from 'src/app/services/api/provences.service';
 import { LocalitiesService } from 'src/app/services/api/localities.service';
 import { MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
+import * as moment from 'moment';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',
@@ -108,13 +109,42 @@ export class SinistersFormComponent implements OnInit {
     this.spinner.show();
     this.sinistersService.getOne(id).subscribe(
       (data:any) => {
-        this.form=data;
+        this.setForm(data);
         this.spinner.hide();
       },
       (error) => {
         this.spinner.hide();
       }
     );
+  }
+
+  setForm(data:any){
+    var date = new Date(data.date);
+    date.setHours(date.getHours()+3);
+    this.datePicker=moment(date);
+    this.form={
+      id:data.id,
+      number:data.number,
+      amount:data.amount,
+      amountRepeat:data.amount,
+      date:moment(date).format('DD/MM/YYYY'),
+      productor:data.productor,
+      company:data.company,
+      name:data.customer.name,
+      document:data.customer.document,
+      email:data.customer.email,
+      phone:data.customer.phone,
+      observations:data.observations,
+      provence:data.customer.provence.id,
+      locality:data.customer.locality.id,
+      street:data.customer.street,
+      streetNumber:data.customer.streetNumber,
+      department:data.customer.department,
+      postalCode:data.customer.postalCode,
+      floor:data.customer.floor
+    };
+    this.onChange();
+    this.form.locality=data.customer.locality.id;
   }
 
   ngOnInit(): void {
@@ -125,7 +155,9 @@ export class SinistersFormComponent implements OnInit {
     $(".form-control-feedback.text-danger").remove();
     if(this.datePicker)
       this.form.date=this.datePicker.format('YYYY-MM-DD');
+    //console.log(this.form);
     
+      //return false;
     this.sinistersService.save(this.form).subscribe(
       (data:any) => {
         this._snackBar.open('Los cambios fueron guardados','Aceptar', { duration: 3000 });

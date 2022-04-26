@@ -67,9 +67,14 @@ class SinistersController extends FOSRestController
         return $this->handleView($this->view($this->getDoctrine()->getRepository(Sinister::class)->getAll()->andWhere('e.createdAt>=:today')->setParameter('today',$today->format('Y-m-d').' 00:00:00')->getQuery()->getResult()));
     }
 
-    public function byProductorAction($productor){
+    public function byProductorAction($productor,Request $request){
+        $status=$request->query->get('status', null);
+        $sinister=$this->getDoctrine()->getRepository(Sinister::class)->getAll()
+        ->andWhere('e.productor=:productor')->setParameter('productor',$productor);
+        if($status)
+            $sinister->andWhere('e.status=:status')->setParameter('status',$status);
         return $this->handleView($this->view(array(
-            'data'=>$this->getDoctrine()->getRepository(Sinister::class)->getAll()->andWhere('e.productor=:productor')->setParameter('productor',$productor)->getQuery()->getResult()
+            'data'=>$sinister->getQuery()->getResult()
         )));
     }
    
@@ -152,6 +157,47 @@ class SinistersController extends FOSRestController
         return $this->handleView($this->view($sinister, Response::HTTP_OK)); 
     }
     
+    public function putAction(Request $request,$id){
+        if(!$entity=$this->getDoctrine()->getRepository(Sinister::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $customer=$this->getDoctrine()->getRepository(Customer::class)->findOneBySinister($id);
+        $content=json_decode($request->getContent(), true);
+        $form = $this->createForm(SinisterType::class, $entity);
+        $form->submit($content);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $date = \DateTime::createFromFormat('Y-m-d', $content['date']);
+            $entity->setDate($date);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+        }else{
+            return $this->handleView($this->view($formSinister->getErrors(), Response::HTTP_BAD_REQUEST));
+        }
+        $formCustomer = $this->createForm(CustomerType::class, $customer);
+        $content=json_decode($request->getContent(), true);
+        $formCustomer->submit($content);
+        if ($formCustomer->isSubmitted() && $formCustomer->isValid()) {
+            $em->persist($customer);    
+        }else{
+            return $this->handleView($this->view($formCustomer->getErrors(), Response::HTTP_BAD_REQUEST));
+        }
+        $em->flush();
+         /**
+         * Guardo su Log
+         */
+        $log=new Log();
+        $log->setUser($content["user"]);
+        $log->setResource($entity->getId());
+        $log->setTitle("Editado");
+        $log->setIcon("fa fa-pencil");
+        $log->setStatus("danger");
+        $log->setDescription("Siniestro editado <b>Nº ".$entity->getNumber()."</b>");
+        $em->persist($log);
+        $em->flush();
+
+        return $this->handleView($this->view($entity, Response::HTTP_OK)); 
+    }
+
     public function importAction(Request $request){
         $form = $this->createForm(ImportType::class, null);
         $content=json_decode($request->getContent(), true);
@@ -164,8 +210,7 @@ class SinistersController extends FOSRestController
                 return $this->handleView($this->view("", Response::HTTP_OK));
             } catch (\Throwable $th) {
                 return $this->handleView($this->view($th->getMessage(), Response::HTTP_BAD_REQUEST));
-            }
-            
+            }   
         }
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
     }
@@ -179,7 +224,7 @@ class SinistersController extends FOSRestController
             return $this->handleView($this->view(null, Response::HTTP_BAD_REQUEST));
 
 
-        $this->getDoctrine()->getRepository(Sinister::class)->addProduct($entity,$body["data"]);
+        //$this->getDoctrine()->getRepository(Sinister::class)->addProduct($entity,$body["data"]);
 
         $em = $this->getDoctrine()->getManager();
         $entity->setStatus($newStatus);
@@ -195,6 +240,54 @@ class SinistersController extends FOSRestController
         $log->setIcon("fa fa-refresh");
         $log->setStatus($entity->getStatus()->getColor());
         $log->setDescription("Cambio de '<b>".$oldStatus->getName()."</b>' a '<b>".$entity->getStatus()->getName()."</b>'.<br/>".@$body["observations"]);
+        $em->persist($log);
+        $em->flush();
+
+        return $this->handleView($this->view($body, Response::HTTP_OK));
+    }
+
+    public function addProductAction(Request $request,$id){
+        if(!$entity=$this->getDoctrine()->getRepository(Sinister::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $body=json_decode($request->getContent(), true);
+
+        $this->getDoctrine()->getRepository(Sinister::class)->addProduct($entity,$body["product"]);
+
+        /**
+         * Guardo su Log
+         */
+        $em = $this->getDoctrine()->getManager();
+        $log=new Log();
+        $log->setUser($body["user"]);
+        $log->setResource($entity->getId());
+        $log->setTitle("Nuevo producto");
+        $log->setIcon("fa fa-plus");
+        $log->setStatus('success');
+        $log->setDescription("Nuevo producto agregado '<b>".$body["product"]["name"]."</b>'");
+        $em->persist($log);
+        $em->flush();
+
+        return $this->handleView($this->view($body, Response::HTTP_OK));
+    }
+
+    public function removeProductAction(Request $request,$id){
+        if(!$entity=$this->getDoctrine()->getRepository(Sinister::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $body=json_decode($request->getContent(), true);
+
+        $this->getDoctrine()->getRepository(Sinister::class)->removeProduct($body["product"]);
+
+        /**
+         * Guardo su Log
+         */
+        $em = $this->getDoctrine()->getManager();
+        $log=new Log();
+        $log->setUser($body["user"]);
+        $log->setResource($entity->getId());
+        $log->setTitle("Producto quitado");
+        $log->setIcon("fa fa-minus");
+        $log->setStatus('primary');
+        $log->setDescription("Se quita el producto '<b>".$body["product"]["description"]."</b>'");
         $em->persist($log);
         $em->flush();
 

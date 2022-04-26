@@ -62,6 +62,7 @@ export class ProductsService {
       return this.http.post(`${environment.apiUrl}products`, data);
   }
   updatePrice(data:any) {
+    data.userLastEdit=this.loginService.user.id;
     return this.http.post(`${environment.apiUrl}productsUpload`, data);
   }
   delete(item:Products) {

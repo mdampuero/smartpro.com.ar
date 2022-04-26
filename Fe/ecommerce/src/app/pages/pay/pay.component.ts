@@ -27,7 +27,6 @@ export class PayComponent implements OnInit {
         this.spinner.hide();
       }
     );
-    console.log(this.pay)
   }
 
 }

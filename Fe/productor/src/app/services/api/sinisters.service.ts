@@ -31,8 +31,8 @@ export class SinistersService {
     this.events.publish('order', {});
   }
 
-  get(query: string,productorId:string) {
-    return this.http.get(`${environment.apiUrl}sinisters/ByProductor/${productorId}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}`);
+  get(query: string,productorId:string,status:String) {
+    return this.http.get(`${environment.apiUrl}sinisters/ByProductor/${productorId}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}&status=${status}`);
   }
 
   getById(id: string) {

@@ -34,9 +34,7 @@ export class ContactComponent implements OnInit {
 
   save(form:NgForm){
     this.spinner.show();
-    $(".form-control-feedback.text-danger").remove();
-    console.log(this.form);
-    
+    $(".form-control-feedback.text-danger").remove();    
     this.servicesService.save(this.form).subscribe(
       () =>  {
         this.spinner.hide();

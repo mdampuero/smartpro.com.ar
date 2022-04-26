@@ -64,12 +64,23 @@ export class SinistersService {
     else
       return this.http.post(`${environment.apiUrl}sinisters`, data);
   }
-  changeStatus(status:string,id:string,data:any,observations:any) {
+  changeStatus(status:string,id:string,observations:any) {
     return this.http.put(`${environment.apiUrl}sinisters/changeSatus/${id}`, { 
       status:status,
-      data:data,
       user:this.loginService.user.name,
       observations: observations});
+  }
+  addProduct(id:string,product:any) {
+    return this.http.put(`${environment.apiUrl}sinisters/addProduct/${id}`, { 
+        product:product,
+        user:this.loginService.user.name
+      });
+  }
+  removeProduct(id:string,product:any) {
+    return this.http.put(`${environment.apiUrl}sinisters/removeProduct/${id}`, { 
+        product:product,
+        user:this.loginService.user.name
+      });
   }
   delete(item:Sinisters) {
     return this.http.delete(`${environment.apiUrl}sinisters/${item.id}`);

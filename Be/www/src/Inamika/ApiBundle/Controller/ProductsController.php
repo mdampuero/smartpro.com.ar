@@ -10,6 +10,7 @@ namespace Inamika\ApiBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Inamika\BackEndBundle\Entity\Product;
+use Inamika\BackEndBundle\Entity\User;
 use Inamika\BackEndBundle\Form\Product\ProductType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -204,6 +205,8 @@ class ProductsController extends DefaultController
 		$success = file_put_contents("uploads/".$fileName, $data);
 
         $em = $this->getDoctrine()->getManager();
+
+        $userLastEdit=$em->getRepository(User::class)->find($content["userLastEdit"]);
         $i=0;
         if (($handle = fopen("uploads/".$fileName, "r")) !== FALSE) {            
             while (($data = fgetcsv($handle, null, ';')) !== FALSE) {
@@ -213,6 +216,7 @@ class ProductsController extends DefaultController
                     continue;
                 $product->setCost($data[2]);
                 $product->setPrice($data[3]);
+                $product->setUserLastEdit($userLastEdit);
                 $em->persist($product);
                                 
             }

@@ -4,7 +4,12 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="preloading" routerLink="/">Mis Siniestros</a></li>
+                    <ng-container *ngIf="loginService.user.isSuper">
+                        <li class="breadcrumb-item"><a class="preloading" href="/?p={{data.productor.id}}">{{ data.productor.name }}</a></li>
+                    </ng-container>
+                    <ng-container *ngIf="!loginService.user.isSuper">
+                        <li class="breadcrumb-item"><a class="preloading" routerLink="/">Mis Siniestros</a></li>
+                    </ng-container>
                     <li class="breadcrumb-item active" aria-current="page">Siniestro Nº {{ data.number}}</li>
                 </ol>
             </nav>

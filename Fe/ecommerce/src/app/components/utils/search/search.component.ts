@@ -17,6 +17,9 @@ export class SearchComponent implements OnInit {
       this.loginService.user.cart=data; 
       this.loginService.saveStorage();      
 		});
+    this.activatedRoute.queryParams.subscribe(params => {
+			this.query=params["q"];
+		});
   }
 
   updateView(cart:any){
@@ -25,13 +28,19 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
+
   logout(){
     this.loginService.logout();
     location.href='/login'
   }
-  onEnter(){    
-    this.router.navigate([`/productos/${this.query}`]);
+  onEnter(){
+    this.router.navigate([`/productos`],{
+      queryParams: {
+        q: this.query
+      }
+    });
     this.events.publish('searchInput', {
       query: this.query,
     });

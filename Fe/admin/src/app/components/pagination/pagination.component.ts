@@ -16,6 +16,9 @@ export class PaginationComponent implements OnInit {
     this.events.subscribe('paginationOffset', (data: any) => {
       this.currentPage=0;
     });
+    this.events.subscribe('pagination', (data: any) => {
+      this.currentPage=data.currentPage
+    });
   }
 
   ngOnInit(): void {
@@ -40,5 +43,9 @@ export class PaginationComponent implements OnInit {
     this.events.publish('pagination', {
       currentPage: this.currentPage,
     });
+  }
+  ngOnDestroy(){
+    this.events.destroy('paginationOffset');
+    this.events.destroy('pagination');
   }
 }

@@ -53,7 +53,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <app-count-results [total]="data.recordsFiltered"></app-count-results>
+                        <div class="float-left">
+                            <app-count-results [total]="data.recordsFiltered"></app-count-results>
+                        </div>
+                        <app-pagination  [total]="data.recordsFiltered" [limit]="usersService.limit" [pages]="data.pages"></app-pagination>
                     </div>
                 </div>
             </div>

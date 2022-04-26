@@ -123,9 +123,9 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
         ->setMaxResults(1)->getQuery()->getResult();
     }
 
-    public function addProduct($sinister,$productList){
+    public function addProduct($sinister,$item){
         $em = $this->getEntityManager();
-        foreach($productList as $item){
+        // foreach($productList as $item){
             $product=$em->getRepository(Product::class)->find($item["id"]);
             $sinisterItem = new SinisterItem();
             $sinisterItem->setSinister($sinister);
@@ -142,8 +142,16 @@ class SinisterRepository extends \Doctrine\ORM\EntityRepository
             $sinisterItem->setArrivalDate(@$item["arrivalDate"]);
             $sinisterItem->setTransport(@$item["transport"]);
             $em->persist($sinisterItem);
-        }
+        //}
         $em->flush();
+    }
+    
+    public function removeProduct($item){
+        $em = $this->getEntityManager();
+        $sinisterItem=$em->getRepository(SinisterItem::class)->find($item["id"]);
+        $em->remove($sinisterItem);
+        $em->flush();
+        return $sinisterItem;
     }
 
     public function addProductByOrder($cart){

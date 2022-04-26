@@ -6,9 +6,18 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="form-group " style="margin-top: 22px;">
                             <label for="si_co_id">Analista</label>
-                            <select id="si_co_id" [(ngModel)]="productorId" name="productor" class="form-control" (change)="getResult()">
+                            <select id="si_co_id" [(ngModel)]="productorId" name="productor" class="form-control" (change)="goToPageProductor()">
                                 <option value=''>-- Seleccione una opción --</option>
                                 <option value="{{ productor.id }}" *ngFor="let productor of productors; let i=index;" >{{ productor.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="form-group " style="margin-top: 22px;">
+                            <label for="si_co_id">Estado</label>
+                            <select id="si_co_id" [(ngModel)]="statusId" name="status" class="form-control" (change)="goToPageProductor()">
+                                <option value=''>-- Seleccione una opción --</option>
+                                <option value="{{ status.id }}" *ngFor="let status of status; let i=index;" >{{ status.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -45,6 +54,12 @@
                                 <td class="text-center">
                                     <a rel="tooltip" class="preloading" data-original-title="Detalle" href="javascript:void(0)" (click)="goToSinister(item.id)">
                                         <i class="fa fas fa-eye fa-1x text-primary"></i>
+                                    </a>&nbsp;
+                                    <a *ngIf="item.status.id == 'NEED_TO_DEFINE_PRODUCTS'" rel="tooltip" class="preloading" data-original-title="Eliminar siniestro" href="javascript:void(0)" (click)="deleteSinister(i)">
+                                        <i class="fa fas fa-trash fa-1x text-danger"></i>
+                                    </a>
+                                    <a *ngIf="item.status.id != 'NEED_TO_DEFINE_PRODUCTS'"> 
+                                        <i class="fa fas fa-trash fa-1x text-muted"></i>
                                     </a>
                                 </td>                            
                             </tr>

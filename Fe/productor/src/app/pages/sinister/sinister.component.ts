@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SinistersService } from 'src/app/services/api/sinisters.service';
+import { LoginService } from 'src/app/services/db/login.service';
 
 @Component({
   selector: 'app-sinister',
@@ -12,11 +13,18 @@ export class SinisterComponent implements OnInit {
   public id:any;
   public data:any;
   public company:any;
+  public productorSelected='';
   constructor(
+    public loginService:LoginService,
     private spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute,
     public sinistersService: SinistersService) {
       this.id=this.activatedRoute.snapshot.paramMap.get('id');
+      this.activatedRoute.queryParams.subscribe(params => {
+        if(params["p"]){
+          this.productorSelected=params["p"];
+        }
+      });
   }
 
   ngOnInit(): void {

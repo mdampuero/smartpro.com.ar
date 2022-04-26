@@ -8,19 +8,19 @@
         <div class="col-sm-6">
             <span class="badge badge-info" *ngIf="item.isSalient">Recomendado</span>
             <h3 class="py-3">{{ item.name }}</h3>
-            <h3 class="text-info" *ngIf="item.price > 0">{{ item.price | formatNumber }}</h3>
+            <h3 class="text-info" *ngIf="item.price > 0 ">{{ item.price | formatNumber }}</h3>
             <div class="description mt-3" [innerHTML]="item.description"> </div>
             <hr>
-            <ng-container *ngIf="item.price > 0">
+            <ng-container *ngIf="item.price > 0 && item.inStock && item.stock > 0">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="input-group ">
                             <div class="input-group-prepend">
-                                <button class="input-group-text btn" (click)="minus()"><i class="fa fa-minus"></i></button>
+                                <button class="input-group-text btn btn-info" (click)="minus()"><i class="fa fa-minus"></i></button>
                             </div>
-                            <input type="text" class="form-control text-center" [(ngModel)]="amount" name="amount">
+                            <input type="text" class="form-control text-center" [(ngModel)]="amount" name="amount" readonly="readonly">
                             <div class="input-group-append">
-                                <button class="input-group-text btn" (click)="plus()"><i class="fa fa-plus"></i></button>
+                                <button class="input-group-text btn btn-info" (click)="plus()"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>

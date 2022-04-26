@@ -29,8 +29,8 @@ class SinisterItem
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Sinister", inversedBy="items",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="sinister_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Sinister", inversedBy="items")
+     * @ORM\JoinColumn(name="sinister_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $sinister;
 

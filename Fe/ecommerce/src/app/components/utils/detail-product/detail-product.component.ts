@@ -27,7 +27,6 @@ export class DetailProductComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       
-      console.log("dsdas");
     });
     
     this.getData();
@@ -38,7 +37,7 @@ export class DetailProductComponent implements OnInit {
     this.spinner.show();
 		this.productsService.getOneBySku(this.sku).subscribe(
 			(data:any) => {
-        this.item=data;
+        this.item=data;        
 				if(this.inCart = this.loginService.user.cart.items.find( (item: any) => item.product.id === this.item.id )){
           this.amount=this.inCart.amount;
         }
@@ -58,6 +57,8 @@ export class DetailProductComponent implements OnInit {
   }
 
   addToCart(){
+    if(!this.checkStock(false))
+      return;
     this.spinner.show();
     this.cartService.save(this.item,this.amount).subscribe(
       (data:any) => { this.events.publish('updateCart', data); this.inCart=true;this.toast.show('Producto agregado al carrito') },
@@ -66,7 +67,22 @@ export class DetailProductComponent implements OnInit {
     )
   }
 
+  checkStock(equal:boolean){
+    let stock=(equal)?this.item.stock:this.item.stock+1;
+    if(this.amount>=stock){
+      this.amount=this.item.stock;
+      this.toast.show('La cantidad no puede superar a '+this.item.stock);
+      return false;
+    }
+    return true;
+  }
+  valid(newValue:any) {
+    if(!this.checkStock(false))
+      this.amount=this.item.stock
+  } 
   plus(){
+    if(!this.checkStock(true))
+      return;
     this.amount++;
   }
   minus(){
