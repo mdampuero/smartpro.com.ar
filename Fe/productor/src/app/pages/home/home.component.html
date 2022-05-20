@@ -1,13 +1,13 @@
 <div class="main main-raised">
     <div class="section section-basic">
         <div class="container">
-            <ng-container *ngIf="this.loginService.user.isSuper">
+            <ng-container >
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-4 col-md-6" *ngIf="this.loginService.user.isSuper">
                         <div class="form-group " style="margin-top: 22px;">
                             <label for="si_co_id">Analista</label>
                             <select id="si_co_id" [(ngModel)]="productorId" name="productor" class="form-control" (change)="goToPageProductor()">
-                                <option value=''>-- Seleccione una opción --</option>
+                                <option value=''>-- Todos --</option>
                                 <option value="{{ productor.id }}" *ngFor="let productor of productors; let i=index;" >{{ productor.name }}</option>
                             </select>
                         </div>
@@ -16,24 +16,24 @@
                         <div class="form-group " style="margin-top: 22px;">
                             <label for="si_co_id">Estado</label>
                             <select id="si_co_id" [(ngModel)]="statusId" name="status" class="form-control" (change)="goToPageProductor()">
-                                <option value=''>-- Seleccione una opción --</option>
+                                <option value=''>-- Todos --</option>
                                 <option value="{{ status.id }}" *ngFor="let status of status; let i=index;" >{{ status.name }}</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </ng-container>
-            <ng-container *ngIf="productorId">
+            <ng-container *ngIf="data.data">
                 <div class="title m-0">
                     <a role="button" routerLink="/nuevo" class="preloading text-white float-right btn btn-primary btn-round"><i class="fas fa-plus"></i> Ingresar siniestro</a>
-                    <h2>Siniestros</h2>
+                    <h2>Siniestros ({{ data.data.length }})</h2>
                 </div>
                 <div class="table-responsive">
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Nº de Siniestro</th>
-                                <th>Compañia</th>
+                                <th>Analista</th>
                                 <th>Asegurado</th>
                                 <th>DNI</th>
                                 <th class="text-right">Monto</th>
@@ -43,23 +43,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of data.data; let i=index;" >
+                            <tr *ngFor="let item of data.data; let i=index;">
                                 <td><b>{{ item.number }}</b></td>
-                                <td>{{ item.company.name }}</td>
+                                <td>{{ item.productor.name }}</td>
                                 <td>{{ item.customer.name }}</td>
                                 <td>{{ item.customer.document }}</td>
                                 <td class="text-right nowrap" nowrap="nowrap"><b>{{ item.amount | formatNumber }}</b></td>
                                 <td class="text-center">{{ item.date | date }}</td>
                                 <td class="text-center"><span class="text-{{ item.status.color }}"><b>{{ item.status.name }}</b></span></td>
                                 <td class="text-center">
-                                    <a rel="tooltip" class="preloading" data-original-title="Detalle" href="javascript:void(0)" (click)="goToSinister(item.id)">
+                                    <a rel="tooltip" class="preloading" title="Detalle" href="javascript:void(0)" (click)="goToSinister(item.id)">
                                         <i class="fa fas fa-eye fa-1x text-primary"></i>
                                     </a>&nbsp;
-                                    <a *ngIf="item.status.id == 'NEED_TO_DEFINE_PRODUCTS'" rel="tooltip" class="preloading" data-original-title="Eliminar siniestro" href="javascript:void(0)" (click)="deleteSinister(i)">
+                                    <a *ngIf="item.status.id == 'NEED_TO_DEFINE_PRODUCTS' && this.loginService.user.isSuper" class="preloading" title="Eliminar siniestro" href="javascript:void(0)" (click)="deleteSinister(i)">
                                         <i class="fa fas fa-trash fa-1x text-danger"></i>
                                     </a>
-                                    <a *ngIf="item.status.id != 'NEED_TO_DEFINE_PRODUCTS'"> 
-                                        <i class="fa fas fa-trash fa-1x text-muted"></i>
+                                    <a *ngIf="item.status.id == 'NEED_TO_DEFINE_PRODUCTS' && !this.loginService.user.isSuper" class="preloading" title="Dar de baja" href="javascript:void(0)" (click)="downSinister(i)">
+                                        <i class="fa fas fa-minus-circle fa-1x text-danger"></i>
                                     </a>
                                 </td>                            
                             </tr>

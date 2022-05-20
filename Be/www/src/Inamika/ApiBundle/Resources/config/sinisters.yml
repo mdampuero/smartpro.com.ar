@@ -8,6 +8,12 @@ api_sinisters_ByProductor:
     defaults: { _controller: InamikaApiBundle:Sinisters:byProductor }
     methods: [GET]
 
+
+api_sinisters_ByCompany:
+    path:     /sinisters/ByCompany/{company}
+    defaults: { _controller: InamikaApiBundle:Sinisters:byCompany }
+    methods: [GET]
+
 api_sinisters_get:
     path:     /sinisters/{id}
     defaults: { _controller: InamikaApiBundle:Sinisters:get }

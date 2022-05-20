@@ -35,6 +35,10 @@ export class SinistersService {
     return this.http.get(`${environment.apiUrl}sinisters/ByProductor/${productorId}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}&status=${status}`);
   }
 
+  getByCompany(query: string,status:String) {
+    return this.http.get(`${environment.apiUrl}sinisters/ByCompany/${this.loginService.user.company.id}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}&status=${status}`);
+  }
+
   getById(id: string) {
     return this.http.get(`${environment.apiUrl}sinisters/${id}`);
   }
@@ -50,5 +54,8 @@ export class SinistersService {
   }
   delete(item:any) {
     return this.http.delete(`${environment.apiUrl}sinisters/${item.id}`);
+  }
+  down(item:any) {
+    return this.http.put(`${environment.apiUrl}sinisters/changeSatus/${item.id}`,{ status:'DISCHARDGED',user:this.loginService.user.name});
   }
 }

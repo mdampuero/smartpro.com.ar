@@ -10,6 +10,8 @@ import { Companies } from 'src/app/models/companies.model';
 import { CompaniesService } from 'src/app/services/api/companies.service';
 import { StatusService } from 'src/app/services/api/status.service';
 import { ProductorsService } from 'src/app/services/api/productors.service';
+import { LoginService } from 'src/app/services/db/login.service';
+import { ThrowStmt } from '@angular/compiler';
 @Component({
   selector: 'app-sinisters',
   templateUrl: './sinisters.component.html'
@@ -25,6 +27,7 @@ export class SinistersComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public sinistersService: SinistersService,
     public events: EventsService,
+    public loginService: LoginService,
     public companiesService: CompaniesService,
     public productorsService: ProductorsService,
     public statusService: StatusService,
@@ -42,7 +45,7 @@ export class SinistersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setFilters(); 
+    this.setFilters(false); 
     this.getResult();
   }
   
@@ -92,17 +95,31 @@ export class SinistersComponent implements OnInit {
   
   filter(){
     this.modalService.dismissAll();
+    this.persistFilter();
     this.getResult();
   }
 
-  setFilters(){
-    this.filters={ company:"",status:"", productor:""};
+  setFilters(clear:Boolean){
+    if(clear){
+      this.filters={ company:"",status:"", productor:""};
+      this.persistFilter();
+    }else{
+      if(this.loginService.user.filters && this.loginService.user.filters.sinisters)
+        this.filters=this.loginService.user.filters.sinisters;
+      else
+        this.filters={ company:"",status:"", productor:""};
+    }
   }
 
   clear(){
-    this.setFilters();  
+    this.setFilters(true);  
     this.modalService.dismissAll();
     this.getResult();
+  }
+
+  persistFilter(){
+    this.loginService.user.filters = { sinisters: this.filters};
+    this.loginService.saveStorage();
   }
 
   private getDismissReason(reason: any): string {

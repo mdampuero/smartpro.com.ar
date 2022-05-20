@@ -5,10 +5,10 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <ng-container *ngIf="loginService.user.isSuper">
-                        <li class="breadcrumb-item"><a class="preloading" href="/?p={{data.productor.id}}">{{ data.productor.name }}</a></li>
+                        <li class="breadcrumb-item"><a class="preloading" href="/?p={{data.productor.id}}&s={{ statusSelected}}">{{ data.productor.name }}</a></li>
                     </ng-container>
                     <ng-container *ngIf="!loginService.user.isSuper">
-                        <li class="breadcrumb-item"><a class="preloading" routerLink="/">Mis Siniestros</a></li>
+                        <li class="breadcrumb-item"><a class="preloading" href="/?s={{ statusSelected}}">Mis Siniestros</a></li>
                     </ng-container>
                     <li class="breadcrumb-item active" aria-current="page">Siniestro Nº {{ data.number}}</li>
                 </ol>

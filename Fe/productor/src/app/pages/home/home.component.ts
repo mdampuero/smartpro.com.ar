@@ -36,8 +36,8 @@ export class HomeComponent implements OnInit {
       this.productorId=this.loginService.user.id
     }else{
       this.productorService.getAll().subscribe((data:any) => this.productors=data);
-      this.statusService.getAll().subscribe((data:any) => this.status=data.data);
     }
+    this.statusService.getAll().subscribe((data:any) => this.status=data.data);
     this.getResult();
   }
 
@@ -60,12 +60,20 @@ export class HomeComponent implements OnInit {
         (error) => this.spinner.hide(),
         () => this.spinner.hide()
         );
+      }else{
+        this.spinner.show();
+        this.sinistersService.getByCompany(this.query,this.statusId).subscribe(
+          (data:any) => this.data=data,
+          (error) => this.spinner.hide(),
+          () => this.spinner.hide()
+          );
       }
   }
   goToSinister(id:string){
     this.router.navigate([`/siniestro/${id}`],{
       queryParams: {
-        p: this.productorId
+        p: this.productorId,
+        s: this.statusId
       }
     });
   }
@@ -91,6 +99,20 @@ export class HomeComponent implements OnInit {
         this.sinistersService.delete(this.data.data[index]).subscribe();
         this.data.data.splice(index,1);
         this._snackBar.open('Siniestro eliminado','Aceptar', { duration: 4000 });
+      }
+    });
+  }
+  downSinister(index:number){
+    Swal.fire({
+      text: '¿Está seguro que desea dar de baja siniestro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, dar de baja',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.sinistersService.down(this.data.data[index]).subscribe(() => this.getResult());
+        this._snackBar.open('Siniestro dado de baja','Aceptar', { duration: 4000 });
       }
     });
   }

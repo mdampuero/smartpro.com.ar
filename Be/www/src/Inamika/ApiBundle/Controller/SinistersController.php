@@ -77,6 +77,17 @@ class SinistersController extends FOSRestController
             'data'=>$sinister->getQuery()->getResult()
         )));
     }
+
+    public function byCompanyAction($company,Request $request){
+        $status=$request->query->get('status', null);
+        $sinister=$this->getDoctrine()->getRepository(Sinister::class)->getAll()
+        ->andWhere('e.company=:company')->setParameter('company',$company);
+        if($status)
+            $sinister->andWhere('e.status=:status')->setParameter('status',$status);
+        return $this->handleView($this->view(array(
+            'data'=>$sinister->getQuery()->getResult()
+        )));
+    }
    
     private function sendEmail($entity){
         //SEND EMAIL ADMINISTRATOR
