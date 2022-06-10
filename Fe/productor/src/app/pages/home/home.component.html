@@ -3,7 +3,7 @@
         <div class="container">
             <ng-container >
                 <div class="row">
-                    <div class="col-lg-4 col-md-6" *ngIf="this.loginService.user.isSuper">
+                    <div class="col-lg-3 col-md-6" *ngIf="this.loginService.user.isSuper">
                         <div class="form-group " style="margin-top: 22px;">
                             <label for="si_co_id">Analista</label>
                             <select id="si_co_id" [(ngModel)]="productorId" name="productor" class="form-control" (change)="goToPageProductor()">
@@ -12,14 +12,28 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="form-group " style="margin-top: 22px;">
                             <label for="si_co_id">Estado</label>
-                            <select id="si_co_id" [(ngModel)]="statusId" name="status" class="form-control" (change)="goToPageProductor()">
+                            <select id="si_pr_id" [(ngModel)]="statusId" name="status" class="form-control" (change)="goToPageProductor()">
                                 <option value=''>-- Todos --</option>
                                 <option value="{{ status.id }}" *ngFor="let status of status; let i=index;" >{{ status.name }}</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                      <div class="form-group " style="margin-top: 27px;">
+                          <label for="si_date_from">Fecha desde</label>
+                          <mat-datepicker #picker></mat-datepicker>
+                          <input (dateChange)="handleDOBChange($event)" type="text" [matDatepicker]="picker" autocomplete="off" (change)="goToPageProductor()" (click)="picker.open()" class="form-control datetimepicker" id="si_date_from" [(ngModel)]="datePickerFrom" name="from" value="">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                      <div class="form-group " style="margin-top: 27px;">
+                        <label for="si_date_to">Fecha hasta</label>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <input type="text" (dateChange)="handleDOBChange($event)" [matDatepicker]="picker1" autocomplete="off" (change)="goToPageProductor()" (click)="picker1.open()" class="form-control datetimepicker" id="si_date_to" [(ngModel)]="datePickerTo" name="to" value="">
+                      </div>
                     </div>
                 </div>
             </ng-container>
@@ -61,7 +75,7 @@
                                     <a *ngIf="item.status.id == 'NEED_TO_DEFINE_PRODUCTS' && !this.loginService.user.isSuper" class="preloading" title="Dar de baja" href="javascript:void(0)" (click)="downSinister(i)">
                                         <i class="fa fas fa-minus-circle fa-1x text-danger"></i>
                                     </a>
-                                </td>                            
+                                </td>
                             </tr>
                         </tbody>
                     </table>

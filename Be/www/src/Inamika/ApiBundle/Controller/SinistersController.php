@@ -69,10 +69,16 @@ class SinistersController extends FOSRestController
 
     public function byProductorAction($productor,Request $request){
         $status=$request->query->get('status', null);
+        $dateFrom=$request->query->get('dateFrom', null);
+        $dateTo=$request->query->get('dateTo', null);
         $sinister=$this->getDoctrine()->getRepository(Sinister::class)->getAll()
         ->andWhere('e.productor=:productor')->setParameter('productor',$productor);
         if($status)
             $sinister->andWhere('e.status=:status')->setParameter('status',$status);
+        if($dateFrom)
+            $sinister->andWhere('e.date>=:dateFrom')->setParameter('dateFrom',$dateFrom);
+        if($dateTo)
+            $sinister->andWhere('e.date<=:dateTo')->setParameter('dateTo',$dateTo);
         return $this->handleView($this->view(array(
             'data'=>$sinister->getQuery()->getResult()
         )));
@@ -80,10 +86,16 @@ class SinistersController extends FOSRestController
 
     public function byCompanyAction($company,Request $request){
         $status=$request->query->get('status', null);
+        $dateFrom=$request->query->get('dateFrom', null);
+        $dateTo=$request->query->get('dateTo', null);
         $sinister=$this->getDoctrine()->getRepository(Sinister::class)->getAll()
         ->andWhere('e.company=:company')->setParameter('company',$company);
         if($status)
             $sinister->andWhere('e.status=:status')->setParameter('status',$status);
+        if($dateFrom)
+            $sinister->andWhere('e.date>=:dateFrom')->setParameter('dateFrom',$dateFrom);
+        if($dateTo)
+            $sinister->andWhere('e.date<=:dateTo')->setParameter('dateTo',$dateTo);
         return $this->handleView($this->view(array(
             'data'=>$sinister->getQuery()->getResult()
         )));

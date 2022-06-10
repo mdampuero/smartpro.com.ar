@@ -5,7 +5,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <ng-container *ngIf="loginService.user.isSuper">
-                        <li class="breadcrumb-item"><a class="preloading" href="/?p={{data.productor.id}}&s={{ statusSelected}}">{{ data.productor.name }}</a></li>
+                        <li class="breadcrumb-item"><a class="preloading" href="/?p={{data.productor.id}}&s={{ statusSelected}}&f={{ f }}&t={{ t }}">{{ data.productor.name }}</a></li>
                     </ng-container>
                     <ng-container *ngIf="!loginService.user.isSuper">
                         <li class="breadcrumb-item"><a class="preloading" href="/?s={{ statusSelected}}">Mis Siniestros</a></li>
@@ -14,7 +14,7 @@
                 </ol>
             </nav>
         </div>
-        
+
         <div class="alert alert-{{ data.status.color }}">
             <div class="container text-center">
                 <h4>
@@ -22,12 +22,12 @@
                 </h4>
             </div>
         </div>
-        
+
         <div class="container">
             <div class="title m-0">
                 <h2 class="pb-3">Nº {{ data.number}}</h2>
             </div>
-            
+
                 <div class="card mb-5">
                     <div class="card-header card-header-info mb-4">
                         <h4>Datos del siniestro</h4>
@@ -99,7 +99,7 @@
                     <h4>Datos postales</h4>
                 </div>
                 <div class="card-body ">
-                    <div class="row"> 
+                    <div class="row">
                         <div class="col-lg-4 col-md-6">
                             <div class="form-group ">
                                 <label for="si_st_id">Provincia</label>

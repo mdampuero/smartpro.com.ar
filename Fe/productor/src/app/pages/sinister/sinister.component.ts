@@ -15,6 +15,8 @@ export class SinisterComponent implements OnInit {
   public company:any;
   public productorSelected='';
   public statusSelected='';
+  public f='';
+  public t='';
   constructor(
     public loginService:LoginService,
     private spinner: NgxSpinnerService,
@@ -24,6 +26,10 @@ export class SinisterComponent implements OnInit {
       this.activatedRoute.queryParams.subscribe(params => {
         if(params["p"]){
           this.productorSelected=params["p"];
+        }if(params["f"]){
+          this.f=params["f"];
+        }if(params["t"]){
+          this.t=params["t"];
         }
         this.statusSelected=params["s"];
       });

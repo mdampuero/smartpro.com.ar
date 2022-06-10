@@ -14,7 +14,7 @@ export class SinistersService {
   public sort = "createdAt";
   public direction = "DESC";
 
-  constructor(private http: HttpClient,public events: EventsService,public loginService:LoginService) { 
+  constructor(private http: HttpClient,public events: EventsService,public loginService:LoginService) {
 
   }
 
@@ -31,18 +31,22 @@ export class SinistersService {
     this.events.publish('order', {});
   }
 
-  get(query: string,productorId:string,status:String) {
-    return this.http.get(`${environment.apiUrl}sinisters/ByProductor/${productorId}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}&status=${status}`);
+  get(query: string,productorId:string,status:String,dateFrom:String,dateTo:String) {
+    if(typeof dateFrom=='undefined') dateFrom='';
+    if(typeof dateTo=='undefined') dateTo='';
+    return this.http.get(`${environment.apiUrl}sinisters/ByProductor/${productorId}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}&status=${status}&dateFrom=${dateFrom}&dateTo=${dateTo}`);
   }
 
-  getByCompany(query: string,status:String) {
-    return this.http.get(`${environment.apiUrl}sinisters/ByCompany/${this.loginService.user.company.id}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}&status=${status}`);
+  getByCompany(query: string,status:String,dateFrom:String,dateTo:String) {
+    if(typeof dateFrom=='undefined') dateFrom='';
+    if(typeof dateTo=='undefined') dateTo='';
+    return this.http.get(`${environment.apiUrl}sinisters/ByCompany/${this.loginService.user.company.id}?search%5Bvalue%5D=${query}&start=${this.offset}&length=${this.limit}&sort=${this.sort}&direction=${this.direction}&status=${status}&dateFrom=${dateFrom}&dateTo=${dateTo}`);
   }
 
   getById(id: string) {
     return this.http.get(`${environment.apiUrl}sinisters/${id}`);
   }
-  
+
   getOne(id: string) {
     return this.http.get(`${environment.apiUrl}sinisters/${id}`);
   }

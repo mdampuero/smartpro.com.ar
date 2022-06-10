@@ -9,16 +9,39 @@ import { param } from 'jquery';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 import { StatusService } from 'src/app/services/api/status.service';
+import { MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
+import {Moment} from "moment";
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
+
 export class HomeComponent implements OnInit {
+
   public data:any={ };
   public productorId='';
   public statusId='';
+  public datePickerFrom:any;
+  public datePickerTo:any;
+  public dateFrom='';
+  public dateTo='';
   public productors:any;
   public status:any;
   public query:string='';
@@ -27,7 +50,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private _snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
-    public events: EventsService) { 
+    public events: EventsService) {
       this.getParam();
     }
 
@@ -40,7 +63,9 @@ export class HomeComponent implements OnInit {
     this.statusService.getAll().subscribe((data:any) => this.status=data.data);
     this.getResult();
   }
-
+  handleDOBChange(event: { value: any; }) {
+    this.goToPageProductor();
+  }
   getParam(){
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["p"]){
@@ -49,20 +74,29 @@ export class HomeComponent implements OnInit {
       if(params["s"]){
         this.statusId=params["s"];
       }
+      if(params["f"]){
+        this.datePickerFrom=params["f"];
+        this.dateFrom=params["f"];
+      }
+      if(params["t"]){
+        this.datePickerTo=params["t"];
+        this.dateTo=params["t"];
+      }
     });
   }
 
   getResult(){
+
     if(this.productorId){
       this.spinner.show();
-      this.sinistersService.get(this.query,this.productorId,this.statusId).subscribe(
+      this.sinistersService.get(this.query,this.productorId,this.statusId,this.dateFrom,this.dateTo).subscribe(
         (data:any) => this.data=data,
         (error) => this.spinner.hide(),
         () => this.spinner.hide()
         );
       }else{
         this.spinner.show();
-        this.sinistersService.getByCompany(this.query,this.statusId).subscribe(
+        this.sinistersService.getByCompany(this.query,this.statusId,this.dateFrom,this.dateTo).subscribe(
           (data:any) => this.data=data,
           (error) => this.spinner.hide(),
           () => this.spinner.hide()
@@ -73,15 +107,28 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`/siniestro/${id}`],{
       queryParams: {
         p: this.productorId,
-        s: this.statusId
+        s: this.statusId,
+        f: this.dateFrom,
+        t: this.dateTo
       }
     });
   }
+
+  convertDate(){
+    if(this.datePickerFrom && typeof this.datePickerFrom != "string")
+      this.dateFrom=this.datePickerFrom.format('YYYY-MM-DD');
+    if(this.datePickerTo && typeof this.datePickerTo != "string")
+      this.dateTo=this.datePickerTo.format('YYYY-MM-DD');
+  }
+
   goToPageProductor(){
+    this.convertDate();
     this.router.navigate([],{
       queryParams: {
         p: this.productorId,
-        s: this.statusId
+        s: this.statusId,
+        f: this.dateFrom,
+        t: this.dateTo
       },
       queryParamsHandling: 'merge',
     });
